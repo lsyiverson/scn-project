@@ -16,8 +16,6 @@ public class Login extends ActionSupport {
     /* ----end---- */
     @Override
     public String execute() throws Exception {
-        System.out.println("lisy============username" + getUsername() + "=====");
-        System.out.println("lisy============password" + getPassword() + "=====");
         if (isInvalid(getUsername())) {
             return INPUT;
         }
