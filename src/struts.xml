@@ -23,6 +23,7 @@
     </package>
 
     <include file="example.xml"/>
+    <include file="upload.xml"></include>
 
     <!-- Add packages here -->
 
