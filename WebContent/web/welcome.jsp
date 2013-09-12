@@ -5,6 +5,27 @@
 <title>四川广电工程管理系统</title>
 <link href="<s:url value="/css/examplecss"/>" rel="stylesheet"
           type="text/css"/>
+
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/md5.js"></script>
+<script type="text/javascript">
+function md5andsubmit() {
+    var hash = hex_md5(login.psw.value);
+    login.password.value = hash;
+}
+
+function validate() {
+    if (login.username.value == "") {
+        alert("用户名不能为空");
+        return false;
+    }
+    if (login.psw.value == "") {
+        alert("密码不能为空");
+        return false;
+    }
+    login.psw.disabled = true;
+}
+</script>
+
 </head>
 
 <body topmargin="50">
@@ -19,10 +40,11 @@
         <tr>
             <td width="456" height="300" background="<%=request.getContextPath()%>/img/network01.jpg">&nbsp;</td>
             <td width="375" align="center">
-            <s:form action="Login">
-                <s:textfield name="username" label="用户名" cssStyle="width:140px"/>
-                <s:password name="password" label="密　码" cssStyle="width:140px"/>
-                <s:submit value="登陆" />
+            <s:form onsubmit="return validate()" action="Login" name="login">
+                <s:textfield id="username" name="username" label="用户名" cssStyle="width:140px" />
+                <s:password id="psw" name="psw" label="密　码" cssStyle="width:140px" />
+                <s:hidden id="password" name="password" />
+                <s:submit value="登陆" onclick="md5andsubmit()" />
             </s:form>
           </td>
         </tr>
