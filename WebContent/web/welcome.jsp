@@ -19,13 +19,11 @@
         <tr>
             <td width="456" height="300" background="<%=request.getContextPath()%>/img/network01.jpg">&nbsp;</td>
             <td width="375" align="center">
-            <s:form action="Login" theme="simple">
-            用户名：<s:textfield key="username" />
-                    <br>
-            密　码：<s:password key="password" />
-                    <br>
-                    <s:submit value="登陆" />
-              </s:form>
+            <s:form action="Login">
+                <s:textfield name="username" label="用户名" cssStyle="width:140px"/>
+                <s:password name="password" label="密　码" cssStyle="width:140px"/>
+                <s:submit value="登陆" />
+            </s:form>
           </td>
         </tr>
 </table>
