@@ -8,7 +8,7 @@ public class Login extends ActionSupport {
 
     private String password;
     /* ----start----
-     * ÁÙÊ±ÓÃ»§ÃûÃÜÂë
+     * ä¸´æ—¶ç”¨æˆ·åå¯†ç 
      */
     private static final String u1 = "admin";
     private static final String p1 = "psw";
