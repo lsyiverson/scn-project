@@ -9,7 +9,7 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/md5.js"></script>
 <script type="text/javascript">
 function md5andsubmit() {
-    var hash = hex_md5(login.psw.value);
+    var hash = hex_md5(login.username.value+login.psw.value);
     login.password.value = hash;
 }
 
