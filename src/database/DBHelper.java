@@ -44,6 +44,7 @@ public class DBHelper {
      */
     public String getEncryptedPasswordByUsername(String username) {
         //TODO: 实现此方法
+        // SELECT password FROM DB WHERE username==username;
         return getUserByUsername(username).getPassword();
     }
     

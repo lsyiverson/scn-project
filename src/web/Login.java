@@ -2,7 +2,13 @@ package web;
 
 import java.security.MessageDigest;
 
+import javax.servlet.http.HttpSession;
+
+import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.dispatcher.SessionMap;
+
 import utils.Utils;
+import bean.User;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -26,6 +32,9 @@ public class Login extends ActionSupport {
         }
         
         if (isPasswordMatchesUsername(username, password)) {
+            User loginUser = DBHelper.getInstance().getUserByUsername(username);
+            HttpSession session = ServletActionContext.getRequest().getSession();
+            session.setAttribute("user", loginUser);
             return SUCCESS;
         } else {
             return ERROR;
