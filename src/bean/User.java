@@ -15,9 +15,9 @@ public class User {
     /**
      * 用户分组
      */
-    private UserGourp group;
+    private UserGroup group;
     
-    public User(String username, String encryptedPsw, UserGourp gourp) {
+    public User(String username, String encryptedPsw, UserGroup gourp) {
         this.username = username;
         this.password = encryptedPsw;
         this.group = gourp;
@@ -39,11 +39,11 @@ public class User {
         this.password = password;
     }
 
-    public UserGourp getGroup() {
+    public UserGroup getGroup() {
         return group;
     }
 
-    public void setGroup(UserGourp group) {
+    public void setGroup(UserGroup group) {
         this.group = group;
     }
 
@@ -52,7 +52,7 @@ public class User {
      * @author IVERSON
      *
      */
-    public static enum UserGourp {
+    public static enum UserGroup {
         /**
          * 普通用户
          * <p>可以查询工程列表

@@ -9,7 +9,13 @@
 
         <action name="Login" class="web.Login">
             <result name="input">/web/welcome.jsp</result>
-            <result name="success">/web/success.html</result>
+            <result name="success" type="chain">UserGroupRedirect</result>
+            <result name="error">/web/login_failed.html</result>
+        </action>
+        
+        <action name="UserGroupRedirect" class="web.UserGroupRedirect">
+            <result name="user">/web/main.jsp</result>
+            <result name="superadmin">/web/success.html</result>
             <result name="error">/web/login_failed.html</result>
         </action>
 

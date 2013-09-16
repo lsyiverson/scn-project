@@ -4,7 +4,7 @@ import java.util.Hashtable;
 
 import utils.Utils;
 import bean.User;
-import bean.User.UserGourp;
+import bean.User.UserGroup;
 
 /**
  * 此类中的方法需要重新实现
@@ -28,9 +28,9 @@ public class DBHelper {
         //TODO: 实现此方法
         //生成临时数据
         //------start------
-        User user = new User("user", Utils.hex_md5("user" + "user"), UserGourp.USER);
-        User admin = new User("admin", Utils.hex_md5("admin" + "admin"), UserGourp.ADMIN);
-        User superadmin = new User("superadmin", Utils.hex_md5("superadmin" + "superadmin"), UserGourp.SUPERADMIN);
+        User user = new User("user", Utils.hex_md5("user" + "user"), UserGroup.USER);
+        User admin = new User("admin", Utils.hex_md5("admin" + "admin"), UserGroup.ADMIN);
+        User superadmin = new User("superadmin", Utils.hex_md5("superadmin" + "superadmin"), UserGroup.SUPERADMIN);
         usertable.put(user.getUsername(), user);
         usertable.put(admin.getUsername(), admin);
         usertable.put(superadmin.getUsername(), superadmin);
