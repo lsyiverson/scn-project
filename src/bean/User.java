@@ -17,7 +17,11 @@ public class User {
      */
     private UserGourp group;
     
-    
+    public User(String username, String encryptedPsw, UserGourp gourp) {
+        this.username = username;
+        this.password = encryptedPsw;
+        this.group = gourp;
+    }
 
     public String getUsername() {
         return username;

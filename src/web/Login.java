@@ -6,22 +6,18 @@ import utils.Utils;
 
 import com.opensymphony.xwork2.ActionSupport;
 
+import database.DBHelper;
+
 public class Login extends ActionSupport {
 
     private String username;
 
     private String password;
-    /* ----start----
-     * 临时用户名密码
-     */
-    private static final String u1 = "admin";
-    private static final String p1 = "psw";
-    /* ----end---- */
+    
     @Override
     public String execute() throws Exception {
         System.out.println("username = " + getUsername() + " password = " + getPassword());
         
-        System.out.println(Utils.hex_md5(u1+p1));
         if (isInvalid(getUsername())) {
             return INPUT;
         }
@@ -29,7 +25,7 @@ public class Login extends ActionSupport {
             return INPUT;
         }
         
-        if (getUsername().equals(u1) && getPassword().equals(p1)) {
+        if (isPasswordMatchesUsername(username, password)) {
             return SUCCESS;
         } else {
             return ERROR;
@@ -38,6 +34,11 @@ public class Login extends ActionSupport {
     
     private boolean isInvalid(String value) {
         return (value == null || value.length() == 0);
+    }
+    
+    private boolean isPasswordMatchesUsername(String username, String password) {
+        String encryptedPsw = DBHelper.getInstance().getEncryptedPasswordByUsername(username);
+        return encryptedPsw.equals(password);
     }
 
     public String getUsername() {
