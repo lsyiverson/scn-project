@@ -18,6 +18,10 @@
             <result name="superadmin">/web/success.html</result>
             <result name="error">/web/login_failed.html</result>
         </action>
+        
+        <action name="Logout" class="web.Logout">
+            <result>/web/welcome.jsp</result>
+        </action>
 
 <!--         <action name="Login_*" method="{1}" class="example.Login">
             <result name="input">/example/Login.jsp</result>

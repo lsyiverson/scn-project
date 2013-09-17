@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
+<%@page import="bean.User"%>
 <html>
 <head>
 <title>四川广电工程管理系统</title>
@@ -29,6 +30,13 @@ function validate() {
 </head>
 
 <body topmargin="50">
+<%User user = (User) session.getAttribute("user");%>
+<%
+if (user != null) {
+    response.sendRedirect(request.getContextPath() + "/web/main.jsp");
+    return;
+}
+%>
 
     <table width="800" height="400" border="0" align="center"
         bordercolor="#F0F0F0">

@@ -1,8 +1,14 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page language="java" pageEncoding="UTF-8"%>
 <%@page import="bean.User"%>
 <div style="background-color:#F0F0F0; overflow:hidden" align="left">
 <div style="width:50%; float:left">
 <%User user = (User) session.getAttribute("user");%>
+<%
+if (user == null) {
+    response.sendRedirect("welcome.jsp");
+    return;
+}
+%>
     欢迎
     <%switch (user.getGroup()) {
     case USER:
@@ -16,5 +22,35 @@
         break;
     }%> ${user.username}
     </div>
-	<div style="width:50%; float:left" align=right>数据上传 用户管理 注销登陆</div>
+    <div style="width:50%; float:left" align=right>
+    <%
+    String uri = request.getServletPath();
+    uri=uri.substring(uri.lastIndexOf("/")+1);
+        switch(user.getGroup()) {
+        case ADMIN:
+            if (!uri.equals("main.jsp")) {
+                %>
+                <a href="main.jsp">数据查询</a>
+                <%
+            }
+            if (!uri.equals("fileupload.jsp")) {
+                %>
+                <a href="fileupload.jsp">数据上传</a>
+                <%
+            }
+            if (!uri.equals("user_manager.jsp")) {
+                %>
+                <a href="user_manager.jsp">用户管理</a>
+                <%
+            }
+        case USER:
+            if (!uri.equals("account_manager.jsp")) {
+                %>
+                <a href="account_manager">帐号管理</a>
+                <%
+            }
+        }
+    %>
+    <a href="Logout">注销登录</a>
+    </div>
 </div>

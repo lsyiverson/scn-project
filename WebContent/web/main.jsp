@@ -4,13 +4,15 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>四川广电工程管理系统</title>
+<title>四川广电工程管理系统-数据查询</title>
 </head>
 <body>
 <center>
 <div style="width:800px; z-index:1">
-<s:include value="page_title.jsp">
-</s:include>
+<%@include file="page_title.jsp" %>
+<%-- <s:include value="page_title.jsp">
+<s:param name="src_page">main</s:param>
+</s:include> --%>
 <div align="left">工程项目查询</div>
 </div>
 </center>
