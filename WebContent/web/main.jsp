@@ -8,7 +8,7 @@
 </head>
 <body>
 <center>
-<div style="width:800px; z-index:1">
+<div style="width:800px">
 <%@include file="page_title.jsp" %>
 <%-- <s:include value="page_title.jsp">
 <s:param name="src_page">main</s:param>
