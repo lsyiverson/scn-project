@@ -3,8 +3,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<%
+User useraccount = (User)session.getAttribute("user");
+if (useraccount == null) {
+    response.sendRedirect("welcome.jsp");
+    return;
+}
+String password = useraccount.getPassword();
+%>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>四川广电工程管理系统-帐号管理</title>
+<title>四川广电工程管理系统-修改密码</title>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/md5.js"></script>
 <script type="text/javascript">
 String.prototype.trim= function(){  
@@ -19,7 +27,6 @@ var confirmpsw;
 var password;
 
 function md5andsubmit() {
-    <% String password = ((User)session.getAttribute("user")).getPassword();%>
     password = "<%=password%>";
     username = change.username.value.trim();
     oldpsw = change.oldpsw.value.trim();
@@ -27,6 +34,10 @@ function md5andsubmit() {
     confirmpsw = change.confirmpsw.value.trim();
     var hash = hex_md5(username+newpsw);
     change.password.value = hash;
+    
+    // 提交原密码进行校验
+    var old = hex_md5(username+oldpsw);
+    change.oldpassword.value = old;
 }
 
 function md5oldpassword() {
@@ -90,12 +101,13 @@ background: #FFFFFF;
 <tr align="center">
 <td align="center">
 <div class="formStyle">
-<s:form onsubmit="return validate()" action="xxx" name="change">
+<s:form onsubmit="return validate()" action="ModifyPassword" name="change">
 <s:textfield id="username" name="username" label="用户名" cssStyle="width:140px" readonly="true" value="%{#session.user.username}"/>
 <s:password id="oldpsw" name="oldpsw" label="原密码" cssStyle="width:140px"/>
 <s:password id="newpsw" name="newpsw" label="新密码" cssStyle="width:140px"/>
 <s:password id="confirmpsw" name="confirmpsw" label="确认密码" cssStyle="width:140px"/>
 <s:hidden id="password" name="password" />
+<s:hidden id="oldpassword" name="oldpassword"/>
 <tr>
 <td colspan="2">
 <div align="right">

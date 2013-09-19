@@ -46,7 +46,7 @@ if (user == null) {
         case USER:
             if (!uri.equals("account_manager.jsp")) {
                 %>
-                <a href="account_manager.jsp">帐号管理</a>
+                <a href="account_manager.jsp">修改密码</a>
                 <%
             }
         }

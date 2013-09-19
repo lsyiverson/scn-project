@@ -22,6 +22,11 @@
         <action name="Logout" class="web.Logout">
             <result>/web/welcome.jsp</result>
         </action>
+        
+        <action name="ModifyPassword" class="web.ModifyPassword">
+            <result name="success">/web/modify_psw_success.html</result>
+            <result name="error">/web/modify_psw_error.html</result>
+        </action>
 
 <!--         <action name="Login_*" method="{1}" class="example.Login">
             <result name="input">/example/Login.jsp</result>

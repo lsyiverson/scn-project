@@ -57,4 +57,15 @@ public class DBHelper {
         //TODO: 实现此方法
         return (User)usertable.get(username);
     }
+    
+    /**
+     * 修改用户密码
+     * @param username 用户名
+     * @param newEncryptedPassword 新密码密文字符串
+     */
+    public boolean updateUserPassword(String username, String newEncryptedPassword) {
+        //TODO: 实现此方法
+        usertable.get(username).setPassword(newEncryptedPassword);
+        return true;
+    }
 }
