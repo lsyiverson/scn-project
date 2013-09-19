@@ -9,20 +9,32 @@
 
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/md5.js"></script>
 <script type="text/javascript">
+String.prototype.trim= function(){  
+    // 用正则表达式将前后空格  
+    // 用空字符串替代。  
+    return this.replace(/(^\s*)|(\s*$)/g, "");  
+};
+var username;
+var password;
+
 function md5andsubmit() {
-    var hash = hex_md5(login.username.value+login.psw.value);
+    username = login.username.value.trim();
+    password = login.psw.value.trim();
+    var hash = hex_md5(username+password);
     login.password.value = hash;
 }
 
 function validate() {
-    if (login.username.value == "") {
+    if (username == "") {
         alert("用户名不能为空");
         return false;
     }
-    if (login.psw.value == "") {
+    if (password == "") {
         alert("密码不能为空");
         return false;
     }
+    login.username.value = username;
+    login.psw.value = password;
     login.psw.disabled = true;
 }
 </script>
