@@ -27,6 +27,7 @@ if (user == null) {
     String uri = request.getServletPath();
     uri=uri.substring(uri.lastIndexOf("/")+1);
         switch(user.getGroup()) {
+        case SUPERADMIN:
         case ADMIN:
             if (!uri.equals("main.jsp")) {
                 %>

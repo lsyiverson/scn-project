@@ -1,6 +1,9 @@
 package database;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Hashtable;
+import java.util.List;
 
 import utils.Utils;
 import bean.User;
@@ -29,9 +32,17 @@ public class DBHelper {
         //生成临时数据
         //------start------
         User user = new User("user", Utils.hex_md5("user" + "user"), UserGroup.USER);
+        User user1 = new User("user1", Utils.hex_md5("user1" + "user"), UserGroup.USER);
+        User user2 = new User("user2", Utils.hex_md5("user2" + "user"), UserGroup.USER);
+        User user3 = new User("user3", Utils.hex_md5("user3" + "user"), UserGroup.USER);
+        User user4 = new User("user4", Utils.hex_md5("user4" + "user"), UserGroup.USER);
         User admin = new User("admin", Utils.hex_md5("admin" + "admin"), UserGroup.ADMIN);
         User superadmin = new User("superadmin", Utils.hex_md5("superadmin" + "superadmin"), UserGroup.SUPERADMIN);
         usertable.put(user.getUsername(), user);
+        usertable.put(user1.getUsername(), user1);
+        usertable.put(user2.getUsername(), user2);
+        usertable.put(user3.getUsername(), user3);
+        usertable.put(user4.getUsername(), user4);
         usertable.put(admin.getUsername(), admin);
         usertable.put(superadmin.getUsername(), superadmin);
         //------end------
@@ -67,5 +78,21 @@ public class DBHelper {
         //TODO: 实现此方法
         usertable.get(username).setPassword(newEncryptedPassword);
         return true;
+    }
+    
+    /**
+     * 得到所有的用户分组为USER级别的用户账号
+     * @return 用户列表
+     */
+    public ArrayList<User> getAllUSERAccounts() {
+        //TODO: 实现此方法
+        ArrayList<User> allUserList = new ArrayList<User>();
+        User[] allUsers = usertable.values().toArray(new User[0]);
+        for(User user : allUsers) {
+            if (user.getGroup() == UserGroup.USER) {
+                allUserList.add(user);
+            }
+        }
+        return allUserList;
     }
 }
