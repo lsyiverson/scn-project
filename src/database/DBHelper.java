@@ -95,4 +95,10 @@ public class DBHelper {
         }
         return allUserList;
     }
+    
+    public boolean delUserByUsername(String username) {
+        //TODO: 实现此方法
+        usertable.remove(username);
+        return true;
+    }
 }

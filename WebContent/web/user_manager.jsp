@@ -10,6 +10,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>四川广电工程管理系统-用户管理</title>
+<script type="text/javascript">
+function deluser(username){
+    return confirm("是否要删除用户:"+username);
+}
+function resetpassword(username) {
+    return confirm("是否要将用户"+ username +"的密码重置为123456");
+}
+</script>
 <style type="text/css">
 .halfContent{
 width:50%;
@@ -24,8 +32,9 @@ float:left
 <%@include file="page_title.jsp" %>
 <%
 ArrayList<User> allUserList = null;
-allUserList = DBHelper.getInstance().getAllUSERAccounts();
+allUserList = (ArrayList<User>)request.getAttribute("alluserlist");
 int allUserCount = allUserList.size();
+pageContext.setAttribute("userlist", allUserList);
 %>
 <div style="margin-top:50px">
 <div class="halfContent" align=left>
@@ -40,17 +49,26 @@ int allUserCount = allUserList.size();
     <td width="50%" align="center"><font color="#FFFFFF">用户名</font></td>
     <td width="50%" align="center"><font color="#FFFFFF">操作</font></td>
   </tr>
-<%
-for(int i=0; i<allUserList.size(); i++){
-    User item = allUserList.get(i);
-%>
-<tr <%if (i%2 == 0) {out.print("bgcolor=\"#D9E2F3\"");}%>>
-    <td width="50%" align="center"><%=item.getUsername()%></td>
-    <td width="50%" align="center"><s:a>密码重置</s:a> <s:a>删除帐号</s:a></td>
+<s:iterator value="#request.alluserlist" status="st" id="list">
+<s:if test="#st.even == true">
+<tr bgcolor="#D9E2F3">
+</s:if>
+<s:else>
+<tr>
+</s:else>
+    <td width="50%" align="center"><s:property value="username"/></td>
+    <td width="50%" align="center">
+    <s:a action="ResetUserPassword?username=%{#list.username}" onclick="return resetpassword('%{#list.username}')">密码重置</s:a>
+     <%
+    if(allUserCount>1){
+     %>
+     <s:a action="DelUser?username=%{#list.username}" onclick="return deluser('%{#list.username}')">删除帐号</s:a>
+     <%
+    }
+     %>
+    </td>
 </tr>
-<%
-}
-%>
+</s:iterator>
 </table>
 </div>
 </center>

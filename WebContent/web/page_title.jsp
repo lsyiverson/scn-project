@@ -41,7 +41,7 @@ if (user == null) {
             }
             if (!uri.equals("user_manager.jsp")) {
                 %>
-                <a href="user_manager.jsp">用户管理</a>
+                <a href="GetAllUsers.action">用户管理</a>
                 <%
             }
         case USER:
