@@ -6,6 +6,7 @@ import java.util.Hashtable;
 import java.util.List;
 
 import utils.Utils;
+import bean.ProjectInfo;
 import bean.User;
 import bean.User.UserGroup;
 
@@ -111,5 +112,15 @@ public class DBHelper {
         //TODO: 实现此方法
         User user = new User(username, Utils.hex_md5(username+"123456"), UserGroup.USER);
         usertable.put(username, user);
+    }
+    
+    /**
+     * 
+     * @param excelData excel数据List
+     * @return boolean 插入是否成功
+     */
+    public boolean insertExcelData(List<ProjectInfo> excelData){
+      //TODO: 实现此方法,用于向数据库中插入excel数据
+        return true;
     }
 }

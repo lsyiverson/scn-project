@@ -3,6 +3,7 @@ package utils;
 import java.security.MessageDigest;
 
 public class Utils {
+    private static final boolean DEBUG = true;
 
     /**
      * 将目标字符串进行MD5加密，并返回十六进制格式的加密后字符串
@@ -35,6 +36,16 @@ public class Utils {
         catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    /**
+     * 网站Log
+     * @param logString
+     */
+    public static void Log(String logString){
+        if(DEBUG){
+            System.out.println(logString);
         }
     }
 }
