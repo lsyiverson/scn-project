@@ -13,6 +13,7 @@ import bean.User;
 import com.opensymphony.xwork2.ActionSupport;
 
 import database.DBHelper;
+import database.DBTest;
 
 public class Login extends ActionSupport {
 
@@ -47,6 +48,7 @@ public class Login extends ActionSupport {
     
     private boolean isPasswordMatchesUsername(String username, String password) {
         String encryptedPsw = DBHelper.getInstance().getEncryptedPasswordByUsername(username);
+        DBTest.getInstance().getEncryptedPasswordByUsername(username);
         return encryptedPsw.equals(password);
     }
 
