@@ -39,6 +39,11 @@
         <action name="ResetUserPassword" class="web.ResetUserPassword">
             <result type="chain">GetAllUsers</result>
         </action>
+        
+        <action name="CreateUser" class="web.CreateUser">
+            <result name="input">/web/have_same_user.html</result>
+            <result type="chain">GetAllUsers</result>
+        </action>
 
 <!--         <action name="Login_*" method="{1}" class="example.Login">
             <result name="input">/example/Login.jsp</result>

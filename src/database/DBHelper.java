@@ -101,4 +101,15 @@ public class DBHelper {
         usertable.remove(username);
         return true;
     }
+    
+    public boolean isAlreadyHaveTheUser(String username) {
+        //TODO: 实现此方法
+        return usertable.containsKey(username);
+    }
+    
+    public void createUser(String username) {
+        //TODO: 实现此方法
+        User user = new User(username, Utils.hex_md5(username+"123456"), UserGroup.USER);
+        usertable.put(username, user);
+    }
 }

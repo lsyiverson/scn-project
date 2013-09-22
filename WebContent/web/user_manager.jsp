@@ -33,15 +33,18 @@ float:left
 <%
 ArrayList<User> allUserList = null;
 allUserList = (ArrayList<User>)request.getAttribute("alluserlist");
+if(allUserList == null) {
+    response.sendRedirect("welcome.jsp");
+    return;
+}
 int allUserCount = allUserList.size();
-pageContext.setAttribute("userlist", allUserList);
 %>
 <div style="margin-top:50px">
 <div class="halfContent" align=left>
 当前共有<%=allUserCount%>个用户帐号
 </div>
 <div class="halfContent" align=right>
-<s:a action="xxx">添加用户帐号</s:a>
+<s:a href="add_user.jsp">添加用户帐号</s:a>
 </div>
 </div>
 <table width="100%" border="1" cellpadding="2" cellspacing="0" bordercolor="#4472C4" style="border-collapse:collapse">
@@ -50,7 +53,7 @@ pageContext.setAttribute("userlist", allUserList);
     <td width="50%" align="center"><font color="#FFFFFF">操作</font></td>
   </tr>
 <s:iterator value="#request.alluserlist" status="st" id="list">
-<s:if test="#st.even == true">
+<s:if test="#st.odd == true">
 <tr bgcolor="#D9E2F3">
 </s:if>
 <s:else>
