@@ -151,7 +151,25 @@ public class DBTest implements DBInterface{
     @Override
     public ArrayList<String> getAllUSERAccounts() {
         // TODO Auto-generated method stub
-        return null;
+        Connection conn = getConnection();
+        Statement st;
+        ResultSet rs;
+        ArrayList<String> username = new ArrayList<String>();
+        String sql = "SELECT username FROM scn.user";
+        try {
+            st = conn.createStatement();
+            rs = st.executeQuery(sql);
+            while(rs.next()) {
+                username.add(rs.getString("username"));
+            }
+            
+            conn.close();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } finally {
+        }
+        return username;
     }
 
     @Override
