@@ -44,6 +44,11 @@
             <result name="input">/web/have_same_user.html</result>
             <result type="chain">GetAllUsers</result>
         </action>
+        
+        <action name="QueryProject" class="web.QueryProject">
+            <result name="success">/web/success.html</result>
+            <result name="error">/web/query_failed.html</result>
+        </action>
 
 <!--         <action name="Login_*" method="{1}" class="example.Login">
             <result name="input">/example/Login.jsp</result>
