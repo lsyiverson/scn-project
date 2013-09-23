@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
 import bean.ProjectInfo;
 import bean.User;
 
-public class DBTest {
+public class DBTest implements DBInterface{
     private static DBTest mDB;
     private static Hashtable<String, User> usertable = new Hashtable<String, User>();
     
@@ -40,8 +41,10 @@ public class DBTest {
         return con; //返回所建立的数据库连接  
     }
     
-    public void getEncryptedPasswordByUsername(String username) {
+    @Override
+    public String getEncryptedPasswordByUsername(String username) {
         Connection conn = getConnection();
+        String encryptedPassword = "";
         Statement st;
         ResultSet rs;
         String sql = "SELECT * FROM scn.user WHERE username = '" + username + "'";
@@ -52,6 +55,7 @@ public class DBTest {
             while(rs.next()) {
                 String u = rs.getString("username");
                 String p = rs.getString("password");
+                encryptedPassword = p;
                 String g = rs.getString("group");
                 System.out.println("username:"+u);
                 System.out.println("password:"+p);
@@ -63,8 +67,10 @@ public class DBTest {
             e.printStackTrace();
         } finally {
         }
+        return encryptedPassword;
     }
     
+    @Override
     public boolean insertExcelData(List<ProjectInfo> excelData){
         //TODO: 实现此方法,用于向数据库中插入excel数据
         Connection conn = getConnection();
@@ -85,6 +91,7 @@ public class DBTest {
         return true;
       }
     
+    @Override
     public boolean updateUserPassword(String username, String newEncryptedPassword) {
         //TODO: 实现此方法
         Connection conn = getConnection();
@@ -103,6 +110,36 @@ public class DBTest {
         }
         //usertable.get(username).setPassword(newEncryptedPassword);
         return true;
+    }
+
+    @Override
+    public User getUserByUsername(String username) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public ArrayList<User> getAllUSERAccounts() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public boolean delUserByUsername(String username) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean isAlreadyHaveTheUser(String username) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public void createUser(String username) {
+        // TODO Auto-generated method stub
+        
     }
 
 }

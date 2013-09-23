@@ -13,7 +13,7 @@ import bean.User.UserGroup;
 /**
  * 此类中的方法需要重新实现
  */
-public class DBHelper {
+public class DBHelper implements DBInterface{
     private static DBHelper mDB;
     //------start------
     //临时数据
@@ -49,42 +49,27 @@ public class DBHelper {
         //------end------
     }
 
-    /**
-     * 通过用户名查找对应的加密后的密码字符串
-     * @param username 用户名
-     * @return 加密后的密码字符串
-     */
+    @Override
     public String getEncryptedPasswordByUsername(String username) {
         //TODO: 实现此方法
         // SELECT password FROM DB WHERE username==username;
         return getUserByUsername(username).getPassword();
     }
     
-    /**
-     * 通过用户名得到对应的用户对象
-     * @param username 用户名
-     * @return 用户
-     */
+    @Override
     public User getUserByUsername(String username) {
         //TODO: 实现此方法
         return (User)usertable.get(username);
     }
     
-    /**
-     * 修改用户密码
-     * @param username 用户名
-     * @param newEncryptedPassword 新密码密文字符串
-     */
+    @Override
     public boolean updateUserPassword(String username, String newEncryptedPassword) {
         //TODO: 实现此方法
         usertable.get(username).setPassword(newEncryptedPassword);
         return true;
     }
     
-    /**
-     * 得到所有的用户分组为USER级别的用户账号
-     * @return 用户列表
-     */
+    @Override
     public ArrayList<User> getAllUSERAccounts() {
         //TODO: 实现此方法
         ArrayList<User> allUserList = new ArrayList<User>();
@@ -97,28 +82,27 @@ public class DBHelper {
         return allUserList;
     }
     
+    @Override
     public boolean delUserByUsername(String username) {
         //TODO: 实现此方法
         usertable.remove(username);
         return true;
     }
     
+    @Override
     public boolean isAlreadyHaveTheUser(String username) {
         //TODO: 实现此方法
         return usertable.containsKey(username);
     }
     
+    @Override
     public void createUser(String username) {
         //TODO: 实现此方法
         User user = new User(username, Utils.hex_md5(username+"123456"), UserGroup.USER);
         usertable.put(username, user);
     }
     
-    /**
-     * 
-     * @param excelData excel数据List
-     * @return boolean 插入是否成功
-     */
+    @Override
     public boolean insertExcelData(List<ProjectInfo> excelData){
       //TODO: 实现此方法,用于向数据库中插入excel数据
         return true;
