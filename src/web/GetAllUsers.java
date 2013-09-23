@@ -10,7 +10,8 @@ import bean.User;
 
 import com.opensymphony.xwork2.ActionSupport;
 
-import database.DBHelper;
+import database.DBTest;
+
 
 public class GetAllUsers extends ActionSupport {
     /**
@@ -20,7 +21,7 @@ public class GetAllUsers extends ActionSupport {
     
     @Override
     public String execute() throws Exception {
-        alluserlist = DBHelper.getInstance().getAllUSERAccounts();
+        alluserlist = DBTest.getInstance().getAllUSERAccounts();
         ServletActionContext.getRequest().setAttribute("alluserlist", alluserlist);
         return SUCCESS;
     }

@@ -2,7 +2,7 @@ package web;
 
 import com.opensymphony.xwork2.ActionSupport;
 
-import database.DBHelper;
+import database.DBTest;
 
 public class DelUser extends ActionSupport {
     
@@ -14,7 +14,7 @@ public class DelUser extends ActionSupport {
     @Override
     public String execute() throws Exception {
         System.out.println("del=====" + username);
-        DBHelper.getInstance().delUserByUsername(username);
+        DBTest.getInstance().delUserByUsername(username);
         return super.execute();
     }
 

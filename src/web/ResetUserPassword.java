@@ -4,7 +4,7 @@ import utils.Utils;
 
 import com.opensymphony.xwork2.ActionSupport;
 
-import database.DBHelper;
+import database.DBTest;
 
 public class ResetUserPassword extends ActionSupport {
     /**
@@ -15,7 +15,7 @@ public class ResetUserPassword extends ActionSupport {
     @Override
     public String execute() throws Exception {
         String resetPassword = Utils.hex_md5(username+"123456");
-        DBHelper.getInstance().updateUserPassword(username, resetPassword);
+        DBTest.getInstance().updateUserPassword(username, resetPassword);
         return SUCCESS;
     }
 

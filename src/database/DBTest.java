@@ -92,7 +92,7 @@ public class DBTest implements DBInterface{
         //TODO: 实现此方法
         Connection conn = getConnection();
         Statement st;
-        String sql = "update scn.user set password = '" + newEncryptedPassword + "' WHERE username = '" + username + "'";
+        String sql = "UPDATE scn.user SET password = '" + newEncryptedPassword + "' WHERE username = '" + username + "'";
         try {
             st = conn.createStatement();
             st = (Statement) conn.createStatement();    //创建用于执行静态sql语句的Statement对象，st属局部变量  
@@ -156,7 +156,7 @@ public class DBTest implements DBInterface{
         ResultSet rs;
         ArrayList<String> username = new ArrayList<String>();
         int usergroup = 0;
-        String sql = "SELECT username FROM scn.user where group = '" + usergroup +"'";
+        String sql = "SELECT username FROM scn.user WHERE scn.user.group = " + usergroup;
         try {
             st = conn.createStatement();
             rs = st.executeQuery(sql);
@@ -178,7 +178,7 @@ public class DBTest implements DBInterface{
         // TODO Auto-generated method stub
         Connection conn = getConnection();
         Statement st;
-        String sql = "delete from scn.user where username = '" +username+ "'";
+        String sql = "DELETE FROM scn.user WHERE username = '" +username+ "'";
         try {
             st = conn.createStatement();
             st = (Statement) conn.createStatement();    //创建用于执行静态sql语句的Statement对象，st属局部变量  
@@ -225,7 +225,7 @@ public class DBTest implements DBInterface{
         int userGroup = 0;
         Connection conn = getConnection();
         Statement st;
-        String sql = "inset into scn.user values('" + userName + "','" +password+ "','" +userGroup+ "')";
+        String sql = "INSERT INTO scn.user VALUES('" + userName + "','" +password+ "','" +userGroup+ "')";
         try {
             st = conn.createStatement();
             st = (Statement) conn.createStatement();    //创建用于执行静态sql语句的Statement对象，st属局部变量  
