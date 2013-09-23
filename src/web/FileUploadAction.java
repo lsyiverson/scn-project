@@ -3,6 +3,8 @@ package web;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.ParseException;
+import java.util.Date;
 
 import javax.servlet.ServletContext;
 
@@ -18,6 +20,8 @@ import org.apache.struts2.util.ServletContextAware;
 
 import utils.Utils;
 import bean.ProjectInfo;
+import bean.ProjectInfo.ProPropertyGroup;
+import bean.ProjectInfo.ProTypeGroup;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -70,10 +74,12 @@ public class FileUploadAction extends ActionSupport implements
 
         return SUCCESS;
     }
-/**
- * 读取excel文件
- * @return
- */
+
+    /**
+     * 读取excel文件
+     * 
+     * @return
+     */
     private boolean readExcel() {
         Workbook wb = null;
         try {
@@ -100,16 +106,17 @@ public class FileUploadAction extends ActionSupport implements
             int rows = sheet.getPhysicalNumberOfRows();
             Utils.Log("Sheet " + k + " \"" + wb.getSheetName(k) + "\" has "
                     + rows + " row(s).");
-            for (int r = 4; r < rows; r++) {
+            for (int r = 3; r < rows; r++) {
                 Row row = sheet.getRow(r);
                 if (row == null) {
                     continue;
                 }
 
                 int cells = row.getPhysicalNumberOfCells();
-                if (r < 20)
+                if (r < 5)
                     Utils.Log("\nROW " + row.getRowNum() + " has " + cells
                             + " cell(s).");
+                ProjectInfo projectInfo = new ProjectInfo();
                 for (int c = 0; c < cells; c++) {
                     Cell cell = row.getCell(c);
                     if (null == cell) {
@@ -135,33 +142,273 @@ public class FileUploadAction extends ActionSupport implements
                         break;
                     case Cell.CELL_TYPE_BLANK:
                         value = "";
+                        break;
                     case Cell.CELL_TYPE_ERROR:
                         Utils.Log("CELL col=" + cell.getColumnIndex()
                                 + " VALUE = ERROR");
                         break;
                     default:
                     }
-                    if (r < 20)
+                    if (r < 5)
                         Utils.Log("CELL col=" + cell.getColumnIndex()
                                 + " VALUE=" + value);
-                    if(!StringUtils.isEmpty(value)){
-                        creatProjectInfo(value, c);
+                    if (!StringUtils.isEmpty(value)) {
+                        setProjectInfoData(projectInfo, value, c).toString();
                     }
+                    
                 }
+                if (r < 5)
+                Utils.Log(projectInfo.toString());
             }
         }
         return true;
     }
+
     /**
      * 创建excel数据对象
-     * @param value 数据值
-     * @param columnNum 列号
+     * 
+     * @param value
+     *            数据值
+     * @param columnNum
+     *            列号
      * @return
      */
-    private ProjectInfo creatProjectInfo(String value, int columnNum){
-        return null;
+    private ProjectInfo setProjectInfoData(ProjectInfo projectInfo, final String value, final int columnNum) {
+        switch (columnNum) {
+        case NUMBER:
+            projectInfo.setNumber((int)Double.parseDouble(value));
+            break;
+        case ITEM_SOURCE_GROUP:
+            if (value.equals("市场")) {
+                projectInfo
+                        .setItemSourceGroup(ProjectInfo.ItemSourceGroup.MARKET);
+            } else if (value.equals("技维")) {
+                projectInfo
+                        .setItemSourceGroup(ProjectInfo.ItemSourceGroup.MAINTAIN);
+            } else if (value.equals("VIP")) {
+                projectInfo.setItemSourceGroup(ProjectInfo.ItemSourceGroup.VIP);
+            } else if (value.equals("省公司派单")) {
+                projectInfo
+                        .setItemSourceGroup(ProjectInfo.ItemSourceGroup.AGGISN);
+            }
+            break;
+        case ITEM_DATE:
+            try {
+                projectInfo.setItemDate(Utils.DATE_FORMAT.parse(value));
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+                projectInfo.setItemDate(new Date(0));
+            }
+            break;
+        case ITEM_NAME:
+            projectInfo.setItemName(value);
+            break;
+        case PRO_NUMBER:
+            projectInfo.setProNumber(value);
+            break;
+        case PRO_NAME:
+            projectInfo.setProName(value);
+            break;
+        case PRO_PROPERTY_GROUP:
+            if (value.equals("新建")) {
+                projectInfo.setProPropertyGroup(ProPropertyGroup.NEW);
+            } else if (value.equals("改造")) {
+                projectInfo.setProPropertyGroup(ProPropertyGroup.TRANSFORM);
+            } else if (value.equals("迁改")) {
+                projectInfo.setProPropertyGroup(ProPropertyGroup.MOVE);
+            } else if (value.equals("专网")) {
+                projectInfo.setProPropertyGroup(ProPropertyGroup.PRIVATENETWORK);
+            }
+            break;
+        case PRO_TYPE_GROUP:
+            if (value.equals("城域网")) {
+                projectInfo.setProTypeGroup(ProTypeGroup.MAN);
+            } else if (value.equals("接入")) {
+                projectInfo.setProTypeGroup(ProTypeGroup.ACCESS);
+            } else if (value.equals("HFC")) {
+                projectInfo.setProTypeGroup(ProTypeGroup.HFC);
+            } else if (value.equals("管道")) {
+                projectInfo.setProTypeGroup(ProTypeGroup.PIPELINE);
+            }
+            break;
+        case PRO_ADDRESS:
+            projectInfo.setProAddress(value);
+            break;
+        case A_MATERIAL_CST:
+            projectInfo.setA_MaterialCST(Float.parseFloat(value));
+            break;
+        case A_MATERIAL_BILL:
+            projectInfo.setA_MaterialBill(value);
+            break;
+        case B_MATERIAL_CST:
+
+            break;
+        case B_MATERIAL_BILL:
+
+            break;
+        case LABOR_COST:
+
+            break;
+        case LABOR_CST_BILL:
+
+            break;
+        case COORDINATION_FEE:
+
+            break;
+        case TOTAL_FEE:
+
+            break;
+        case MATERIAL_QUA:
+
+            break;
+        case CONS_METHOD_GROUP:
+
+            break;
+        case PRO_OA_DATE:
+
+            break;
+        case PRO_PAPER_DATE:
+
+            break;
+        case DISPATCH_DATE:
+
+            break;
+        case AUDIT_RECORD_DATE:
+
+            break;
+        case CONTRACT_NUMBER:
+
+            break;
+        case CONTRACT_ACCOUNT:
+
+            break;
+        case FIRST_PAYMENT_AMOUNT:
+
+            break;
+        case SECOND_PAYMENT_AMOUNT:
+
+            break;
+        case APPROACH_TIME:
+
+            break;
+        case APPROACH_EXPECT_MATERIAL:
+
+            break;
+        case PRO_LEADER:
+
+            break;
+        case CONSTRUCTION_UNIT:
+
+            break;
+        case MONTH_PROGRESS:
+
+            break;
+        case LAST_MONTH_PROGRESS:
+
+            break;
+        case HOUSE_HOLDS:
+
+            break;
+        case ROUTE_LENGTH:
+
+            break;
+        case REFORM_WAY:
+
+            break;
+        case CONS_STAGE_GROUP:
+
+            break;
+        case CONCEALED_WORK:
+
+            break;
+        case HOOKING_ORTUBE:
+
+            break;
+        case ORDER_CHANGE_NO:
+
+            break;
+        case ORDER_CHANGE_ACCOUNT:
+
+            break;
+        case CONSTRUCTION:
+
+            break;
+        case COMPLETED_DATE:
+
+            break;
+        case SUBMIT_COMPLETION_DATA:
+
+            break;
+        case ACCEPTANCE:
+
+            break;
+        case ACTUAL_INSTALL:
+
+            break;
+        case ASSETS_TRANSFER:
+
+            break;
+        case ASSETS_GIS:
+
+            break;
+        case COMPLETION_DOC_NO:
+
+            break;
+        case DATA_TRANSFER:
+
+            break;
+        case IMPORTANT_DATA_SUBMIT:
+
+            break;
+        case SETTLEMENT_AMOUNT:
+
+            break;
+        case IMPORTANT_PRO_AMOUNT:
+
+            break;
+        case SETTLEMENT_PAYABLE:
+
+            break;
+        case SETTLEMENT_PAY_MERCHANTS:
+
+            break;
+
+        case OWED_AMOUNT:
+
+            break;
+
+        case THIRD_PAYMENT_AMOUNT:
+
+            break;
+
+        case RETENTION_AMOUNT:
+
+            break;
+
+        case RETENTION_EXPIRES:
+
+            break;
+
+        case NEXT_MONTH_PAY_AMOUNT:
+
+            break;
+        case OPTICAL_NODE:
+
+            break;
+        case CABLE:
+
+            break;
+        case CHARGE_CONSTRUCTION:
+
+            break;
+
+        default:
+            break;
+        }
+        return projectInfo;
     }
-    
+
     /*
      * 以下为excel列编号
      */

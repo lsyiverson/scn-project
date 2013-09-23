@@ -1,5 +1,7 @@
 package bean;
 
+import java.util.Date;
+
 public class ProjectInfo {
     /**
      * 序号
@@ -14,7 +16,7 @@ public class ProjectInfo {
     /**
      * 来单时间
      */
-    private String itemDate;
+    private Date itemDate;
     
     /**
      * 来单名称
@@ -332,11 +334,11 @@ public class ProjectInfo {
         this.itemSourceGroup = itemSourceGroup;
     }
    
-    public String getItemDate() {
+    public Date getItemDate() {
         return itemDate;
     }
 
-    public void setItemDate(String itemDate) {
+    public void setItemDate(Date itemDate) {
         this.itemDate = itemDate;
     }
     

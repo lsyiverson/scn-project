@@ -1,9 +1,11 @@
 package utils;
 
 import java.security.MessageDigest;
+import java.text.SimpleDateFormat;
 
 public class Utils {
     private static final boolean DEBUG = true;
+    public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy.M.d");
 
     /**
      * 将目标字符串进行MD5加密，并返回十六进制格式的加密后字符串
