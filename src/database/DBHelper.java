@@ -70,13 +70,13 @@ public class DBHelper implements DBInterface{
     }
     
     @Override
-    public ArrayList<User> getAllUSERAccounts() {
+    public ArrayList<String> getAllUSERAccounts() {
         //TODO: 实现此方法
-        ArrayList<User> allUserList = new ArrayList<User>();
+        ArrayList<String> allUserList = new ArrayList<String>();
         User[] allUsers = usertable.values().toArray(new User[0]);
         for(User user : allUsers) {
             if (user.getGroup() == UserGroup.USER) {
-                allUserList.add(user);
+                allUserList.add(user.getUsername());
             }
         }
         return allUserList;

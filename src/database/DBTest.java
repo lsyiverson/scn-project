@@ -149,7 +149,7 @@ public class DBTest implements DBInterface{
     }
 
     @Override
-    public ArrayList<User> getAllUSERAccounts() {
+    public ArrayList<String> getAllUSERAccounts() {
         // TODO Auto-generated method stub
         return null;
     }

@@ -34,7 +34,7 @@ public interface DBInterface {
      * 得到所有的用户分组为USER级别的用户账号
      * @return 用户列表
      */
-    public ArrayList<User> getAllUSERAccounts();
+    public ArrayList<String> getAllUSERAccounts();
     
     /**
      * 通过用户名删除用户

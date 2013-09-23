@@ -59,13 +59,13 @@ int allUserCount = allUserList.size();
 <s:else>
 <tr>
 </s:else>
-    <td width="50%" align="center"><s:property value="username"/></td>
+    <td width="50%" align="center"><s:property/></td>
     <td width="50%" align="center">
-    <s:a action="ResetUserPassword?username=%{#list.username}" onclick="return resetpassword('%{#list.username}')">密码重置</s:a>
+    <s:a action="ResetUserPassword?username=%{#list}" onclick="return resetpassword('%{#list}')">密码重置</s:a>
      <%
     if(allUserCount>1){
      %>
-     <s:a action="DelUser?username=%{#list.username}" onclick="return deluser('%{#list.username}')">删除帐号</s:a>
+     <s:a action="DelUser?username=%{#list}" onclick="return deluser('%{#list}')">删除帐号</s:a>
      <%
     }
      %>
