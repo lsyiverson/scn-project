@@ -39,7 +39,7 @@
 <div style="width:800px">
 <%@include file="page_title.jsp" %>
 <div align="center"><h2>工程项目查询</h2></div>
-<s:form action="xxx" name="query">
+<s:form action="QueryProject" name="query">
 <table width="100%" border="1" cellpadding="2" cellspacing="0" bordercolor="#4472C4" style="border-collapse:collapse">
     <tr align="center" bgcolor="#4472C4">
         <td width="25%"><font color="#FFFFFF">项目来源</font></td>
@@ -98,6 +98,7 @@
         </td>
     </tr>
 </table>
+<div style="width:100%;text-align:left;padding-top:5px">请选择输入一个或多个项进行查询，如果全都不输入将查询所有项</div>
 <div class="btnQuery"><s:submit cssClass="btnStyle" value="查询" theme="simple"/></div>
 </s:form>
 </div>
