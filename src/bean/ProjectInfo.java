@@ -131,12 +131,12 @@ public class ProjectInfo {
     /**
      * 第一次付款金额
      */
-    private float firstPaymentAmount;
+    private String firstPaymentAmount;
     
     /**
      * 第二次付款金额
      */
-    private float secondPaymentAmount;
+    private String secondPaymentAmount;
     
     /**
      * 进场时间
@@ -171,12 +171,12 @@ public class ProjectInfo {
     /**
      * 户数
      */
-    private int houseHolds;
+    private String houseHolds;
     
     /**
      * 干线长度
      */
-    private int routeLength;
+    private String routeLength;
     
     /**
      * 改造方式
@@ -518,19 +518,19 @@ public class ProjectInfo {
         this.contractAccount = contractAccount;
     }
     
-    public float getFirstPaymentAmount() {
+    public String getFirstPaymentAmount() {
         return firstPaymentAmount;
     }
 
-    public void setFirstPaymentAmount(float firstPaymentAmount) {
+    public void setFirstPaymentAmount(String firstPaymentAmount) {
         this.firstPaymentAmount = firstPaymentAmount;
     }
     
-    public float getSecondPaymentAmount() {
+    public String getSecondPaymentAmount() {
         return secondPaymentAmount;
     }
 
-    public void setSecondPaymentAmount(float secondPaymentAmount) {
+    public void setSecondPaymentAmount(String secondPaymentAmount) {
         this.secondPaymentAmount = secondPaymentAmount;
     }
     
@@ -582,19 +582,19 @@ public class ProjectInfo {
         this.lastMonthProgress = lastMonthProgress;
     }
     
-    public int getHouseHolds() {
+    public String getHouseHolds() {
         return houseHolds;
     }
 
-    public void setHouseHolds(int houseHolds) {
+    public void setHouseHolds(String houseHolds) {
         this.houseHolds = houseHolds;
     }
     
-    public int getRouteLength() {
+    public String getRouteLength() {
         return routeLength;
     }
 
-    public void setRouteLength(int routeLength) {
+    public void setRouteLength(String routeLength) {
         this.routeLength = routeLength;
     }
     
@@ -820,6 +820,56 @@ public class ProjectInfo {
 
     public void setChargeConstruction(String chargeConstruction) {
         this.chargeConstruction = chargeConstruction;
+    }
+
+
+    @Override
+    public String toString() {
+        return "ProjectInfo [number=" + number + ", itemSourceGroup="
+                + itemSourceGroup + ", itemDate=" + itemDate + ", itemName="
+                + itemName + ", proNumber=" + proNumber + ", proName="
+                + proName + ", proPropertyGroup=" + proPropertyGroup
+                + ", proTypeGroup=" + proTypeGroup + ", proAddress="
+                + proAddress + ", A_MaterialCST=" + A_MaterialCST
+                + ", A_MaterialBill=" + A_MaterialBill + ", B_MaterialCST="
+                + B_MaterialCST + ", B_MaterialBill=" + B_MaterialBill
+                + ", laborCost=" + laborCost + ", laborCstBill=" + laborCstBill
+                + ", coordinationFee=" + coordinationFee + ", totalFee="
+                + totalFee + ", materialQua=" + materialQua
+                + ", consMethodGroup=" + consMethodGroup + ", proOADate="
+                + proOADate + ", proPaperDate=" + proPaperDate
+                + ", dispatchDate=" + dispatchDate + ", auditRecordDate="
+                + auditRecordDate + ", contractNumber=" + contractNumber
+                + ", contractAccount=" + contractAccount
+                + ", firstPaymentAmount=" + firstPaymentAmount
+                + ", secondPaymentAmount=" + secondPaymentAmount
+                + ", approachTime=" + approachTime
+                + ", approachExpectMaterial=" + approachExpectMaterial
+                + ", proLeader=" + proLeader + ", constructionUnit="
+                + constructionUnit + ", monthProgress=" + monthProgress
+                + ", lastMonthProgress=" + lastMonthProgress + ", houseHolds="
+                + houseHolds + ", routeLength=" + routeLength + ", reformWay="
+                + reformWay + ", consStageGroup=" + consStageGroup
+                + ", concealedWork=" + concealedWork + ", hookingOrTube="
+                + hookingOrTube + ", orderChangeNo=" + orderChangeNo
+                + ", orderChangeAccount=" + orderChangeAccount
+                + ", construction=" + construction + ", completedDate="
+                + completedDate + ", submitCompletionData="
+                + submitCompletionData + ", acceptance=" + acceptance
+                + ", actualInstall=" + actualInstall + ", assetsTransfer="
+                + assetsTransfer + ", assetsGIS=" + assetsGIS
+                + ", completionDocNo=" + completionDocNo + ", dataTransfer="
+                + dataTransfer + ", importantDataSubmit=" + importantDataSubmit
+                + ", settlementAmount=" + settlementAmount
+                + ", importantProAmount=" + importantProAmount
+                + ", settlementPayable=" + settlementPayable
+                + ", settlementPayMerchants=" + settlementPayMerchants
+                + ", owedAmount=" + owedAmount + ", thirdPaymentAmount="
+                + thirdPaymentAmount + ", retentionAmount=" + retentionAmount
+                + ", retentionExpires=" + retentionExpires
+                + ", nextMonthPayAmount=" + nextMonthPayAmount
+                + ", opticalNode=" + opticalNode + ", cable=" + cable
+                + ", chargeConstruction=" + chargeConstruction + "]";
     }
 
 

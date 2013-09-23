@@ -3,8 +3,9 @@ package web;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.ServletContext;
 
@@ -20,10 +21,14 @@ import org.apache.struts2.util.ServletContextAware;
 
 import utils.Utils;
 import bean.ProjectInfo;
+import bean.ProjectInfo.ConsMethodGroup;
+import bean.ProjectInfo.ConsStageGroup;
 import bean.ProjectInfo.ProPropertyGroup;
 import bean.ProjectInfo.ProTypeGroup;
 
 import com.opensymphony.xwork2.ActionSupport;
+
+import database.DBHelper;
 
 public class FileUploadAction extends ActionSupport implements
         ServletContextAware {
@@ -106,6 +111,7 @@ public class FileUploadAction extends ActionSupport implements
             int rows = sheet.getPhysicalNumberOfRows();
             Utils.Log("Sheet " + k + " \"" + wb.getSheetName(k) + "\" has "
                     + rows + " row(s).");
+            List<ProjectInfo> proInfoList = new ArrayList<ProjectInfo>();
             for (int r = 3; r < rows; r++) {
                 Row row = sheet.getRow(r);
                 if (row == null) {
@@ -155,11 +161,14 @@ public class FileUploadAction extends ActionSupport implements
                     if (!StringUtils.isEmpty(value)) {
                         setProjectInfoData(projectInfo, value, c).toString();
                     }
-                    
+
                 }
                 if (r < 5)
-                Utils.Log(projectInfo.toString());
+                    Utils.Log(projectInfo.toString());
+                proInfoList.add(projectInfo);
             }
+            Utils.Log(proInfoList.toString());
+            DBHelper.getInstance().insertExcelData(proInfoList);
         }
         return true;
     }
@@ -167,16 +176,19 @@ public class FileUploadAction extends ActionSupport implements
     /**
      * 创建excel数据对象
      * 
+     * @param projectInfo
+     *            数据对象
      * @param value
      *            数据值
      * @param columnNum
      *            列号
-     * @return
+     * @return ProjectInfo
      */
-    private ProjectInfo setProjectInfoData(ProjectInfo projectInfo, final String value, final int columnNum) {
+    private ProjectInfo setProjectInfoData(ProjectInfo projectInfo,
+            final String value, final int columnNum) {
         switch (columnNum) {
         case NUMBER:
-            projectInfo.setNumber((int)Double.parseDouble(value));
+            projectInfo.setNumber((int) Double.parseDouble(value));
             break;
         case ITEM_SOURCE_GROUP:
             if (value.equals("市场")) {
@@ -218,7 +230,8 @@ public class FileUploadAction extends ActionSupport implements
             } else if (value.equals("迁改")) {
                 projectInfo.setProPropertyGroup(ProPropertyGroup.MOVE);
             } else if (value.equals("专网")) {
-                projectInfo.setProPropertyGroup(ProPropertyGroup.PRIVATENETWORK);
+                projectInfo
+                        .setProPropertyGroup(ProPropertyGroup.PRIVATENETWORK);
             }
             break;
         case PRO_TYPE_GROUP:
@@ -236,177 +249,197 @@ public class FileUploadAction extends ActionSupport implements
             projectInfo.setProAddress(value);
             break;
         case A_MATERIAL_CST:
-            projectInfo.setA_MaterialCST(Float.parseFloat(value));
+            projectInfo.setA_MaterialCST(parseFloat(value));
             break;
         case A_MATERIAL_BILL:
             projectInfo.setA_MaterialBill(value);
             break;
         case B_MATERIAL_CST:
-
+            projectInfo.setB_MaterialCST(parseFloat(value));
             break;
         case B_MATERIAL_BILL:
-
+            projectInfo.setB_MaterialBill(value);
             break;
         case LABOR_COST:
-
+            projectInfo.setLaborCost(parseFloat(value));
             break;
         case LABOR_CST_BILL:
-
+            projectInfo.setLaborCstBill(value);
             break;
         case COORDINATION_FEE:
-
+            projectInfo.setCoordinationFee(parseFloat(value));
             break;
         case TOTAL_FEE:
-
+            projectInfo.setTotalFee(parseFloat(value));
             break;
         case MATERIAL_QUA:
-
+            projectInfo.setMaterialQua(value);
             break;
         case CONS_METHOD_GROUP:
-
+            if (value.equals("单包")) {
+                projectInfo.setConsMethodGroup(ConsMethodGroup.SINGLE);
+            } else if (value.equals("双包")) {
+                projectInfo.setConsMethodGroup(ConsMethodGroup.DOUBLE);
+            }
             break;
         case PRO_OA_DATE:
-
+            projectInfo.setProOADate(value);
             break;
         case PRO_PAPER_DATE:
-
+            projectInfo.setProPaperDate(value);
             break;
         case DISPATCH_DATE:
-
+            projectInfo.setDispatchDate(value);
             break;
         case AUDIT_RECORD_DATE:
-
+            projectInfo.setAuditRecordDate(value);
             break;
         case CONTRACT_NUMBER:
-
+            projectInfo.setContractNumber(value);
             break;
         case CONTRACT_ACCOUNT:
-
+            projectInfo.setContractAccount(parseFloat(value));
             break;
         case FIRST_PAYMENT_AMOUNT:
-
+            projectInfo.setFirstPaymentAmount(value);
             break;
         case SECOND_PAYMENT_AMOUNT:
-
+            projectInfo.setSecondPaymentAmount(value);
             break;
         case APPROACH_TIME:
-
+            projectInfo.setApproachTime(value);
             break;
         case APPROACH_EXPECT_MATERIAL:
-
+            projectInfo.setApproachExpectMaterial(value);
             break;
         case PRO_LEADER:
-
+            projectInfo.setProLeader(value);
             break;
         case CONSTRUCTION_UNIT:
-
+            projectInfo.setConstructionUnit(value);
             break;
         case MONTH_PROGRESS:
-
+            projectInfo.setMonthProgress(value);
             break;
         case LAST_MONTH_PROGRESS:
-
+            projectInfo.setLastMonthProgress(value);
             break;
         case HOUSE_HOLDS:
-
+            projectInfo.setHouseHolds(value);
             break;
         case ROUTE_LENGTH:
-
+            projectInfo.setRouteLength(value);
             break;
         case REFORM_WAY:
-
+            projectInfo.setReformWay(value);
             break;
         case CONS_STAGE_GROUP:
-
+            if (value.equals("干线")) {
+                projectInfo.setConsStageGroup(ConsStageGroup.ROUTE);
+            } else if (value.equals("总平")) {
+                projectInfo.setConsStageGroup(ConsStageGroup.TOTALFLAT);
+            } else if (value.equals("户线")) {
+                projectInfo.setConsStageGroup(ConsStageGroup.HOUSELINE);
+            }
             break;
         case CONCEALED_WORK:
-
+            projectInfo.setConcealedWork(value);
             break;
-        case HOOKING_ORTUBE:
-
+        case HOOKING_OR_TUBE:
+            projectInfo.setHookingOrTube(value);
             break;
         case ORDER_CHANGE_NO:
-
+            projectInfo.setOrderChangeNo(value);
             break;
         case ORDER_CHANGE_ACCOUNT:
-
+            projectInfo.setOrderChangeAccount(value);
             break;
         case CONSTRUCTION:
-
+            projectInfo.setConstruction(value);
             break;
         case COMPLETED_DATE:
-
+            projectInfo.setCompletedDate(value);
             break;
         case SUBMIT_COMPLETION_DATA:
-
+            projectInfo.setSubmitCompletionData(value);
             break;
         case ACCEPTANCE:
-
+            projectInfo.setAcceptance(value);
             break;
         case ACTUAL_INSTALL:
-
+            projectInfo.setActualInstall(value);
             break;
         case ASSETS_TRANSFER:
-
+            projectInfo.setAssetsTransfer(value);
             break;
         case ASSETS_GIS:
-
+            projectInfo.setAssetsGIS(value);
             break;
         case COMPLETION_DOC_NO:
-
+            projectInfo.setCompletionDocNo(value);
             break;
         case DATA_TRANSFER:
-
+            projectInfo.setDataTransfer(value);
             break;
         case IMPORTANT_DATA_SUBMIT:
-
+            projectInfo.setImportantDataSubmit(value);
             break;
         case SETTLEMENT_AMOUNT:
-
+            projectInfo.setSettlementAmount(value);
             break;
         case IMPORTANT_PRO_AMOUNT:
-
+            projectInfo.setImportantProAmount(value);
             break;
         case SETTLEMENT_PAYABLE:
-
+            projectInfo.setSettlementPayable(value);
             break;
         case SETTLEMENT_PAY_MERCHANTS:
-
+            projectInfo.setSettlementPayMerchants(value);
             break;
 
         case OWED_AMOUNT:
-
+            projectInfo.setOwedAmount(value);
             break;
 
         case THIRD_PAYMENT_AMOUNT:
-
+            projectInfo.setThirdPaymentAmount(value);
             break;
 
         case RETENTION_AMOUNT:
-
+            projectInfo.setRetentionAmount(value);
             break;
 
         case RETENTION_EXPIRES:
-
+            projectInfo.setRetentionExpires(value);
             break;
 
         case NEXT_MONTH_PAY_AMOUNT:
-
+            projectInfo.setNextMonthPayAmount(value);
             break;
         case OPTICAL_NODE:
-
+            projectInfo.setOpticalNode(value);
             break;
         case CABLE:
-
+            projectInfo.setCable(value);
             break;
         case CHARGE_CONSTRUCTION:
-
+            projectInfo.setChargeConstruction(value);
             break;
 
         default:
             break;
         }
         return projectInfo;
+    }
+
+    private Float parseFloat(String value) {
+        try {
+            return Float.parseFloat(value);
+        } catch (NumberFormatException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return -10001.00f;
+        }
     }
 
     /*
@@ -450,7 +483,7 @@ public class FileUploadAction extends ActionSupport implements
     private static final int REFORM_WAY = 35;
     private static final int CONS_STAGE_GROUP = 36;
     private static final int CONCEALED_WORK = 37;
-    private static final int HOOKING_ORTUBE = 38;
+    private static final int HOOKING_OR_TUBE = 38;
     private static final int ORDER_CHANGE_NO = 39;
     private static final int ORDER_CHANGE_ACCOUNT = 40;
     private static final int CONSTRUCTION = 41;
