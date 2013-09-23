@@ -9,7 +9,7 @@ import bean.User;
 import com.opensymphony.xwork2.ActionSupport;
 
 import database.DBHelper;
-
+import database.DBTest;
 public class ModifyPassword extends ActionSupport {
 
     /**
@@ -46,7 +46,7 @@ public class ModifyPassword extends ActionSupport {
             return ERROR;
         }
         
-        if (DBHelper.getInstance().updateUserPassword(username, password)) {
+        if (DBTest.getInstance().updateUserPassword(username, password)) {
             session.removeAttribute("user");
             return SUCCESS;
         }

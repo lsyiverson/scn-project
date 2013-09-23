@@ -5,9 +5,16 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.List;
+
+import bean.ProjectInfo;
+import bean.User;
 
 public class DBTest {
     private static DBTest mDB;
+    private static Hashtable<String, User> usertable = new Hashtable<String, User>();
     
     public static DBTest getInstance() {
         if (mDB == null) {
@@ -56,6 +63,46 @@ public class DBTest {
             e.printStackTrace();
         } finally {
         }
+    }
+    
+    public boolean insertExcelData(List<ProjectInfo> excelData){
+        //TODO: 实现此方法,用于向数据库中插入excel数据
+        Connection conn = getConnection();
+        Statement st;
+        try {
+                String sql = "INSERT INTO projectInfo "  
+                       + " VALUES ('hello')";  // 插入数据的sql语句 
+                st = (Statement) conn.createStatement();    // 创建用于执行静态sql语句的Statement对象  
+                int count = st.executeUpdate(sql);  // 执行插入操作的sql语句，并返回插入数据的个数  
+        
+                System.out.println("向projectInfo表中插入 " + count + " 条数据"); //输出插入操作的处理结果  
+
+                conn.close();   //关闭数据库连接  
+
+        } catch (SQLException e) {  
+                System.out.println("插入数据失败" + e.getMessage());  
+        }
+        return true;
+      }
+    
+    public boolean updateUserPassword(String username, String newEncryptedPassword) {
+        //TODO: 实现此方法
+        Connection conn = getConnection();
+        Statement st;
+        String sql = "update scn.user set password = '" + newEncryptedPassword + "' WHERE username = '" + username + "'";
+        try {
+            st = conn.createStatement();
+            st = (Statement) conn.createStatement();    //创建用于执行静态sql语句的Statement对象，st属局部变量  
+            int count = st.executeUpdate(sql);// 执行更新操作的sql语句，返回更新数据的个数 
+            System.out.println("user表中更新 " + count + " 条数据");      //输出更新操作的处理结果
+            conn.close();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } finally {
+        }
+        //usertable.get(username).setPassword(newEncryptedPassword);
+        return true;
     }
 
 }
