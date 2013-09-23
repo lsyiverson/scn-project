@@ -155,7 +155,8 @@ public class DBTest implements DBInterface{
         Statement st;
         ResultSet rs;
         ArrayList<String> username = new ArrayList<String>();
-        String sql = "SELECT username FROM scn.user";
+        int usergroup = 0;
+        String sql = "SELECT username FROM scn.user where group = '" + usergroup +"'";
         try {
             st = conn.createStatement();
             rs = st.executeQuery(sql);
