@@ -48,7 +48,7 @@ public class Login extends ActionSupport {
     
     private boolean isPasswordMatchesUsername(String username, String password) {
         String encryptedPsw = DBHelper.getInstance().getEncryptedPasswordByUsername(username);
-        DBTest.getInstance().getEncryptedPasswordByUsername(username);
+//        DBTest.getInstance().getEncryptedPasswordByUsername(username);
         return encryptedPsw.equals(password);
     }
 
