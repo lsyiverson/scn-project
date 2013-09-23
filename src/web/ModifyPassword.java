@@ -8,7 +8,6 @@ import bean.User;
 
 import com.opensymphony.xwork2.ActionSupport;
 
-import database.DBHelper;
 import database.DBTest;
 public class ModifyPassword extends ActionSupport {
 
@@ -30,6 +29,7 @@ public class ModifyPassword extends ActionSupport {
     @Override
     public String execute() throws Exception {
         if(isInvalid(username) || isInvalid(password)) {
+            System.out.println("1");
             return ERROR;
         }
         HttpSession session = ServletActionContext.getRequest().getSession();
@@ -39,10 +39,12 @@ public class ModifyPassword extends ActionSupport {
         
         // 校验提交的用户名与会话中用户名是否一致
         if (!username.equals(usernamInSession)) {
+            System.out.println("2");
             return ERROR;
         }
         
         if (!getOldpassword().equals(oldEncryptedPassword) || !isOldpasswordCorrect(username, getOldpassword())) {
+            System.out.println("3");
             return ERROR;
         }
         
@@ -54,7 +56,7 @@ public class ModifyPassword extends ActionSupport {
     }
     
     private boolean isOldpasswordCorrect(String username, String oldPassword ) {
-        String encryptedPsw = DBHelper.getInstance().getEncryptedPasswordByUsername(username);
+        String encryptedPsw = DBTest.getInstance().getEncryptedPasswordByUsername(username);
         return encryptedPsw.equals(oldPassword);
     }
     
@@ -63,7 +65,7 @@ public class ModifyPassword extends ActionSupport {
     }
     
     private boolean isPasswordMatchesUsername(String username, String password) {
-        String encryptedPsw = DBHelper.getInstance().getEncryptedPasswordByUsername(username);
+        String encryptedPsw = DBTest.getInstance().getEncryptedPasswordByUsername(username);
         return encryptedPsw.equals(password);
     }
 

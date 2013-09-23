@@ -1,10 +1,8 @@
-<%@page import="database.DBHelper"%>
 <%@page import="java.util.ArrayList"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="bean.User" %>
-<%@page import="database.DBHelper" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -31,8 +29,8 @@ float:left
 <div style="width:800px">
 <%@include file="page_title.jsp" %>
 <%
-ArrayList<User> allUserList = null;
-allUserList = (ArrayList<User>)request.getAttribute("alluserlist");
+ArrayList<String> allUserList = null;
+allUserList = (ArrayList<String>)request.getAttribute("alluserlist");
 if(allUserList == null) {
     response.sendRedirect("welcome.jsp");
     return;

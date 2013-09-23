@@ -2,7 +2,7 @@ package web;
 
 import com.opensymphony.xwork2.ActionSupport;
 
-import database.DBHelper;
+import database.DBTest;
 
 public class CreateUser extends ActionSupport {
 
@@ -13,10 +13,10 @@ public class CreateUser extends ActionSupport {
         if (isInvalid(username)) {
             return INPUT;
         }
-        if(DBHelper.getInstance().isAlreadyHaveTheUser(username)){
+        if(DBTest.getInstance().isAlreadyHaveTheUser(username)){
             return INPUT;
         }
-        DBHelper.getInstance().createUser(username);
+        DBTest.getInstance().createUser(username);
         return SUCCESS;
     }
 
