@@ -157,7 +157,20 @@ public class DBTest implements DBInterface{
     @Override
     public boolean delUserByUsername(String username) {
         // TODO Auto-generated method stub
-        return false;
+        Connection conn = getConnection();
+        Statement st;
+        String sql = "delete from scn.user where username = '" +username+ "'";
+        try {
+            st = conn.createStatement();
+            st = (Statement) conn.createStatement();    //创建用于执行静态sql语句的Statement对象，st属局部变量  
+            st.executeUpdate(sql);// 执行更新操作的sql语句，返回更新数据的个数 
+            conn.close();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } finally {
+        }
+        return true;
     }
 
     @Override
