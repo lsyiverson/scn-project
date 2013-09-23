@@ -10,8 +10,10 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 
+import utils.Utils;
 import bean.ProjectInfo;
 import bean.User;
+import bean.User.UserGroup;
 
 public class DBTest implements DBInterface{
     private static DBTest mDB;
@@ -47,19 +49,13 @@ public class DBTest implements DBInterface{
         String encryptedPassword = "";
         Statement st;
         ResultSet rs;
-        String sql = "SELECT * FROM scn.user WHERE username = '" + username + "'";
+        String sql = "SELECT password FROM scn.user WHERE username = '" + username + "'";
         try {
             st = conn.createStatement();
             rs = st.executeQuery(sql);
             rs.beforeFirst();
             while(rs.next()) {
-                String u = rs.getString("username");
-                String p = rs.getString("password");
-                encryptedPassword = p;
-                String g = rs.getString("group");
-                System.out.println("username:"+u);
-                System.out.println("password:"+p);
-                System.out.println("group:"+g);
+                encryptedPassword = rs.getString("password");
             }
             conn.close();
         } catch (SQLException e) {
@@ -100,8 +96,7 @@ public class DBTest implements DBInterface{
         try {
             st = conn.createStatement();
             st = (Statement) conn.createStatement();    //创建用于执行静态sql语句的Statement对象，st属局部变量  
-            int count = st.executeUpdate(sql);// 执行更新操作的sql语句，返回更新数据的个数 
-            System.out.println("user表中更新 " + count + " 条数据");      //输出更新操作的处理结果
+            st.executeUpdate(sql);// 执行更新操作的sql语句，返回更新数据的个数 
             conn.close();
         } catch (SQLException e) {
             // TODO Auto-generated catch block
@@ -115,7 +110,42 @@ public class DBTest implements DBInterface{
     @Override
     public User getUserByUsername(String username) {
         // TODO Auto-generated method stub
-        return null;
+        Connection conn = getConnection();
+        Statement st;
+        ResultSet rs;
+        User user = null;
+        String sql = "SELECT * FROM scn.user WHERE username = '" + username + "'";
+        try {
+            st = conn.createStatement();
+            rs = st.executeQuery(sql);
+            while(rs.next()) {
+                String userName = rs.getString("username");
+                String password = rs.getString("password");
+                int userGroup = rs.getInt("group");
+                UserGroup group;
+                switch (userGroup) {
+                case 0: 
+                    group = UserGroup.USER;
+                    break;
+                case 1:
+                    group = UserGroup.ADMIN;
+                    break;
+                case 2:
+                    group = UserGroup.SUPERADMIN;
+                    break;
+                    default:
+                        group = UserGroup.USER;
+                }
+                user = new User(userName,password,group);
+            }
+            
+            conn.close();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } finally {
+        }
+        return user;
     }
 
     @Override
@@ -133,13 +163,47 @@ public class DBTest implements DBInterface{
     @Override
     public boolean isAlreadyHaveTheUser(String username) {
         // TODO Auto-generated method stub
-        return false;
+        Connection conn = getConnection();
+        Statement st;
+        ResultSet rs;
+        boolean result = false;
+        String sql = "SELECT username FROM scn.user WHERE username = '" + username + "'";
+        try {
+            st = conn.createStatement();
+            rs = st.executeQuery(sql);
+            if (rs.next()) {
+                result = true;
+            } else {
+                result = false;
+            }
+            conn.close();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } finally {
+        }
+        return result;
     }
 
     @Override
     public void createUser(String username) {
         // TODO Auto-generated method stub
-        
+        String userName =username;
+        String password = Utils.hex_md5(username+"123456");
+        int userGroup = 0;
+        Connection conn = getConnection();
+        Statement st;
+        String sql = "inset into scn.user values('" + userName + "','" +password+ "','" +userGroup+ "')";
+        try {
+            st = conn.createStatement();
+            st = (Statement) conn.createStatement();    //创建用于执行静态sql语句的Statement对象，st属局部变量  
+            st.executeUpdate(sql);// 执行更新操作的sql语句，返回更新数据的个数 
+            conn.close();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } finally {
+        }
     }
 
 }

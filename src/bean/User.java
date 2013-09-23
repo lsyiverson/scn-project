@@ -69,4 +69,16 @@ public class User {
          */
         SUPERADMIN
     };
+    
+    public static String groupToString(UserGroup group) {
+        switch(group) {
+        case USER:
+            return "user";
+        case ADMIN:
+            return "admin";
+        case SUPERADMIN:
+            return "superadmin";
+        }
+        return null;
+    }
 }
