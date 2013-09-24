@@ -99,10 +99,10 @@ public class DBTest implements DBInterface{
                            +"','"+excelData.get(location).getOpticalNode()+"','"+excelData.get(location).getCable()+"','"+excelData.get(location).getChargeConstruction()+"')";  // 插入数据的sql语句 
                     st = (Statement) conn.createStatement();    // 创建用于执行静态sql语句的Statement对象  
                     st.executeUpdate(sql);  // 执行插入操作的sql语句，并返回插入数据的个数  
-                      
-                    location = location + 1;
             } catch (SQLException e) {  
                     System.out.println("插入数据失败" + e.getMessage());  
+            } finally {
+                location = location + 1;
             }
         }
         try{
