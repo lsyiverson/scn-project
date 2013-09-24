@@ -105,7 +105,7 @@ public class DBTest implements DBInterface{
                     System.out.println("插入数据失败" + e.getMessage());  
             } catch (NullPointerException e){
                 Utils.Log(""+location+"-------size--->"+excelData.size()+"--excelData.get(location)--->"+excelData.get(location)+"-----excelData.get(location).getItemDate()----->"+excelData.get(location).getItemDate());
-            }finally {
+            } finally {
                 location = location + 1;
             }
         }
