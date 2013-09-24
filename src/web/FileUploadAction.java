@@ -21,10 +21,6 @@ import org.apache.struts2.util.ServletContextAware;
 
 import utils.Utils;
 import bean.ProjectInfo;
-import bean.ProjectInfo.ConsMethodGroup;
-import bean.ProjectInfo.ConsStageGroup;
-import bean.ProjectInfo.ProPropertyGroup;
-import bean.ProjectInfo.ProTypeGroup;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -191,18 +187,7 @@ public class FileUploadAction extends ActionSupport implements
             projectInfo.setNumber((int) Double.parseDouble(value));
             break;
         case ITEM_SOURCE_GROUP:
-            if (value.equals("市场")) {
-                projectInfo
-                        .setItemSourceGroup(ProjectInfo.ItemSourceGroup.MARKET);
-            } else if (value.equals("技维")) {
-                projectInfo
-                        .setItemSourceGroup(ProjectInfo.ItemSourceGroup.MAINTAIN);
-            } else if (value.equals("VIP")) {
-                projectInfo.setItemSourceGroup(ProjectInfo.ItemSourceGroup.VIP);
-            } else if (value.equals("省公司派单")) {
-                projectInfo
-                        .setItemSourceGroup(ProjectInfo.ItemSourceGroup.AGGISN);
-            }
+            projectInfo.setItemSourceGroup(value);
             break;
         case ITEM_DATE:
             try {
@@ -223,27 +208,10 @@ public class FileUploadAction extends ActionSupport implements
             projectInfo.setProName(value);
             break;
         case PRO_PROPERTY_GROUP:
-            if (value.equals("新建")) {
-                projectInfo.setProPropertyGroup(ProPropertyGroup.NEW);
-            } else if (value.equals("改造")) {
-                projectInfo.setProPropertyGroup(ProPropertyGroup.TRANSFORM);
-            } else if (value.equals("迁改")) {
-                projectInfo.setProPropertyGroup(ProPropertyGroup.MOVE);
-            } else if (value.equals("专网")) {
-                projectInfo
-                        .setProPropertyGroup(ProPropertyGroup.PRIVATENETWORK);
-            }
+            projectInfo.setProPropertyGroup(value);
             break;
         case PRO_TYPE_GROUP:
-            if (value.equals("城域网")) {
-                projectInfo.setProTypeGroup(ProTypeGroup.MAN);
-            } else if (value.equals("接入")) {
-                projectInfo.setProTypeGroup(ProTypeGroup.ACCESS);
-            } else if (value.equals("HFC")) {
-                projectInfo.setProTypeGroup(ProTypeGroup.HFC);
-            } else if (value.equals("管道")) {
-                projectInfo.setProTypeGroup(ProTypeGroup.PIPELINE);
-            }
+            projectInfo.setProTypeGroup(value);
             break;
         case PRO_ADDRESS:
             projectInfo.setProAddress(value);
@@ -276,11 +244,7 @@ public class FileUploadAction extends ActionSupport implements
             projectInfo.setMaterialQua(value);
             break;
         case CONS_METHOD_GROUP:
-            if (value.equals("单包")) {
-                projectInfo.setConsMethodGroup(ConsMethodGroup.SINGLE);
-            } else if (value.equals("双包")) {
-                projectInfo.setConsMethodGroup(ConsMethodGroup.DOUBLE);
-            }
+            projectInfo.setConsMethodGroup(value);
             break;
         case PRO_OA_DATE:
             projectInfo.setProOADate(value);
@@ -334,13 +298,7 @@ public class FileUploadAction extends ActionSupport implements
             projectInfo.setReformWay(value);
             break;
         case CONS_STAGE_GROUP:
-            if (value.equals("干线")) {
-                projectInfo.setConsStageGroup(ConsStageGroup.ROUTE);
-            } else if (value.equals("总平")) {
-                projectInfo.setConsStageGroup(ConsStageGroup.TOTALFLAT);
-            } else if (value.equals("户线")) {
-                projectInfo.setConsStageGroup(ConsStageGroup.HOUSELINE);
-            }
+            projectInfo.setConsStageGroup(value);
             break;
         case CONCEALED_WORK:
             projectInfo.setConcealedWork(value);
