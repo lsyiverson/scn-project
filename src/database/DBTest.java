@@ -76,7 +76,7 @@ public class DBTest implements DBInterface{
         {
             try {
                     String sql = "INSERT INTO projectInfo "  
-                           + " VALUES ("+excelData.get(location).getNumber()+",'"+excelData.get(location).getNumber()+"',"+excelData.get(location).getItemDate()
+                           + " VALUES ("+excelData.get(location).getNumber()+",'"+excelData.get(location).getItemSourceGroup()+"',str_to_date('"+ excelData.get(location).getProName() +"', '%Y-%m-%d')"
                            +",'"+excelData.get(location).getItemName()+"','"+excelData.get(location).getProNumber()+"','"+excelData.get(location).getProName()
                            +"','"+excelData.get(location).getProPropertyGroup()+"','"+excelData.get(location).getProTypeGroup()+"','"+excelData.get(location).getProAddress()
                            +"',"+excelData.get(location).getA_MaterialCST()+",'"+excelData.get(location).getA_MaterialBill()+"',"+excelData.get(location).getB_MaterialCST()
