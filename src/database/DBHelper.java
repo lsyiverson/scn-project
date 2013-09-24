@@ -139,7 +139,7 @@ public class DBHelper implements DBInterface{
                 if (!needAddAnd){
                     needAddAnd = true;
                 }
-                sql.append(buildQueryStatement("itemsourcegroup", mSourceList));
+                sql.append(buildQueryStatement("itemSource", mSourceList));
             }
             if (!mPropertyList.isEmpty()) {
                 if (needAddAnd) {
@@ -147,7 +147,7 @@ public class DBHelper implements DBInterface{
                 } else {
                     needAddAnd = true;
                 }
-                sql.append(buildQueryStatement("proproperty", mPropertyList));
+                sql.append(buildQueryStatement("proProperty", mPropertyList));
             }
             if (!mTypeList.isEmpty()) {
                 if (needAddAnd) {
@@ -155,7 +155,7 @@ public class DBHelper implements DBInterface{
                 } else {
                     needAddAnd = true;
                 }
-                sql.append(buildQueryStatement("proproperty", mTypeList));
+                sql.append(buildQueryStatement("proType", mTypeList));
             }
             if (!itemdate.isEmpty()) {
                 if (needAddAnd) {
@@ -163,7 +163,7 @@ public class DBHelper implements DBInterface{
                 } else {
                     needAddAnd = true;
                 }
-                sql.append(" itemdate=str_to_date('"+ itemdate +"', '%Y-%m-%d')");
+                sql.append(" itemDate=str_to_date('"+ itemdate +"', '%Y-%m-%d')");
             }
             if (!itemname.isEmpty()) {
                 if (needAddAnd) {
@@ -171,7 +171,7 @@ public class DBHelper implements DBInterface{
                 } else {
                     needAddAnd = true;
                 }
-                sql.append(" itemname LIKE '%" + itemname +"%'");
+                sql.append(" itemName LIKE '%" + itemname +"%'");
             }
             if (!pronumber.isEmpty()) {
                 if (needAddAnd) {
@@ -179,7 +179,7 @@ public class DBHelper implements DBInterface{
                 } else {
                     needAddAnd = true;
                 }
-                sql.append(" pronumber LIKE '%" + pronumber +"%'");
+                sql.append(" proNumber LIKE '%" + pronumber +"%'");
             }
             if (!proname.isEmpty()) {
                 if (needAddAnd) {
@@ -187,7 +187,7 @@ public class DBHelper implements DBInterface{
                 } else {
                     needAddAnd = true;
                 }
-                sql.append(" proname LIKE '%" + proname +"%'");
+                sql.append(" proName LIKE '%" + proname +"%'");
             }
             if (!proaddress.isEmpty()) {
                 if (needAddAnd) {
@@ -195,7 +195,7 @@ public class DBHelper implements DBInterface{
                 } else {
                     needAddAnd = true;
                 }
-                sql.append(" proaddress LIKE '%" + proaddress +"%'");
+                sql.append(" proAddress LIKE '%" + proaddress +"%'");
             }
         }
         System.out.println(sql.toString());

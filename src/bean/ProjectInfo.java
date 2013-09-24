@@ -11,7 +11,7 @@ public class ProjectInfo {
     /**
      * 项目来源
      */
-    private ItemSourceGroup itemSourceGroup;
+    private String itemSourceGroup;
     
     /**
      * 来单时间
@@ -36,12 +36,12 @@ public class ProjectInfo {
     /**
      * 项目性质
      */
-    private ProPropertyGroup proPropertyGroup;
+    private String proPropertyGroup;
     
     /**
      * 项目类别
      */
-    private ProTypeGroup proTypeGroup;
+    private String proTypeGroup;
     
     /**
      * 项目地址
@@ -96,7 +96,7 @@ public class ProjectInfo {
     /**
      * 施工方式
      */
-    private ConsMethodGroup consMethodGroup;
+    private String consMethodGroup;
     
     /**
      * OA立项通过时间
@@ -186,7 +186,7 @@ public class ProjectInfo {
     /**
      * 施工阶段
      */
-    private ConsStageGroup consStageGroup;
+    private String consStageGroup;
     
     /**
      * 隐蔽工程
@@ -326,11 +326,11 @@ public class ProjectInfo {
         this.number = number;
     }
     
-    public ItemSourceGroup getItemSourceGroup() {
+    public String getItemSourceGroup() {
         return itemSourceGroup;
     }
 
-    public void setItemSourceGroup(ItemSourceGroup itemSourceGroup) {
+    public void setItemSourceGroup(String itemSourceGroup) {
         this.itemSourceGroup = itemSourceGroup;
     }
    
@@ -366,19 +366,19 @@ public class ProjectInfo {
         this.proName = proName;
     }
     
-    public ProPropertyGroup getProPropertyGroup() {
+    public String getProPropertyGroup() {
         return proPropertyGroup;
     }
 
-    public void setProPropertyGroup(ProPropertyGroup proPropertyGroup) {
+    public void setProPropertyGroup(String proPropertyGroup) {
         this.proPropertyGroup = proPropertyGroup;
     }
     
-    public ProTypeGroup getProTypeGroup() {
+    public String getProTypeGroup() {
         return proTypeGroup;
     }
 
-    public void setProTypeGroup(ProTypeGroup proTypeGroup) {
+    public void setProTypeGroup(String proTypeGroup) {
         this.proTypeGroup = proTypeGroup;
     }
     
@@ -462,11 +462,11 @@ public class ProjectInfo {
         this.materialQua = materialQua;
     }
     
-    public ConsMethodGroup getConsMethodGroup() {
+    public String getConsMethodGroup() {
         return consMethodGroup;
     }
 
-    public void setConsMethodGroup(ConsMethodGroup consMethodGroup) {
+    public void setConsMethodGroup(String consMethodGroup) {
         this.consMethodGroup = consMethodGroup;
     }
     
@@ -606,11 +606,11 @@ public class ProjectInfo {
         this.reformWay = reformWay;
     }
     
-    public ConsStageGroup getConsStageGroup() {
+    public String getConsStageGroup() {
         return consStageGroup;
     }
 
-    public void setConsStageGroup(ConsStageGroup consStageGroup) {
+    public void setConsStageGroup(String consStageGroup) {
         this.consStageGroup = consStageGroup;
     }
     
@@ -872,109 +872,6 @@ public class ProjectInfo {
                 + ", chargeConstruction=" + chargeConstruction + "]";
     }
 
-
-    /**
-     * 项目来源枚举定义
-     *
-     */
-    public static enum ItemSourceGroup {
-        /**
-         * 市场
-         */
-        MARKET,
-        /**
-         * 技维
-         */
-        MAINTAIN,
-        /**
-         * VIP
-         */
-        VIP,
-        /**
-         * 省公司派单
-         */
-        AGGISN
-    };
-    
-    /**
-     * 项目性质枚举定义
-     *
-     */
-    public static enum ProPropertyGroup {
-        /**
-         * 新建
-         */
-        NEW,
-        /**
-         * 改造
-         */
-        TRANSFORM,
-        /**
-         * 迁改
-         */
-        MOVE,
-        /**
-         * 专网
-         */
-        PRIVATENETWORK
-    };
-    
-    /**
-     * 项目类别枚举定义
-     *
-     */
-    public static enum ProTypeGroup {
-        /**
-         * 城域网
-         */
-        MAN,
-        /**
-         * 接入
-         */
-        ACCESS,
-        /**
-         * HFC
-         */
-        HFC,
-        /**
-         * 管道
-         */
-        PIPELINE
-    };
-    
-    /**
-     * 施工方式枚举定义
-     *
-     */
-    public static enum ConsMethodGroup {
-        /**
-         * 单包
-         */
-        SINGLE,
-        /**
-         * 双包
-         */
-        DOUBLE
-    };
-    
-    /**
-     * 施工阶段枚举定义
-     *
-     */
-    public static enum ConsStageGroup {
-        /**
-         * 干线
-         */
-        ROUTE,
-        /**
-         * 总平
-         */
-        TOTALFLAT,
-        /**
-         * 户线
-         */
-        HOUSELINE
-    };
 }
 
 
