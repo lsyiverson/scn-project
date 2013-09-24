@@ -10,6 +10,10 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+
 import utils.Utils;
 import bean.ProjectInfo;
 import bean.User;
@@ -32,11 +36,10 @@ public class DBTest implements DBInterface{
     public Connection getConnection() {
         Connection con = null;  //创建用于连接数据库的Connection对象  
         try {  
-            Class.forName("com.mysql.jdbc.Driver");// 加载Mysql数据驱动  
-              
-            con = DriverManager.getConnection(  
-                    "jdbc:mysql://192.168.100.105:3306/scn", "root", "");// 创建数据连接  
-              
+            Context initCtx = new InitialContext();
+            Context ctx = (Context)initCtx.lookup("java:comp/env");
+            DataSource ds = (DataSource)ctx.lookup("jdbc/mysql");
+            con = ds.getConnection();
         } catch (Exception e) {  
             System.out.println("数据库连接失败" + e.getMessage());  
         }  
