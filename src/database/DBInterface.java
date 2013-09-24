@@ -62,4 +62,25 @@ public interface DBInterface {
      * @return boolean 插入是否成功
      */
     public boolean insertExcelData(List<ProjectInfo> excelData);
+    
+    /**
+     * 根据项目条件查询工程信息
+     * @param itemsource 项目来源
+     * @param itemdate 来单时间
+     * @param itemname 来单名称
+     * @param pronumber 项目编号
+     * @param proname 项目名称
+     * @param proproperty 项目性质
+     * @param protype 项目类别
+     * @param proaddress 项目地址
+     * @return 工程信息列表
+     */
+    public ArrayList<ProjectInfo> queryProjectRecord(String[] itemsource,
+            String itemdate,
+            String itemname,
+            String pronumber,
+            String proname,
+            String[] proproperty,
+            String[] protype,
+            String proaddress);
 }
