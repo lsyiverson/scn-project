@@ -204,17 +204,11 @@ public class DBHelper implements DBInterface{
 
     private String buildQueryStatement(String field, ArrayList<String> list) {
         StringBuilder sb = new StringBuilder();
-        if (list.size() == 1) {
-            sb.append(" " + field + " LIKE '%" + list.get(0) + "%'");
-        } else {
-            for (int i = 0; i < list.size(); i++) {
-                if (i == 0) {
-                    sb.append(" " + field + " IN['%" + list.get(i) + "%'");
-                } else if (i == list.size() - 1) {
-                    sb.append(",'%" + list.get(i) + "%']");
-                } else {
-                    sb.append(",'%" + list.get(i) + "%'");
-                }
+        for (int i = 0; i < list.size(); i++) {
+            if (i == 0) {
+                sb.append(" " + field + " LIKE '%" + list.get(i) + "%'");
+            } else {
+                sb.append(" OR " + field + " LIKE '%" + list.get(i) + "%'");
             }
         }
         return sb.toString();
