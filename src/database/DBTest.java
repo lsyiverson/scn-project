@@ -238,4 +238,12 @@ public class DBTest implements DBInterface{
         }
     }
 
+    @Override
+    public ArrayList<ProjectInfo> queryProjectRecord(String[] itemsource,
+            String itemdate, String itemname, String pronumber, String proname,
+            String[] proproperty, String[] protype, String proaddress) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
 }

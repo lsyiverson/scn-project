@@ -2,6 +2,8 @@ package web;
 
 import com.opensymphony.xwork2.ActionSupport;
 
+import database.DBHelper;
+
 public class QueryProject extends ActionSupport {
     /**
      * 项目来源
@@ -38,8 +40,16 @@ public class QueryProject extends ActionSupport {
      */
     private String[] protype;
     
+    /**
+     * 项目地址
+     */
+    private String proaddress;
+    
     @Override
     public String execute() throws Exception {
+        DBHelper.getInstance().queryProjectRecord(itemsource,
+                itemdate,itemname,pronumber,proname,
+                proproperty,protype,proaddress);
         for(String str : itemsource) {
             System.out.println("---" + str);
         }
@@ -123,9 +133,4 @@ public class QueryProject extends ActionSupport {
     public void setProaddress(String proaddress) {
         this.proaddress = proaddress;
     }
-
-    /**
-     * 项目地址
-     */
-    private String proaddress;
 }
