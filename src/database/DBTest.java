@@ -72,11 +72,11 @@ public class DBTest implements DBInterface{
         Connection conn = getConnection();
         Statement st;
         int location = 0;
-        while (location <= excelData.size())
+        while (location < excelData.size())
         {
             try {
                     String sql = "INSERT INTO projectInfo "  
-                           + " VALUES ("+excelData.get(location).getNumber()+",'"+excelData.get(location).getItemSourceGroup()+"',str_to_date('"+ excelData.get(location).getProName() +"', '%Y-%m-%d')"
+                           + " VALUES ("+excelData.get(location).getNumber()+",'"+excelData.get(location).getItemSourceGroup()+"',str_to_date('"+ Utils.DATE_FORMAT.format(excelData.get(location).getItemDate())+"','%Y.%m.%d')"
                            +",'"+excelData.get(location).getItemName()+"','"+excelData.get(location).getProNumber()+"','"+excelData.get(location).getProName()
                            +"','"+excelData.get(location).getProPropertyGroup()+"','"+excelData.get(location).getProTypeGroup()+"','"+excelData.get(location).getProAddress()
                            +"',"+excelData.get(location).getA_MaterialCST()+",'"+excelData.get(location).getA_MaterialBill()+"',"+excelData.get(location).getB_MaterialCST()
@@ -84,8 +84,8 @@ public class DBTest implements DBInterface{
                            +"',"+excelData.get(location).getCoordinationFee()+","+excelData.get(location).getTotalFee()+",'"+excelData.get(location).getMaterialQua()
                            +"','"+excelData.get(location).getConsMethodGroup()+"','"+excelData.get(location).getProOADate()+"','"+excelData.get(location).getProPaperDate()
                            +"','"+excelData.get(location).getDispatchDate()+"','"+excelData.get(location).getAuditRecordDate()+"','"+excelData.get(location).getContractNumber()
-                           +"',"+excelData.get(location).getContractAccount()+","+excelData.get(location).getFirstPaymentAmount()+","+excelData.get(location).getSecondPaymentAmount()
-                           +",'"+excelData.get(location).getApproachTime()+"','"+excelData.get(location).getApproachExpectMaterial()+"','"+excelData.get(location).getProLeader() 
+                           +"',"+excelData.get(location).getContractAccount()+",'"+excelData.get(location).getFirstPaymentAmount()+"','"+excelData.get(location).getSecondPaymentAmount()
+                           +"','"+excelData.get(location).getApproachTime()+"','"+excelData.get(location).getApproachExpectMaterial()+"','"+excelData.get(location).getProLeader() 
                            +"','"+excelData.get(location).getConstructionUnit()+"','"+excelData.get(location).getMonthProgress()+"','"+excelData.get(location).getLastMonthProgress()
                            +"','"+excelData.get(location).getHouseHolds()+"','"+excelData.get(location).getRouteLength()+"','"+excelData.get(location).getReformWay()
                            +"','"+excelData.get(location).getConsStageGroup()+"','"+excelData.get(location).getConcealedWork()+"','"+excelData.get(location).getHookingOrTube()
@@ -97,12 +97,16 @@ public class DBTest implements DBInterface{
                            +"','"+excelData.get(location).getSettlementPayMerchants()+"','"+excelData.get(location).getOwedAmount()+"','"+excelData.get(location).getThirdPaymentAmount()
                            +"','"+excelData.get(location).getRetentionAmount()+"','"+excelData.get(location).getRetentionExpires()+"','"+excelData.get(location).getNextMonthPayAmount()
                            +"','"+excelData.get(location).getOpticalNode()+"','"+excelData.get(location).getCable()+"','"+excelData.get(location).getChargeConstruction()+"')";  // 插入数据的sql语句 
+                    if(0==location)
+                    Utils.Log(sql);
                     st = (Statement) conn.createStatement();    // 创建用于执行静态sql语句的Statement对象  
                     st.executeUpdate(sql);  // 执行插入操作的sql语句，并返回插入数据的个数  
-                      
-                    location = location + 1;
             } catch (SQLException e) {  
                     System.out.println("插入数据失败" + e.getMessage());  
+            } catch (NullPointerException e){
+                Utils.Log(""+location+"-------size--->"+excelData.size()+"--excelData.get(location)--->"+excelData.get(location)+"-----excelData.get(location).getItemDate()----->"+excelData.get(location).getItemDate());
+            }finally {
+                location = location + 1;
             }
         }
         try{
