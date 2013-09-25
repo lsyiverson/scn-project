@@ -293,7 +293,6 @@ public class DBTest implements DBInterface{
             String[] proproperty, String[] protype, String proaddress) {
         
         ArrayList<ProjectInfo> queryResult = new ArrayList<ProjectInfo>();
-        ProjectInfo projectInfo = new ProjectInfo();
         String SQL = generateSQLStatement(itemsource, itemdate, itemname, pronumber, proname, proproperty, protype, proaddress);
         
         //TODO: 实现此方法，以查询到的数据生成ProjectInfo的LIst
@@ -304,6 +303,7 @@ public class DBTest implements DBInterface{
             st = conn.createStatement();
             rs = st.executeQuery(SQL);
             while (rs.next()) {
+                ProjectInfo projectInfo = new ProjectInfo();
                 projectInfo.setNumber(rs.getInt("number"));
                 projectInfo.setItemSourceGroup(rs.getString("itemSource"));
                 projectInfo.setItemDate(rs.getDate("itemDate"));

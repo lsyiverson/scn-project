@@ -1,8 +1,15 @@
 package web;
 
+import java.util.ArrayList;
+
+import org.apache.struts2.ServletActionContext;
+
+import bean.ProjectInfo;
+
 import com.opensymphony.xwork2.ActionSupport;
 
 import database.DBHelper;
+import database.DBTest;
 
 public class QueryProject extends ActionSupport {
     /**
@@ -47,26 +54,42 @@ public class QueryProject extends ActionSupport {
     
     @Override
     public String execute() throws Exception {
-        DBHelper.getInstance().queryProjectRecord(itemsource,
-                itemdate,itemname,pronumber,proname,
-                proproperty,protype,proaddress);
-        for(String str : itemsource) {
-            System.out.println("---" + str);
-        }
-        System.out.println(itemdate);
-        if (itemdate.isEmpty()) {
+//        DBHelper.getInstance().queryProjectRecord(itemsource,
+//                itemdate,itemname,pronumber,proname,
+//                proproperty,protype,proaddress);
+//        for(String str : itemsource) {
+//            System.out.println("---" + str);
+//        }
+//        System.out.println(itemdate);
+//        if (itemdate.isEmpty()) {
+//            return ERROR;
+//        }
+//        System.out.println(itemname);
+//        System.out.println(pronumber);
+//        System.out.println(proname);
+//        for(String str : proproperty) {
+//            System.out.println("---" + str);
+//        }
+//        for(String str : protype) {
+//            System.out.println("---" + str);
+//        }
+//        System.out.println(proaddress);
+        try {
+            long time = System.currentTimeMillis();
+            ArrayList<ProjectInfo> projectlist = DBTest.getInstance()
+                    .queryProjectRecord(itemsource, itemdate, itemname,
+                            pronumber, proname, proproperty, protype,
+                            proaddress);
+            time = System.currentTimeMillis() - time; 
+            // for(ProjectInfo pro : projectlist) {
+            // System.out.println(pro.toString());
+            // }
+            ServletActionContext.getRequest().setAttribute("projectlist",
+                    projectlist);
+            ServletActionContext.getRequest().setAttribute("time", time);
+        } catch (Exception ex) {
             return ERROR;
         }
-        System.out.println(itemname);
-        System.out.println(pronumber);
-        System.out.println(proname);
-        for(String str : proproperty) {
-            System.out.println("---" + str);
-        }
-        for(String str : protype) {
-            System.out.println("---" + str);
-        }
-        System.out.println(proaddress);
         return SUCCESS;
     }
 

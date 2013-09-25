@@ -109,7 +109,7 @@ public class ProjectInfo {
     private String proPaperDate;
     
     /**
-     * 纸质立项通过时间
+     * 工程派工时间
      */
     private String dispatchDate;
     
@@ -284,7 +284,7 @@ public class ProjectInfo {
     private String owedAmount;
     
     /**
-     * 欠付金额
+     * 第三次付款金额
      */
     private String thirdPaymentAmount;
     
