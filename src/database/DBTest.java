@@ -1,18 +1,18 @@
 package database;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
+
+import org.apache.commons.lang3.StringUtils;
 
 import utils.Utils;
 import bean.ProjectInfo;
@@ -75,8 +75,13 @@ public class DBTest implements DBInterface{
         Connection conn = getConnection();
         Statement st;
         int location = 0;
-        while (location < excelData.size())
-        {
+        while (location < excelData.size()) {
+            if (StringUtils.isEmpty(excelData.get(location).getItemName()
+                    .trim())) {
+                location++;
+                continue;
+            }
+
             try {
                     String sql = "INSERT INTO projectInfo "  
                            + " VALUES ("+excelData.get(location).getNumber()+",'"+excelData.get(location).getItemSourceGroup()+"',str_to_date('"+ Utils.DATE_FORMAT.format(excelData.get(location).getItemDate())+"','%Y.%m.%d')"

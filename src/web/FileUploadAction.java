@@ -10,7 +10,6 @@ import java.util.List;
 import javax.servlet.ServletContext;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -24,7 +23,6 @@ import bean.ProjectInfo;
 
 import com.opensymphony.xwork2.ActionSupport;
 
-import database.DBHelper;
 import database.DBTest;
 
 public class FileUploadAction extends ActionSupport implements
@@ -119,7 +117,7 @@ public class FileUploadAction extends ActionSupport implements
                 if (r < 5)
                     Utils.Log("\nROW " + row.getRowNum() + " has " + cells
                             + " cell(s).");
-                if(cells<=0){
+                if (cells <= 0) {
                     continue;
                 }
                 ProjectInfo projectInfo = new ProjectInfo();
@@ -159,9 +157,9 @@ public class FileUploadAction extends ActionSupport implements
                     if (r < 5)
                         Utils.Log("CELL col=" + cell.getColumnIndex()
                                 + " VALUE=" + value);
-//                    if (!StringUtils.isEmpty(value)) {
-                        setProjectInfoData(projectInfo, value, c);
-//                    }
+                    // if (!StringUtils.isEmpty(value)) {
+                    setProjectInfoData(projectInfo, value, c);
+                    // }
 
                 }
                 if (r < 5)
@@ -169,7 +167,7 @@ public class FileUploadAction extends ActionSupport implements
                 proInfoList.add(projectInfo);
             }
             Utils.Log(proInfoList.toString());
-//            DBHelper.getInstance().insertExcelData(proInfoList);
+            // DBHelper.getInstance().insertExcelData(proInfoList);
             DBTest.getInstance().insertExcelData(proInfoList);
         }
         return true;
@@ -399,8 +397,8 @@ public class FileUploadAction extends ActionSupport implements
             return 0.00f;
         }
     }
-    
-    private int parseInt(String value){
+
+    private int parseInt(String value) {
         try {
             return (int) Double.parseDouble(value);
         } catch (NumberFormatException e) {
@@ -409,8 +407,8 @@ public class FileUploadAction extends ActionSupport implements
             return 0;
         }
     }
-    
-    private Date parseDate(String value){
+
+    private Date parseDate(String value) {
         try {
             return Utils.DATE_FORMAT.parse(value);
         } catch (Exception e) {
