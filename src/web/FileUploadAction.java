@@ -10,6 +10,7 @@ import java.util.List;
 import javax.servlet.ServletContext;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -69,10 +70,35 @@ public class FileUploadAction extends ActionSupport implements
         target = new File(targetDirectory, fileName);
         if (!target.getParentFile().exists())
             target.getParentFile().mkdirs();
+        deleteUploadFile(targetDirectory);
         FileUtils.copyFile(doc, target);
         readExcel();
 
         return SUCCESS;
+    }
+
+    private boolean deleteUploadFile(String path) {
+        if (StringUtils.isEmpty(path.trim())) {
+            return false;
+        }
+        try {
+            File file = new File(path);
+            if (file.isFile()) {
+                file.delete();
+            }
+            if (file.isDirectory()) {
+                File[] files = file.listFiles();
+                for (File f : files) {
+                    deleteUploadFile(f.getPath());
+                }
+                file.delete();
+            }
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            Utils.Log(e.toString());
+        }
+        return true;
     }
 
     /**
