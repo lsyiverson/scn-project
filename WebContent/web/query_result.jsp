@@ -6,13 +6,15 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<link rel="stylesheet"
-    href="<%=request.getContextPath()%>/flexigrid/css/flexigrid.css"
-    type="text/css"></link>
+<style type="text/css" title="currentStyle">
+        @import "<%=request.getContextPath()%>/datatables/media/css/demo_page.css";
+        @import "<%=request.getContextPath()%>/datatables/media/css/demo_table.css";
+        @import "<%=request.getContextPath()%>/datatables/media/css/demo_table_jui.css";
+</style>
 <script type="text/javascript"
-    src="<%=request.getContextPath()%>/js/jquery-1.5.2.js"></script>
+    src="<%=request.getContextPath()%>/datatables/media/js/jquery.js"></script>
 <script type="text/javascript"
-    src="<%=request.getContextPath()%>/flexigrid/js/flexigrid.js"></script>
+    src="<%=request.getContextPath()%>/datatables/media/js/jquery.dataTables.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>四川广电工程管理系统-查询结果</title>
 </head>
@@ -47,76 +49,76 @@ int projectCount = projectlist.size();
 double time = (Long)request.getAttribute("time")/1000.0;
 %>
         </div>
-        <div style="width: 80%; min-width: 800px">
+        <div style="width:90%; min-width: 800px" id="dt_example">
         <div align="left">
 共找到满足条件的记录<%=projectCount%>条，共耗时<%=time%>秒
         </div>
-            <table class="result" align="left">
+            <table id="result" align="left" class="display" style="table-layout:inherit;">
                 <thead align="left">
                     <tr>
-                        <th width="100">序号</th>
-                        <th width="100">项目来源</th>
-                        <th width="100">来单时间</th>
-                        <th width="100">来单名称</th>
-                        <th width="100">项目编号</th>
-                        <th width="100">项目名称</th>
-                        <th width="100">项目性质</th>
-                        <th width="100">项目类别</th>
-                        <th width="100">项目地址</th>
-                        <th width="100">甲供材料费用</th>
-                        <th width="100">甲供材料清单</th>
-                        <th width="100">乙供材料费用</th>
-                        <th width="100">乙供材料清单</th>
-                        <th width="100">人工费</th>
-                        <th width="100">人工费清单</th>
-                        <th width="100">协调费</th>
-                        <th width="100">合计</th>
-                        <th width="100">材料使用第几季度入围材料</th>
-                        <th width="100">施工方式</th>
-                        <th width="100">OA立项通过时间</th>
-                        <th width="100">纸质立项通过时间</th>
-                        <th width="100">工程派工时间</th>
-                        <th width="100">重大项目提交审计备案时间</th>
-                        <th width="100">合同编号</th>
-                        <th width="100">合同金额</th>
-                        <th width="100">第一次付款金额</th>
-                        <th width="100">第二次付款金额</th>
-                        <th width="100">进场时间</th>
-                        <th width="100">进场材料是否与预期一致</th>
-                        <th width="100">项目负责人</th>
-                        <th width="100">施工单位</th>
-                        <th width="100">本月工程进度</th>
-                        <th width="100">上月已报工程进度</th>
-                        <th width="100">户数</th>
-                        <th width="100">干线长度</th>
-                        <th width="100">改造方式</th>
-                        <th width="100">施工阶段</th>
-                        <th width="100">隐蔽工程</th>
-                        <th width="100">附挂、穿管</th>
-                        <th width="100">变更单编号</th>
-                        <th width="100">变更金额</th>
-                        <th width="100">建设情况详细说明（问题处理的时间与结果）</th>
-                        <th width="100">完工时间</th>
-                        <th width="100">提交竣工资料时间</th>
-                        <th width="100">验收是否通过</th>
-                        <th width="100">实际安装户数</th>
-                        <th width="100">资产是否转移</th>
-                        <th width="100">资产是否上GIS系统</th>
-                        <th width="100">竣工文件编号</th>
-                        <th width="100">资料是否转移</th>
-                        <th width="100">重大项目结算资料提交审计时间</th>
-                        <th width="100">决算金额</th>
-                        <th width="100">重大项目审计报告金额</th>
-                        <th width="100">按决算应付施工方金额</th>
-                        <th width="100">按决算应付施客商方金额</th>
-                        <th width="100">欠付金额</th>
-                        <th width="100">第三次付款金额</th>
-                        <th width="100">质保金金额</th>
-                        <th width="100">质保到期时间</th>
-                        <th width="100">下月预计付款金额</th>
-                        <th width="100">光节点</th>
-                        <th width="100">电缆</th>
-                        <th width="100">施工负责人</th>
+                        <th>序号</th>
+                        <th>项目来源</th>
+                        <th>来单时间</th>
+                        <th>来单名称</th>
+                        <th>项目编号</th>
+                        <th>项目名称</th>
+                        <th>项目性质</th>
+                        <th>项目类别</th>
+                        <th>项目地址</th>
+                        <th>甲供材料费用</th>
+                        <th>甲供材料清单</th>
+                        <th>乙供材料费用</th>
+                        <th>乙供材料清单</th>
+                        <th>人工费</th>
+                        <th>人工费清单</th>
+                        <th>协调费</th>
+                        <th>合计</th>
+                        <th>材料使用第几季度入围材料</th>
+                        <th>施工方式</th>
+                        <th>OA立项通过时间</th>
+                        <th>纸质立项通过时间</th>
+                        <th>工程派工时间</th>
+                        <th>重大项目提交审计备案时间</th>
+                        <th>合同编号</th>
+                        <th>合同金额</th>
+                        <th>第一次付款金额</th>
+                        <th>第二次付款金额</th>
+                        <th>进场时间</th>
+                        <th>进场材料是否与预期一致</th>
+                        <th>项目负责人</th>
+                        <th>施工单位</th>
+                        <th>本月工程进度</th>
+                        <th>上月已报工程进度</th>
+                        <th>户数</th>
+                        <th>干线长度</th>
+                        <th>改造方式</th>
+                        <th>施工阶段</th>
+                        <th>隐蔽工程</th>
+                        <th>附挂、穿管</th>
+                        <th>变更单编号</th>
+                        <th>变更金额</th>
+                        <th>建设情况详细说明（问题处理的时间与结果）</th>
+                        <th>完工时间</th>
+                        <th>提交竣工资料时间</th>
+                        <th>验收是否通过</th>
+                        <th>实际安装户数</th>
+                        <th>资产是否转移</th>
+                        <th>资产是否上GIS系统</th>
+                        <th>竣工文件编号</th>
+                        <th>资料是否转移</th>
+                        <th>重大项目结算资料提交审计时间</th>
+                        <th>决算金额</th>
+                        <th>重大项目审计报告金额</th>
+                        <th>按决算应付施工方金额</th>
+                        <th>按决算应付施客商方金额</th>
+                        <th>欠付金额</th>
+                        <th>第三次付款金额</th>
+                        <th>质保金金额</th>
+                        <th>质保到期时间</th>
+                        <th>下月预计付款金额</th>
+                        <th>光节点</th>
+                        <th>电缆</th>
+                        <th>施工负责人</th>
                     </tr>
                 </thead>
                 <tbody align="left">
@@ -191,8 +193,30 @@ double time = (Long)request.getAttribute("time")/1000.0;
             </table>
         </div>
     </center>
-    <script type="text/javascript">
-        $('.result').flexigrid();
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#result').dataTable({
+        "sScrollX": "800%",
+        "bAutoWidth": true,
+        "bScrollCollapse": true,
+        "sPaginationType": "full_numbers",
+        "oLanguage": {
+            "sLengthMenu": "每页显示 _MENU_ 条记录",
+            "sZeroRecords": "抱歉， 没有找到",
+            "sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
+            "sInfoEmpty": "没有数据",
+            "sInfoFiltered": "(从 _MAX_ 条数据中检索)",
+            "oPaginate": {  
+                    "sFirst": "首页",  
+                    "sPrevious": "前一页",
+                    "sNext": "后一页",  
+                    "sLast": "尾页"  
+                }, 
+            "sZeroRecords": "没有检索到数据",  
+            "sProcessing": "<img src='./loading.gif' />"
+        }
+    });
+} );
 </script>
 </body>
 </html>
