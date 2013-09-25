@@ -292,10 +292,89 @@ public class DBTest implements DBInterface{
             String itemdate, String itemname, String pronumber, String proname,
             String[] proproperty, String[] protype, String proaddress) {
         
+        ArrayList<ProjectInfo> queryResult = new ArrayList<ProjectInfo>();
+        ProjectInfo projectInfo = new ProjectInfo();
         String SQL = generateSQLStatement(itemsource, itemdate, itemname, pronumber, proname, proproperty, protype, proaddress);
         
         //TODO: 实现此方法，以查询到的数据生成ProjectInfo的LIst
-        
+        Connection conn = getConnection();
+        Statement st;
+        ResultSet rs;
+        try {
+            st = conn.createStatement();
+            rs = st.executeQuery(SQL);
+            while (rs.next()) {
+                projectInfo.setNumber(rs.getInt("number"));
+                projectInfo.setItemSourceGroup(rs.getString("itemSource"));
+                projectInfo.setItemDate(rs.getDate("itemDate"));
+                projectInfo.setItemName(rs.getString("itemName"));
+                projectInfo.setProNumber(rs.getString("proNumber"));
+                projectInfo.setProName(rs.getString("proName"));
+                projectInfo.setProPropertyGroup(rs.getString("proProperty"));
+                projectInfo.setProTypeGroup(rs.getString("proType"));
+                projectInfo.setProAddress(rs.getString("proAddress"));
+                projectInfo.setA_MaterialCST(rs.getFloat("A_MaterialCST"));
+                projectInfo.setA_MaterialBill(rs.getString("A_MaterialBill"));
+                projectInfo.setB_MaterialCST(rs.getFloat("B_MaterialCST"));
+                projectInfo.setB_MaterialBill(rs.getString("B_MaterialBill"));
+                projectInfo.setLaborCost(rs.getFloat("laborCost"));
+                projectInfo.setLaborCstBill(rs.getString("laborCstBill"));
+                projectInfo.setCoordinationFee(rs.getFloat("coordinationFee"));
+                projectInfo.setTotalFee(rs.getFloat("totalFee"));
+                projectInfo.setMaterialQua(rs.getString("materialQua"));
+                projectInfo.setConsMethodGroup(rs.getString("consMethodGroup"));
+                projectInfo.setProOADate(rs.getString("proOADate"));
+                projectInfo.setProPaperDate(rs.getString("proPaperDate"));
+                projectInfo.setDispatchDate(rs.getString("dispatchDate"));
+                projectInfo.setAuditRecordDate(rs.getString("auditRecordDate"));
+                projectInfo.setContractNumber(rs.getString("contractNumber"));
+                projectInfo.setContractAccount(rs.getFloat("contractAccount"));
+                projectInfo.setFirstPaymentAmount(rs.getString("firstPaymentAmount"));
+                projectInfo.setSecondPaymentAmount(rs.getString("secondPaymentAmount"));
+                projectInfo.setApproachTime(rs.getString("approachTime"));
+                projectInfo.setApproachExpectMaterial(rs.getString("approachExpectMaterial"));
+                projectInfo.setProLeader(rs.getString("proLeader"));
+                projectInfo.setConstructionUnit(rs.getString("constructionUnit"));
+                projectInfo.setMonthProgress(rs.getString("monthProgress"));
+                projectInfo.setLastMonthProgress(rs.getString("lastMonthProgress"));
+                projectInfo.setHouseHolds(rs.getString("houseHolds"));
+                projectInfo.setRouteLength(rs.getString("routeLength"));
+                projectInfo.setReformWay(rs.getString("reformWay"));
+                projectInfo.setConsStageGroup(rs.getString("consStageGroup"));
+                projectInfo.setConcealedWork(rs.getString("concealedWork"));
+                projectInfo.setHookingOrTube(rs.getString("hookingOrTube"));
+                projectInfo.setOrderChangeNo(rs.getString("orderChangeNo"));
+                projectInfo.setOrderChangeAccount(rs.getString("orderChangeAccount"));
+                projectInfo.setConstruction(rs.getString("construction"));
+                projectInfo.setCompletedDate(rs.getString("completedDate"));
+                projectInfo.setSubmitCompletionData(rs.getString("submitCompletionData"));
+                projectInfo.setAcceptance(rs.getString("acceptance"));
+                projectInfo.setActualInstall(rs.getString("actualInstall"));
+                projectInfo.setAssetsTransfer(rs.getString("assetsTransfer"));
+                projectInfo.setAssetsGIS(rs.getString("assetsGIS"));
+                projectInfo.setCompletionDocNo(rs.getString("completionDocNo"));
+                projectInfo.setDataTransfer(rs.getString("dataTransfer"));
+                projectInfo.setImportantDataSubmit(rs.getString("importantDataSubmit"));
+                projectInfo.setSettlementAmount(rs.getString("settlementAmount"));
+                projectInfo.setImportantProAmount(rs.getString("importantProAmount"));
+                projectInfo.setSettlementPayable(rs.getString("settlementPayable"));
+                projectInfo.setSettlementPayMerchants(rs.getString("settlementPayMerchants"));
+                projectInfo.setOwedAmount(rs.getString("owedAmount"));
+                projectInfo.setThirdPaymentAmount(rs.getString("thirdPaymentAmount"));
+                projectInfo.setRetentionAmount(rs.getString("retentionAmount"));
+                projectInfo.setRetentionExpires(rs.getString("retentionExpires"));
+                projectInfo.setNextMonthPayAmount(rs.getString("nextMonthPayAmount"));
+                projectInfo.setOpticalNode(rs.getString("opticalNode"));
+                projectInfo.setCable(rs.getString("cable"));
+                projectInfo.setChargeConstruction(rs.getString("chargeConstruction"));
+                queryResult.add(projectInfo);
+            }
+            conn.close();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } finally {
+        }
         return null;
     }
     
