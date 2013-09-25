@@ -24,7 +24,6 @@ import bean.ProjectInfo;
 
 import com.opensymphony.xwork2.ActionSupport;
 
-import database.DBHelper;
 import database.DBTest;
 
 public class FileUploadAction extends ActionSupport implements
@@ -71,10 +70,35 @@ public class FileUploadAction extends ActionSupport implements
         target = new File(targetDirectory, fileName);
         if (!target.getParentFile().exists())
             target.getParentFile().mkdirs();
+        deleteUploadFile(targetDirectory);
         FileUtils.copyFile(doc, target);
         readExcel();
 
         return SUCCESS;
+    }
+
+    private boolean deleteUploadFile(String path) {
+        if (StringUtils.isEmpty(path.trim())) {
+            return false;
+        }
+        try {
+            File file = new File(path);
+            if (file.isFile()) {
+                file.delete();
+            }
+            if (file.isDirectory()) {
+                File[] files = file.listFiles();
+                for (File f : files) {
+                    deleteUploadFile(f.getPath());
+                }
+                file.delete();
+            }
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            Utils.Log(e.toString());
+        }
+        return true;
     }
 
     /**
@@ -119,7 +143,7 @@ public class FileUploadAction extends ActionSupport implements
                 if (r < 5)
                     Utils.Log("\nROW " + row.getRowNum() + " has " + cells
                             + " cell(s).");
-                if(cells<=0){
+                if (cells <= 0) {
                     continue;
                 }
                 ProjectInfo projectInfo = new ProjectInfo();
@@ -159,9 +183,9 @@ public class FileUploadAction extends ActionSupport implements
                     if (r < 5)
                         Utils.Log("CELL col=" + cell.getColumnIndex()
                                 + " VALUE=" + value);
-//                    if (!StringUtils.isEmpty(value)) {
-                        setProjectInfoData(projectInfo, value, c);
-//                    }
+                    // if (!StringUtils.isEmpty(value)) {
+                    setProjectInfoData(projectInfo, value, c);
+                    // }
 
                 }
                 if (r < 5)
@@ -169,7 +193,7 @@ public class FileUploadAction extends ActionSupport implements
                 proInfoList.add(projectInfo);
             }
             Utils.Log(proInfoList.toString());
-//            DBHelper.getInstance().insertExcelData(proInfoList);
+            // DBHelper.getInstance().insertExcelData(proInfoList);
             DBTest.getInstance().insertExcelData(proInfoList);
         }
         return true;
@@ -399,8 +423,8 @@ public class FileUploadAction extends ActionSupport implements
             return 0.00f;
         }
     }
-    
-    private int parseInt(String value){
+
+    private int parseInt(String value) {
         try {
             return (int) Double.parseDouble(value);
         } catch (NumberFormatException e) {
@@ -409,8 +433,8 @@ public class FileUploadAction extends ActionSupport implements
             return 0;
         }
     }
-    
-    private Date parseDate(String value){
+
+    private Date parseDate(String value) {
         try {
             return Utils.DATE_FORMAT.parse(value);
         } catch (Exception e) {

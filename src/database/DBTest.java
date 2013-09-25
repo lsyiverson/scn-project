@@ -1,18 +1,18 @@
 package database;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
+
+import org.apache.commons.lang3.StringUtils;
 
 import utils.Utils;
 import bean.ProjectInfo;
@@ -75,8 +75,13 @@ public class DBTest implements DBInterface{
         Connection conn = getConnection();
         Statement st;
         int location = 0;
-        while (location < excelData.size())
-        {
+        while (location < excelData.size()) {
+            if (StringUtils.isEmpty(excelData.get(location).getItemName()
+                    .trim())) {
+                location++;
+                continue;
+            }
+
             try {
                     String sql = "INSERT INTO projectInfo "  
                            + " VALUES ("+excelData.get(location).getNumber()+",'"+excelData.get(location).getItemSourceGroup()+"',str_to_date('"+ Utils.DATE_FORMAT.format(excelData.get(location).getItemDate())+"','%Y.%m.%d')"
@@ -99,7 +104,29 @@ public class DBTest implements DBInterface{
                            +"','"+excelData.get(location).getSettlementAmount()+"','"+excelData.get(location).getImportantProAmount()+"','"+excelData.get(location).getSettlementPayable()
                            +"','"+excelData.get(location).getSettlementPayMerchants()+"','"+excelData.get(location).getOwedAmount()+"','"+excelData.get(location).getThirdPaymentAmount()
                            +"','"+excelData.get(location).getRetentionAmount()+"','"+excelData.get(location).getRetentionExpires()+"','"+excelData.get(location).getNextMonthPayAmount()
-                           +"','"+excelData.get(location).getOpticalNode()+"','"+excelData.get(location).getCable()+"','"+excelData.get(location).getChargeConstruction()+"')";  // 插入数据的sql语句 
+                           +"','"+excelData.get(location).getOpticalNode()+"','"+excelData.get(location).getCable()+"','"+excelData.get(location).getChargeConstruction()+"')"
+                           +" ON DUPLICATE KEY UPDATE "
+                           +"number="+excelData.get(location).getNumber()+", itemSource='"+excelData.get(location).getItemSourceGroup()+"', itemDate=str_to_date('"+ Utils.DATE_FORMAT.format(excelData.get(location).getItemDate())+"','%Y.%m.%d')"
+                           +", itemName='"+excelData.get(location).getItemName()+"', proNumber='"+excelData.get(location).getProNumber()+"', proName='"+excelData.get(location).getProName()
+                           +"', proProperty='"+excelData.get(location).getProPropertyGroup()+"', proType='"+excelData.get(location).getProTypeGroup()+"', proAddress='"+excelData.get(location).getProAddress()
+                           +"', A_MaterialCST="+excelData.get(location).getA_MaterialCST()+", A_MaterialBill='"+excelData.get(location).getA_MaterialBill()+"', B_MaterialCST="+excelData.get(location).getB_MaterialCST()
+                           +", B_MaterialBill='"+excelData.get(location).getB_MaterialBill()+"', laborCost="+excelData.get(location).getLaborCost()+", LaborCstBill='"+excelData.get(location).getLaborCstBill()
+                           +"', coordinationFee="+excelData.get(location).getCoordinationFee()+", totalFee="+excelData.get(location).getTotalFee()+", materialQua='"+excelData.get(location).getMaterialQua()
+                           +"', consMethodGroup='"+excelData.get(location).getConsMethodGroup()+"', proOADate='"+excelData.get(location).getProOADate()+"', proPaperDate='"+excelData.get(location).getProPaperDate()
+                           +"', dispatchDate='"+excelData.get(location).getDispatchDate()+"', auditRecordDate='"+excelData.get(location).getAuditRecordDate()+"', contractNumber='"+excelData.get(location).getContractNumber()
+                           +"', contractAccount="+excelData.get(location).getContractAccount()+", firstPaymentAmount='"+excelData.get(location).getFirstPaymentAmount()+"', secondPaymentAmount='"+excelData.get(location).getSecondPaymentAmount()
+                           +"', approachTime='"+excelData.get(location).getApproachTime()+"', approachExpectMaterial='"+excelData.get(location).getApproachExpectMaterial()+"', proLeader='"+excelData.get(location).getProLeader() 
+                           +"', constructionUnit='"+excelData.get(location).getConstructionUnit()+"', monthProgress='"+excelData.get(location).getMonthProgress()+"', lastMonthProgress='"+excelData.get(location).getLastMonthProgress()
+                           +"', houseHolds='"+excelData.get(location).getHouseHolds()+"', routeLength='"+excelData.get(location).getRouteLength()+"', reformWay='"+excelData.get(location).getReformWay()
+                           +"', consStageGroup='"+excelData.get(location).getConsStageGroup()+"', concealedWork='"+excelData.get(location).getConcealedWork()+"', hookingOrTube='"+excelData.get(location).getHookingOrTube()
+                           +"', orderChangeNo='"+excelData.get(location).getOrderChangeNo()+"', orderChangeAccount='"+excelData.get(location).getOrderChangeAccount()+"', construction='"+excelData.get(location).getConstruction()
+                           +"', completedDate='"+excelData.get(location).getCompletedDate()+"', submitCompletionData='"+excelData.get(location).getSubmitCompletionData()+"', acceptance='"+excelData.get(location).getAcceptance()
+                           +"', actualInstall='"+excelData.get(location).getActualInstall()+"', assetsTransfer='"+excelData.get(location).getAssetsTransfer()+"', assetsGIS='"+excelData.get(location).getAssetsGIS()
+                           +"', completionDocNo='"+excelData.get(location).getCompletionDocNo()+"', dataTransfer='"+excelData.get(location).getDataTransfer()+"', importantDataSubmit='"+excelData.get(location).getImportantDataSubmit()
+                           +"', settlementAmount='"+excelData.get(location).getSettlementAmount()+"', importantProAmount='"+excelData.get(location).getImportantProAmount()+"', settlementPayable='"+excelData.get(location).getSettlementPayable()
+                           +"', settlementPayMerchants='"+excelData.get(location).getSettlementPayMerchants()+"', owedAmount='"+excelData.get(location).getOwedAmount()+"', thirdPaymentAmount='"+excelData.get(location).getThirdPaymentAmount()
+                           +"', retentionAmount='"+excelData.get(location).getRetentionAmount()+"', retentionExpires='"+excelData.get(location).getRetentionExpires()+"', nextMonthPayAmount='"+excelData.get(location).getNextMonthPayAmount()
+                           +"', opticalNode='"+excelData.get(location).getOpticalNode()+"', cable='"+excelData.get(location).getCable()+"', chargeConstruction='"+excelData.get(location).getChargeConstruction()+"'";  // 插入数据的sql语句 
                     if(0==location)
                     Utils.Log(sql);
                     st = (Statement) conn.createStatement();    // 创建用于执行静态sql语句的Statement对象  
