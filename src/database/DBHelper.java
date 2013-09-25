@@ -128,6 +128,16 @@ public class DBHelper implements DBInterface{
             String itemdate, String itemname, String pronumber, String proname,
             String[] proproperty, String[] protype, String proaddress) {
         
+        String SQL = generateSQLStatement(itemsource, itemdate, itemname, pronumber, proname, proproperty, protype, proaddress);
+        
+        //TODO: 实现此方法，以查询到的数据生成ProjectInfo的LIst
+        
+        return null;
+    }
+    
+    private String generateSQLStatement(String[] itemsource,
+            String itemdate, String itemname, String pronumber, String proname,
+            String[] proproperty, String[] protype, String proaddress) {
         StringBuilder sql = new StringBuilder("SELECT * FROM scn.projectinfo");
         mSourceList = removeEmptyItem(itemsource);
         mPropertyList = removeEmptyItem(proproperty);
@@ -199,7 +209,7 @@ public class DBHelper implements DBInterface{
             }
         }
         System.out.println(sql.toString());
-        return null;
+        return sql.toString();
     }
 
     private String buildQueryStatement(String field, ArrayList<String> list) {

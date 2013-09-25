@@ -25,6 +25,7 @@ import bean.ProjectInfo;
 import com.opensymphony.xwork2.ActionSupport;
 
 import database.DBHelper;
+import database.DBTest;
 
 public class FileUploadAction extends ActionSupport implements
         ServletContextAware {
@@ -118,6 +119,9 @@ public class FileUploadAction extends ActionSupport implements
                 if (r < 5)
                     Utils.Log("\nROW " + row.getRowNum() + " has " + cells
                             + " cell(s).");
+                if(cells<=0){
+                    continue;
+                }
                 ProjectInfo projectInfo = new ProjectInfo();
                 for (int c = 0; c < cells; c++) {
                     Cell cell = row.getCell(c);
@@ -148,15 +152,16 @@ public class FileUploadAction extends ActionSupport implements
                     case Cell.CELL_TYPE_ERROR:
                         Utils.Log("CELL col=" + cell.getColumnIndex()
                                 + " VALUE = ERROR");
+                        value = "";
                         break;
                     default:
                     }
                     if (r < 5)
                         Utils.Log("CELL col=" + cell.getColumnIndex()
                                 + " VALUE=" + value);
-                    if (!StringUtils.isEmpty(value)) {
-                        setProjectInfoData(projectInfo, value, c).toString();
-                    }
+//                    if (!StringUtils.isEmpty(value)) {
+                        setProjectInfoData(projectInfo, value, c);
+//                    }
 
                 }
                 if (r < 5)
@@ -164,7 +169,8 @@ public class FileUploadAction extends ActionSupport implements
                 proInfoList.add(projectInfo);
             }
             Utils.Log(proInfoList.toString());
-            DBHelper.getInstance().insertExcelData(proInfoList);
+//            DBHelper.getInstance().insertExcelData(proInfoList);
+            DBTest.getInstance().insertExcelData(proInfoList);
         }
         return true;
     }
@@ -184,19 +190,13 @@ public class FileUploadAction extends ActionSupport implements
             final String value, final int columnNum) {
         switch (columnNum) {
         case NUMBER:
-            projectInfo.setNumber((int) Double.parseDouble(value));
+            projectInfo.setNumber(parseInt(value));
             break;
         case ITEM_SOURCE_GROUP:
             projectInfo.setItemSourceGroup(value);
             break;
         case ITEM_DATE:
-            try {
-                projectInfo.setItemDate(Utils.DATE_FORMAT.parse(value));
-            } catch (Exception e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-                projectInfo.setItemDate(new Date(0));
-            }
+            projectInfo.setItemDate(parseDate(value));
             break;
         case ITEM_NAME:
             projectInfo.setItemName(value);
@@ -396,7 +396,27 @@ public class FileUploadAction extends ActionSupport implements
         } catch (NumberFormatException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-            return -10001.00f;
+            return 0.00f;
+        }
+    }
+    
+    private int parseInt(String value){
+        try {
+            return (int) Double.parseDouble(value);
+        } catch (NumberFormatException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return 0;
+        }
+    }
+    
+    private Date parseDate(String value){
+        try {
+            return Utils.DATE_FORMAT.parse(value);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return new Date(0);
         }
     }
 

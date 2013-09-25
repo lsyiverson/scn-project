@@ -10,6 +10,10 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+
 import utils.Utils;
 import bean.ProjectInfo;
 import bean.User;
@@ -32,11 +36,10 @@ public class DBTest implements DBInterface{
     public Connection getConnection() {
         Connection con = null;  //创建用于连接数据库的Connection对象  
         try {  
-            Class.forName("com.mysql.jdbc.Driver");// 加载Mysql数据驱动  
-              
-            con = DriverManager.getConnection(  
-                    "jdbc:mysql://192.168.100.105:3306/scn", "root", "");// 创建数据连接  
-              
+            Context initCtx = new InitialContext();
+            Context ctx = (Context)initCtx.lookup("java:comp/env");
+            DataSource ds = (DataSource)ctx.lookup("jdbc/mysql");
+            con = ds.getConnection();
         } catch (Exception e) {  
             System.out.println("数据库连接失败" + e.getMessage());  
         }  
@@ -268,12 +271,158 @@ public class DBTest implements DBInterface{
         } finally {
         }
     }
+    
+    /**
+     * 查询的项目来源关键字列表
+     */
+    private ArrayList<String> mSourceList;
+    
+    /**
+     * 查询的项目性质关键字列表
+     */
+    private ArrayList<String> mPropertyList;
+    
+    /**
+     * 查询的项目类别关键字列表
+     */
+    private ArrayList<String> mTypeList;
 
     @Override
     public ArrayList<ProjectInfo> queryProjectRecord(String[] itemsource,
             String itemdate, String itemname, String pronumber, String proname,
             String[] proproperty, String[] protype, String proaddress) {
-        // TODO Auto-generated method stub
+        
+        String SQL = generateSQLStatement(itemsource, itemdate, itemname, pronumber, proname, proproperty, protype, proaddress);
+        
+        //TODO: 实现此方法，以查询到的数据生成ProjectInfo的LIst
+        
         return null;
+    }
+    
+    private String generateSQLStatement(String[] itemsource,
+            String itemdate, String itemname, String pronumber, String proname,
+            String[] proproperty, String[] protype, String proaddress) {
+        StringBuilder sql = new StringBuilder("SELECT * FROM scn.projectinfo");
+        mSourceList = removeEmptyItem(itemsource);
+        mPropertyList = removeEmptyItem(proproperty);
+        mTypeList = removeEmptyItem(protype);
+        boolean needAddAnd = false;
+        if(isQueryNeedFilter(itemsource, itemdate, itemname, pronumber, proname, proproperty, protype, proaddress)){
+            sql.append(" WHERE");
+            if (!mSourceList.isEmpty()) {
+                if (!needAddAnd){
+                    needAddAnd = true;
+                }
+                sql.append(buildQueryStatement("itemSource", mSourceList));
+            }
+            if (!mPropertyList.isEmpty()) {
+                if (needAddAnd) {
+                    sql.append(" AND");
+                } else {
+                    needAddAnd = true;
+                }
+                sql.append(buildQueryStatement("proProperty", mPropertyList));
+            }
+            if (!mTypeList.isEmpty()) {
+                if (needAddAnd) {
+                    sql.append(" AND");
+                } else {
+                    needAddAnd = true;
+                }
+                sql.append(buildQueryStatement("proType", mTypeList));
+            }
+            if (!itemdate.isEmpty()) {
+                if (needAddAnd) {
+                    sql.append(" AND");
+                } else {
+                    needAddAnd = true;
+                }
+                sql.append(" itemDate=str_to_date('"+ itemdate +"', '%Y-%m-%d')");
+            }
+            if (!itemname.isEmpty()) {
+                if (needAddAnd) {
+                    sql.append(" AND");
+                } else {
+                    needAddAnd = true;
+                }
+                sql.append(" itemName LIKE '%" + itemname +"%'");
+            }
+            if (!pronumber.isEmpty()) {
+                if (needAddAnd) {
+                    sql.append(" AND");
+                } else {
+                    needAddAnd = true;
+                }
+                sql.append(" proNumber LIKE '%" + pronumber +"%'");
+            }
+            if (!proname.isEmpty()) {
+                if (needAddAnd) {
+                    sql.append(" AND");
+                } else {
+                    needAddAnd = true;
+                }
+                sql.append(" proName LIKE '%" + proname +"%'");
+            }
+            if (!proaddress.isEmpty()) {
+                if (needAddAnd) {
+                    sql.append(" AND");
+                } else {
+                    needAddAnd = true;
+                }
+                sql.append(" proAddress LIKE '%" + proaddress +"%'");
+            }
+        }
+        System.out.println(sql.toString());
+        return sql.toString();
+    }
+
+    private String buildQueryStatement(String field, ArrayList<String> list) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < list.size(); i++) {
+            if (i == 0) {
+                sb.append(" " + field + " LIKE '%" + list.get(i) + "%'");
+            } else {
+                sb.append(" OR " + field + " LIKE '%" + list.get(i) + "%'");
+            }
+        }
+        return sb.toString();
+    }
+    
+    /**
+     * 判断字符串数组中是否每一项都有内容
+     */
+    private ArrayList<String> removeEmptyItem(String[] strArray) {
+        ArrayList<String> list = new ArrayList<>();
+        for(String str : strArray) {
+            if(!str.isEmpty()) {
+                list.add(str);
+            }
+        }
+        return list;
+    }
+    
+    /**
+     * 判断是否需要在查询SQL语句中加入WHERE条件判断
+     */
+    private boolean isQueryNeedFilter(String[] itemsource,
+            String itemdate, String itemname, String pronumber, String proname,
+            String[] proproperty, String[] protype, String proaddress) {
+        if (mSourceList == null) {
+            mSourceList = removeEmptyItem(itemsource);
+        }
+        if (mPropertyList == null) {
+            mPropertyList = removeEmptyItem(proproperty);
+        }
+        if (mTypeList == null) {
+            mTypeList = removeEmptyItem(protype);
+        }
+        if (!mSourceList.isEmpty()||!mPropertyList.isEmpty()||!mTypeList.isEmpty()) {
+            return true;
+        }
+        if (!itemdate.isEmpty()||!itemname.isEmpty()||!pronumber.isEmpty()
+                ||!proname.isEmpty()||!proaddress.isEmpty()) {
+            return true;
+        }
+        return false;
     }
 }
