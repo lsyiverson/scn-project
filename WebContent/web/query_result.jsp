@@ -124,7 +124,12 @@ double time = (Long)request.getAttribute("time")/1000.0;
                 <tbody align="left">
 <s:iterator value="#request.projectlist" id="list">
                     <tr>
+                    <s:if test="#list.number == 0">
+                        <td></td>
+                    </s:if>
+                    <s:else>
                         <td><s:property value="#list.number"/></td>
+                    </s:else>
                         <td><s:property value="#list.itemSourceGroup"/></td>
                         <td><s:date name="#list.itemDate" format="yyyy.M.d"/></td>
                         <td><s:property value="#list.itemName"/></td>
@@ -196,13 +201,11 @@ double time = (Long)request.getAttribute("time")/1000.0;
 <script type="text/javascript">
 $(document).ready(function() {
     $('#result').dataTable({
-        "sScrollX": "800%",
+        "sScrollX": "820%",
         "bAutoWidth": true,
         "bScrollCollapse": true,
-        "sPaginationType": "full_numbers",
         "oLanguage": {
             "sLengthMenu": "每页显示 _MENU_ 条记录",
-            "sZeroRecords": "抱歉， 没有找到",
             "sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
             "sInfoEmpty": "没有数据",
             "sInfoFiltered": "(从 _MAX_ 条数据中检索)",
@@ -212,6 +215,7 @@ $(document).ready(function() {
                     "sNext": "后一页",  
                     "sLast": "尾页"  
                 }, 
+            "sSearch": "搜索",
             "sZeroRecords": "没有检索到数据",  
             "sProcessing": "<img src='./loading.gif' />"
         }

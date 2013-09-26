@@ -83,8 +83,22 @@ public class DBTest implements DBInterface{
             }
 
             try {
-                    String sql = "INSERT INTO projectInfo "  
-                           + " VALUES ("+excelData.get(location).getNumber()+",'"+excelData.get(location).getItemSourceGroup()+"',str_to_date('"+ Utils.DATE_FORMAT.format(excelData.get(location).getItemDate())+"','%Y.%m.%d')"
+                StringBuilder sqlBuilder = new StringBuilder("INSERT INTO projectInfo (");
+                if (excelData.get(location).getNumber() != 0) {
+                    sqlBuilder.append("number, ");
+                }
+                sqlBuilder.append("itemSource, itemDate, itemName, proNumber, proName, proProperty, proType, proAddress, A_MaterialCST, A_MaterialBill, B_MaterialCST, "
+                        + "B_MaterialBill, laborCost, laborCstBill, coordinationFee, totalFee, materialQua, consMethodGroup, proOADate, proPaperDate, dispatchDate, "
+                        + "auditRecordDate, contractNumber, contractAccount, firstPaymentAmount, secondPaymentAmount, approachTime, approachExpectMaterial, proLeader, "
+                        + "constructionUnit, monthProgress, lastMonthProgress, houseHolds, routeLength, reformWay, consStageGroup, concealedWork, hookingOrTube, "
+                        + "orderChangeNo, orderChangeAccount, construction, completedDate, submitCompletionData, acceptance, actualInstall, assetsTransfer, assetsGIS, "
+                        + "completionDocNo, dataTransfer, importantDataSubmit, settlementAmount, importantProAmount, settlementPayable, settlementPayMerchants, owedAmount, "
+                        + "thirdPaymentAmount, retentionAmount, retentionExpires, nextMonthPayAmount, opticalNode, cable, chargeConstruction) ");
+                sqlBuilder.append("VALUES (");
+                if (excelData.get(location).getNumber() != 0) {
+                    sqlBuilder.append(excelData.get(location).getNumber() + ",");
+                }
+                sqlBuilder.append("'"+excelData.get(location).getItemSourceGroup()+"',str_to_date('"+ Utils.DATE_FORMAT.format(excelData.get(location).getItemDate())+"','%Y.%m.%d')"
                            +",'"+excelData.get(location).getItemName()+"','"+excelData.get(location).getProNumber()+"','"+excelData.get(location).getProName()
                            +"','"+excelData.get(location).getProPropertyGroup()+"','"+excelData.get(location).getProTypeGroup()+"','"+excelData.get(location).getProAddress()
                            +"',"+excelData.get(location).getA_MaterialCST()+",'"+excelData.get(location).getA_MaterialBill()+"',"+excelData.get(location).getB_MaterialCST()
@@ -105,8 +119,11 @@ public class DBTest implements DBInterface{
                            +"','"+excelData.get(location).getSettlementPayMerchants()+"','"+excelData.get(location).getOwedAmount()+"','"+excelData.get(location).getThirdPaymentAmount()
                            +"','"+excelData.get(location).getRetentionAmount()+"','"+excelData.get(location).getRetentionExpires()+"','"+excelData.get(location).getNextMonthPayAmount()
                            +"','"+excelData.get(location).getOpticalNode()+"','"+excelData.get(location).getCable()+"','"+excelData.get(location).getChargeConstruction()+"')"
-                           +" ON DUPLICATE KEY UPDATE "
-                           +"number="+excelData.get(location).getNumber()+", itemSource='"+excelData.get(location).getItemSourceGroup()+"', itemDate=str_to_date('"+ Utils.DATE_FORMAT.format(excelData.get(location).getItemDate())+"','%Y.%m.%d')"
+                           +" ON DUPLICATE KEY UPDATE ");
+                if (excelData.get(location).getNumber() != 0) {
+                    sqlBuilder.append("number=" + excelData.get(location).getNumber() + ", ");
+                }
+                sqlBuilder.append("itemSource='"+excelData.get(location).getItemSourceGroup()+"', itemDate=str_to_date('"+ Utils.DATE_FORMAT.format(excelData.get(location).getItemDate())+"','%Y.%m.%d')"
                            +", itemName='"+excelData.get(location).getItemName()+"', proNumber='"+excelData.get(location).getProNumber()+"', proName='"+excelData.get(location).getProName()
                            +"', proProperty='"+excelData.get(location).getProPropertyGroup()+"', proType='"+excelData.get(location).getProTypeGroup()+"', proAddress='"+excelData.get(location).getProAddress()
                            +"', A_MaterialCST="+excelData.get(location).getA_MaterialCST()+", A_MaterialBill='"+excelData.get(location).getA_MaterialBill()+"', B_MaterialCST="+excelData.get(location).getB_MaterialCST()
@@ -126,7 +143,8 @@ public class DBTest implements DBInterface{
                            +"', settlementAmount='"+excelData.get(location).getSettlementAmount()+"', importantProAmount='"+excelData.get(location).getImportantProAmount()+"', settlementPayable='"+excelData.get(location).getSettlementPayable()
                            +"', settlementPayMerchants='"+excelData.get(location).getSettlementPayMerchants()+"', owedAmount='"+excelData.get(location).getOwedAmount()+"', thirdPaymentAmount='"+excelData.get(location).getThirdPaymentAmount()
                            +"', retentionAmount='"+excelData.get(location).getRetentionAmount()+"', retentionExpires='"+excelData.get(location).getRetentionExpires()+"', nextMonthPayAmount='"+excelData.get(location).getNextMonthPayAmount()
-                           +"', opticalNode='"+excelData.get(location).getOpticalNode()+"', cable='"+excelData.get(location).getCable()+"', chargeConstruction='"+excelData.get(location).getChargeConstruction()+"'";  // 插入数据的sql语句 
+                           +"', opticalNode='"+excelData.get(location).getOpticalNode()+"', cable='"+excelData.get(location).getCable()+"', chargeConstruction='"+excelData.get(location).getChargeConstruction()+"'");  // 插入数据的sql语句 
+                String sql = sqlBuilder.toString();
                     if(0==location)
                     Utils.Log(sql);
                     st = (Statement) conn.createStatement();    // 创建用于执行静态sql语句的Statement对象  
