@@ -20,7 +20,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
     $('#result').dataTable({
-        "sScrollX": "820%",
+        "sScrollX": "850%",
         "bAutoWidth": false,
         "bScrollCollapse": true,
         "bProcessing": true,
@@ -93,14 +93,14 @@ double time = (Long)request.getAttribute("time")/1000.0;
                         <th>项目性质</th>
                         <th>项目类别</th>
                         <th>项目地址</th>
-                        <th>甲供材料费用</th>
+                        <th>甲供材料费用(元)</th>
                         <th>甲供材料清单</th>
-                        <th>乙供材料费用</th>
+                        <th>乙供材料费用(元)</th>
                         <th>乙供材料清单</th>
-                        <th>人工费</th>
+                        <th>人工费(元)</th>
                         <th>人工费清单</th>
-                        <th>协调费</th>
-                        <th>合计</th>
+                        <th>协调费(元)</th>
+                        <th>合计(元)</th>
                         <th>材料使用第几季度入围材料</th>
                         <th>施工方式</th>
                         <th>OA立项通过时间</th>
@@ -108,15 +108,15 @@ double time = (Long)request.getAttribute("time")/1000.0;
                         <th>工程派工时间</th>
                         <th>重大项目提交审计备案时间</th>
                         <th>合同编号</th>
-                        <th>合同金额</th>
-                        <th>第一次付款金额</th>
-                        <th>第二次付款金额</th>
+                        <th>合同金额(元)</th>
+                        <th>第一次付款金额(元)</th>
+                        <th>第二次付款金额(元)</th>
                         <th>进场时间</th>
                         <th>进场材料是否与预期一致</th>
                         <th>项目负责人</th>
                         <th>施工单位</th>
-                        <th>本月工程进度</th>
-                        <th>上月已报工程进度</th>
+                        <th>本月工程进度(%)</th>
+                        <th>上月已报工程进度(%)</th>
                         <th>户数</th>
                         <th>干线长度</th>
                         <th>改造方式</th>
@@ -124,28 +124,28 @@ double time = (Long)request.getAttribute("time")/1000.0;
                         <th>隐蔽工程</th>
                         <th>附挂、穿管</th>
                         <th>变更单编号</th>
-                        <th>变更金额</th>
+                        <th>变更金额(增加或减少)</th>
                         <th>建设情况详细说明（问题处理的时间与结果）</th>
                         <th>完工时间</th>
                         <th>提交竣工资料时间</th>
-                        <th>验收是否通过</th>
+                        <th>验收是否通过(验收几次合格)</th>
                         <th>实际安装户数</th>
                         <th>资产是否转移</th>
                         <th>资产是否上GIS系统</th>
-                        <th>竣工文件编号</th>
+                        <th>竣工文件编号(签字、盖章手续已经完毕)</th>
                         <th>资料是否转移</th>
                         <th>重大项目结算资料提交审计时间</th>
-                        <th>决算金额</th>
-                        <th>重大项目审计报告金额</th>
-                        <th>按决算应付施工方金额</th>
-                        <th>按决算应付施客商方金额</th>
-                        <th>欠付金额</th>
-                        <th>第三次付款金额</th>
-                        <th>质保金金额</th>
+                        <th>决算金额(元)</th>
+                        <th>重大项目审计报告金额(元)</th>
+                        <th>按决算应付施工方金额(元)</th>
+                        <th>按决算应付施客商方金额(元)</th>
+                        <th>欠付金额(元)</th>
+                        <th>第三次付款金额(元)</th>
+                        <th>质保金金额(元)</th>
                         <th>质保到期时间</th>
-                        <th>下月预计付款金额</th>
-                        <th>光节点</th>
-                        <th>电缆</th>
+                        <th>下月预计付款金额(元)</th>
+                        <th>光节点(个)</th>
+                        <th>电缆(米)</th>
                         <th class="rightside">施工负责人</th>
                     </tr>
                 </thead>
@@ -166,14 +166,14 @@ double time = (Long)request.getAttribute("time")/1000.0;
                         <td><s:property value="#list.proPropertyGroup"/></td>
                         <td><s:property value="#list.proTypeGroup"/></td>
                         <td><s:property value="#list.proAddress"/></td>
-                        <td><s:property value="#list.A_MaterialCST"/></td>
+                        <td><s:property value="%{getText('format.money',{#list.A_MaterialCST})}"/></td>
                         <td><s:property value="#list.A_MaterialBill"/></td>
-                        <td><s:property value="#list.B_MaterialCST"/></td>
+                        <td><s:property value="%{getText('format.money',{#list.B_MaterialCST})}"/></td>
                         <td><s:property value="#list.B_MaterialBill"/></td>
-                        <td><s:property value="#list.laborCost"/></td>
+                        <td><s:property value="%{getText('format.money',{#list.laborCost})}"/></td>
                         <td><s:property value="#list.laborCstBill"/></td>
-                        <td><s:property value="#list.coordinationFee"/></td>
-                        <td><s:property value="#list.totalFee"/></td>
+                        <td><s:property value="%{getText('format.money',{#list.coordinationFee})}"/></td>
+                        <td><s:property value="%{getText('format.money',{#list.totalFee})}"/></td>
                         <td><s:property value="#list.materialQua"/></td>
                         <td><s:property value="#list.consMethodGroup"/></td>
                         <td><s:property value="#list.proOADate"/></td>
@@ -181,7 +181,7 @@ double time = (Long)request.getAttribute("time")/1000.0;
                         <td><s:property value="#list.dispatchDate"/></td>
                         <td><s:property value="#list.auditRecordDate"/></td>
                         <td><s:property value="#list.contractNumber"/></td>
-                        <td><s:property value="#list.contractAccount"/></td>
+                        <td><s:property value="%{getText('format.money',{#list.contractAccount})}"/></td>
                         <td><s:property value="#list.firstPaymentAmount"/></td>
                         <td><s:property value="#list.secondPaymentAmount"/></td>
                         <td><s:property value="#list.approachTime"/></td>

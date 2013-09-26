@@ -4,9 +4,13 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Currency;
 import java.util.Hashtable;
+import java.util.IllegalFormatException;
 import java.util.List;
+import java.util.Locale;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -374,8 +378,8 @@ public class DBTest implements DBInterface{
                 projectInfo.setAuditRecordDate(rs.getString("auditRecordDate"));
                 projectInfo.setContractNumber(rs.getString("contractNumber"));
                 projectInfo.setContractAccount(rs.getFloat("contractAccount"));
-                projectInfo.setFirstPaymentAmount(rs.getString("firstPaymentAmount"));
-                projectInfo.setSecondPaymentAmount(rs.getString("secondPaymentAmount"));
+                projectInfo.setFirstPaymentAmount(convertToMoney(rs.getString("firstPaymentAmount")));
+                projectInfo.setSecondPaymentAmount(convertToMoney(rs.getString("secondPaymentAmount")));
                 projectInfo.setApproachTime(rs.getString("approachTime"));
                 projectInfo.setApproachExpectMaterial(rs.getString("approachExpectMaterial"));
                 projectInfo.setProLeader(rs.getString("proLeader"));
@@ -405,7 +409,7 @@ public class DBTest implements DBInterface{
                 projectInfo.setSettlementPayable(rs.getString("settlementPayable"));
                 projectInfo.setSettlementPayMerchants(rs.getString("settlementPayMerchants"));
                 projectInfo.setOwedAmount(rs.getString("owedAmount"));
-                projectInfo.setThirdPaymentAmount(rs.getString("thirdPaymentAmount"));
+                projectInfo.setThirdPaymentAmount(convertToMoney(rs.getString("thirdPaymentAmount")));
                 projectInfo.setRetentionAmount(rs.getString("retentionAmount"));
                 projectInfo.setRetentionExpires(rs.getString("retentionExpires"));
                 projectInfo.setNextMonthPayAmount(rs.getString("nextMonthPayAmount"));
@@ -425,6 +429,19 @@ public class DBTest implements DBInterface{
             }
         }
         return queryResult;
+    }
+    
+    private String convertToMoney(String src) {
+        DecimalFormat df = new DecimalFormat("0.00");
+        try {
+            float value = Float.parseFloat(src);
+            String money = df.format(value);
+            return money;
+        } catch(NumberFormatException ex){
+            return src;
+        } catch(IllegalArgumentException ex) {
+            return src;
+        }
     }
     
     private String generateSQLStatement(String[] itemsource,

@@ -162,12 +162,17 @@ public class FileUploadAction extends ActionSupport implements
                         break;
 
                     case Cell.CELL_TYPE_NUMERIC:
-                        value = String.valueOf(cell.getNumericCellValue());
-                        if (value.contains("E") || value.contains("e")) {
-                            // 解决从excel中读出项目编号显示为科学计数法的问题
-                            DecimalFormat df = new DecimalFormat("0");
-                            value = df.format(cell.getNumericCellValue());
-                        }
+                        DecimalFormat df = new DecimalFormat("0.##");
+                        value = df.format(cell.getNumericCellValue());
+//                        value = String.valueOf(cell.getNumericCellValue());
+//                        if (value.contains("E") || value.contains("e")) {
+//                            // 解决从excel中读出项目编号显示为科学计数法的问题
+//                            DecimalFormat df = new DecimalFormat("0");
+//                            value = df.format(cell.getNumericCellValue());
+//                        } else {
+//                            DecimalFormat df = new DecimalFormat("0.##");
+//                            value = df.format(cell.getNumericCellValue());
+//                        }
                         break;
 
                     case Cell.CELL_TYPE_STRING:
