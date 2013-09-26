@@ -442,6 +442,7 @@ public class FileUploadAction extends ActionSupport implements
 
     private Date parseDate(String value) {
         try {
+            value = value.replaceAll("\\.+", "\\.");
             return Utils.DATE_FORMAT.parse(value);
         } catch (Exception e) {
             // TODO Auto-generated catch block
