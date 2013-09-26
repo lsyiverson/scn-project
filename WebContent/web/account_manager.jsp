@@ -12,7 +12,7 @@ if (useraccount == null) {
 String password = useraccount.getPassword();
 %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>四川广电工程管理系统-修改密码</title>
+<title>四川广电网络工程管理系统-修改密码</title>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/md5.js"></script>
 <script type="text/javascript">
 String.prototype.trim= function(){  

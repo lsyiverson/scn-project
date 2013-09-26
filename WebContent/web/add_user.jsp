@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>四川广电工程管理系统-添加用户</title>
+<title>四川广电网络工程管理系统-添加用户</title>
 <script type="text/javascript">
 String.prototype.trim = function(){  
     // 用正则表达式将前后空格  

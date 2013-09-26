@@ -3,7 +3,7 @@
 <%@page import="bean.User"%>
 <html>
 <head>
-<title>四川广电工程管理系统</title>
+<title>四川广电网络工程管理系统</title>
 <link href="<s:url value="/css/examplecss"/>" rel="stylesheet"
           type="text/css"/>
 
@@ -55,7 +55,7 @@ if (user != null) {
 
         <tr align="center" bgcolor="#33B5E5">
             <td colspan="2" bgcolor="#33B5E5">
-                <h2><font color="white">四川广电工程管理系统</font></h2>
+                <h2><font color="white">四川广电网络工程管理系统</font></h2>
             </td>
         <tr>
             <td width="456" height="300" background="<%=request.getContextPath()%>/img/network01.jpg">&nbsp;</td>

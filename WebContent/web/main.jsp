@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>四川广电工程管理系统-数据查询</title>
+<title>四川广电网络工程管理系统-数据查询</title>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/My97DatePicker/WdatePicker.js"></script>
 <style type="text/css">
  .centerDiv { 

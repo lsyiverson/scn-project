@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>四川广电工程管理系统-上传文件</title>
+<title>四川广电网络工程管理系统-上传文件</title>
 <style type="text/css">
 .content{
 height:500px;

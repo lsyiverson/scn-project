@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>四川广电工程管理系统-用户管理</title>
+<title>四川广电网络工程管理系统-用户管理</title>
 <script type="text/javascript">
 function deluser(username){
     return confirm("是否要删除用户:"+username);

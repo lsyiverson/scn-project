@@ -16,7 +16,7 @@
 <script type="text/javascript"
     src="<%=request.getContextPath()%>/datatables/media/js/jquery.dataTables.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>四川广电工程管理系统-查询结果</title>
+<title>四川广电网络工程管理系统-查询结果</title>
 <script type="text/javascript">
 $(document).ready(function() {
     $('#result').dataTable({
