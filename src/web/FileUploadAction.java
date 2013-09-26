@@ -3,6 +3,7 @@ package web;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -162,6 +163,11 @@ public class FileUploadAction extends ActionSupport implements
 
                     case Cell.CELL_TYPE_NUMERIC:
                         value = String.valueOf(cell.getNumericCellValue());
+                        if (value.contains("E") || value.contains("e")) {
+                            // 解决从excel中读出项目编号显示为科学计数法的问题
+                            DecimalFormat df = new DecimalFormat("0");
+                            value = df.format(cell.getNumericCellValue());
+                        }
                         break;
 
                     case Cell.CELL_TYPE_STRING:
