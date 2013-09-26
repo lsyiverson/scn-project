@@ -17,12 +17,40 @@
     src="<%=request.getContextPath()%>/datatables/media/js/jquery.dataTables.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>四川广电工程管理系统-查询结果</title>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#result').dataTable({
+        "sScrollX": "820%",
+        "bAutoWidth": false,
+        "bScrollCollapse": true,
+        "bProcessing": true,
+        "oLanguage": {
+            "sLengthMenu": "每页显示 _MENU_ 条记录",
+            "sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
+            "sInfoEmpty": "没有数据",
+            "sInfoFiltered": "(从 _MAX_ 条数据中检索)",
+            "oPaginate": {  
+                    "sFirst": "首页",  
+                    "sPrevious": "前一页",
+                    "sNext": "后一页",  
+                    "sLast": "尾页"  
+                }, 
+            "sSearch": "搜索",
+            "sZeroRecords": "没有检索到数据",  
+            "sProcessing": "<img src='./loading.gif' />"
+        },
+        "fnInitComplete": function() {
+            $('#result').show();
+        }
+    });
+} );
+</script>
 </head>
 <body>
     <center>
         <div style="width: 800px">
             <%@include file="page_title.jsp"%>
-            <h2>Example 1</h2>
+            <h2>项目详细清单</h2>
 <%
 ArrayList<ProjectInfo> projectlist = null;
 Object obj = request.getAttribute("projectlist");
@@ -49,13 +77,13 @@ int projectCount = projectlist.size();
 double time = (Long)request.getAttribute("time")/1000.0;
 %>
         </div>
-        <div style="width:90%; min-width: 800px" id="dt_example">
+        <div style="width:90%; min-width: 800px; padding-bottom: 50px" id="dt_example">
         <div align="left">
 共找到满足条件的记录<%=projectCount%>条，共耗时<%=time%>秒
         </div>
-            <table id="result" align="left" class="display" style="table-layout:inherit;">
-                <thead align="left">
-                    <tr>
+            <table id="result" align="left" class="display">
+                <thead>
+                    <tr align="center">
                         <th>序号</th>
                         <th>项目来源</th>
                         <th>来单时间</th>
@@ -118,12 +146,12 @@ double time = (Long)request.getAttribute("time")/1000.0;
                         <th>下月预计付款金额</th>
                         <th>光节点</th>
                         <th>电缆</th>
-                        <th>施工负责人</th>
+                        <th class="rightside">施工负责人</th>
                     </tr>
                 </thead>
-                <tbody align="left">
+                <tbody>
 <s:iterator value="#request.projectlist" id="list">
-                    <tr>
+                    <tr align="center">
                     <s:if test="#list.number == 0">
                         <td></td>
                     </s:if>
@@ -191,36 +219,13 @@ double time = (Long)request.getAttribute("time")/1000.0;
                         <td><s:property value="#list.nextMonthPayAmount"/></td>
                         <td><s:property value="#list.opticalNode"/></td>
                         <td><s:property value="#list.cable"/></td>
-                        <td><s:property value="#list.chargeConstruction"/></td>
+                        <td class="rightside"><s:property value="#list.chargeConstruction"/></td>
                     </tr>
 </s:iterator>
                 </tbody>
             </table>
         </div>
     </center>
-<script type="text/javascript">
-$(document).ready(function() {
-    $('#result').dataTable({
-        "sScrollX": "820%",
-        "bAutoWidth": true,
-        "bScrollCollapse": true,
-        "oLanguage": {
-            "sLengthMenu": "每页显示 _MENU_ 条记录",
-            "sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
-            "sInfoEmpty": "没有数据",
-            "sInfoFiltered": "(从 _MAX_ 条数据中检索)",
-            "oPaginate": {  
-                    "sFirst": "首页",  
-                    "sPrevious": "前一页",
-                    "sNext": "后一页",  
-                    "sLast": "尾页"  
-                }, 
-            "sSearch": "搜索",
-            "sZeroRecords": "没有检索到数据",  
-            "sProcessing": "<img src='./loading.gif' />"
-        }
-    });
-} );
-</script>
+
 </body>
 </html>

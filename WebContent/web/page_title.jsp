@@ -1,6 +1,6 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@page import="bean.User"%>
-<div style="background-color:#F0F0F0; overflow:hidden" align="left">
+<div style="background-color:#DDF3FF; overflow:hidden" align="left">
 <div style="width:50%; float:left">
 <%User user = (User) session.getAttribute("user");%>
 <%
@@ -29,29 +29,29 @@ if (user == null) {
         switch(user.getGroup()) {
         case SUPERADMIN:
         case ADMIN:
-            if (!uri.equals("main.jsp")) {
-                %>
-                <a href="main.jsp">数据查询</a>
-                <%
-            }
             if (!uri.equals("fileupload.jsp")) {
                 %>
-                <a href="fileupload.jsp">数据上传</a>
+                <a href="fileupload.jsp" style="text-decoration: none;">数据上传</a>
                 <%
             }
             if (!uri.equals("user_manager.jsp")) {
                 %>
-                <a href="GetAllUsers.action">用户管理</a>
+                <a href="GetAllUsers.action" style="text-decoration: none;">用户管理</a>
                 <%
             }
         case USER:
+            if (!uri.equals("main.jsp")) {
+                %>
+                <a href="main.jsp" style="text-decoration: none;">数据查询</a>
+                <%
+            }
             if (!uri.equals("account_manager.jsp")) {
                 %>
-                <a href="account_manager.jsp">修改密码</a>
+                <a href="account_manager.jsp" style="text-decoration: none;">修改密码</a>
                 <%
             }
         }
     %>
-    <a href="Logout">注销登录</a>
+    <a href="Logout" style="text-decoration: none;">注销登录</a>
     </div>
 </div>

@@ -8,7 +8,7 @@
     <package name="uploadAction" namespace="/web" extends="default">
 
         <action name="fileUpload" class="web.FileUploadAction">
-            <result>/web/success.html</result>
+            <result>/web/upload_success.html</result>
         </action>
     </package>
 </struts>
