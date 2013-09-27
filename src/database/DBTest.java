@@ -80,8 +80,8 @@ public class DBTest implements DBInterface{
         Statement st;
         int location = 0;
         while (location < excelData.size()) {
-            if (StringUtils.isEmpty(excelData.get(location).getItemName()
-                    .trim())) {
+            if (excelData.get(location).getItemName() == null 
+                    || StringUtils.isEmpty(excelData.get(location).getItemName().trim())) {
                 location++;
                 continue;
             }
