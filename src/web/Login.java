@@ -1,17 +1,15 @@
 package web;
 
-import java.security.MessageDigest;
 
 import javax.servlet.http.HttpSession;
 
 import org.apache.struts2.ServletActionContext;
-import org.apache.struts2.dispatcher.SessionMap;
 
 import bean.User;
 
 import com.opensymphony.xwork2.ActionSupport;
 
-import database.DBTest;
+import database.DBHelper;
 
 public class Login extends ActionSupport {
 
@@ -31,7 +29,7 @@ public class Login extends ActionSupport {
         }
         
         if (isPasswordMatchesUsername(username, password)) {
-            User loginUser = DBTest.getInstance().getUserByUsername(username);
+            User loginUser = DBHelper.getInstance().getUserByUsername(username);
             HttpSession session = ServletActionContext.getRequest().getSession();
             session.setAttribute("user", loginUser);
             return SUCCESS;
@@ -45,7 +43,7 @@ public class Login extends ActionSupport {
     }
     
     private boolean isPasswordMatchesUsername(String username, String password) {
-        String encryptedPsw = DBTest.getInstance().getEncryptedPasswordByUsername(username);
+        String encryptedPsw = DBHelper.getInstance().getEncryptedPasswordByUsername(username);
         return encryptedPsw.equals(password);
     }
 

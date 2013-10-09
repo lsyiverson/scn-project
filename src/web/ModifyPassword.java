@@ -8,7 +8,7 @@ import bean.User;
 
 import com.opensymphony.xwork2.ActionSupport;
 
-import database.DBTest;
+import database.DBHelper;
 public class ModifyPassword extends ActionSupport {
 
     /**
@@ -48,7 +48,7 @@ public class ModifyPassword extends ActionSupport {
             return ERROR;
         }
         
-        if (DBTest.getInstance().updateUserPassword(username, password)) {
+        if (DBHelper.getInstance().updateUserPassword(username, password)) {
             session.removeAttribute("user");
             return SUCCESS;
         }
@@ -56,7 +56,7 @@ public class ModifyPassword extends ActionSupport {
     }
     
     private boolean isOldpasswordCorrect(String username, String oldPassword ) {
-        String encryptedPsw = DBTest.getInstance().getEncryptedPasswordByUsername(username);
+        String encryptedPsw = DBHelper.getInstance().getEncryptedPasswordByUsername(username);
         return encryptedPsw.equals(oldPassword);
     }
     
@@ -65,7 +65,7 @@ public class ModifyPassword extends ActionSupport {
     }
     
     private boolean isPasswordMatchesUsername(String username, String password) {
-        String encryptedPsw = DBTest.getInstance().getEncryptedPasswordByUsername(username);
+        String encryptedPsw = DBHelper.getInstance().getEncryptedPasswordByUsername(username);
         return encryptedPsw.equals(password);
     }
 

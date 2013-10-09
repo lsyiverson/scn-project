@@ -25,7 +25,7 @@ import bean.ProjectInfo;
 
 import com.opensymphony.xwork2.ActionSupport;
 
-import database.DBTest;
+import database.DBHelper;
 
 public class FileUploadAction extends ActionSupport implements
         ServletContextAware {
@@ -205,7 +205,7 @@ public class FileUploadAction extends ActionSupport implements
             }
             Utils.Log(proInfoList.toString());
             // DBHelper.getInstance().insertExcelData(proInfoList);
-            DBTest.getInstance().insertExcelData(proInfoList);
+            DBHelper.getInstance().insertExcelData(proInfoList);
         }
         return true;
     }

@@ -9,7 +9,6 @@ import bean.ProjectInfo;
 import com.opensymphony.xwork2.ActionSupport;
 
 import database.DBHelper;
-import database.DBTest;
 
 public class QueryProject extends ActionSupport {
     /**
@@ -76,7 +75,7 @@ public class QueryProject extends ActionSupport {
 //        System.out.println(proaddress);
         try {
             long time = System.currentTimeMillis();
-            ArrayList<ProjectInfo> projectlist = DBTest.getInstance()
+            ArrayList<ProjectInfo> projectlist = DBHelper.getInstance()
                     .queryProjectRecord(itemsource, itemdate, itemname,
                             pronumber, proname, proproperty, protype,
                             proaddress);
