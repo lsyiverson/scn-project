@@ -37,6 +37,12 @@ public interface DBInterface {
     public ArrayList<String> getAllUSERAccounts();
     
     /**
+     * 得到所有的用户分组为ADMIN级别的用户账号
+     * @return 用户列表
+     */
+    public ArrayList<String> getAllADMINAccounts();
+    
+    /**
      * 通过用户名删除用户
      * @param username
      * @return
@@ -51,10 +57,10 @@ public interface DBInterface {
     public boolean isAlreadyHaveTheUser(String username);
     
     /**
-     * 根据指定用户名创建用户
+     * 根据指定用户名和用户分组创建用户
      * @param username
      */
-    public void createUser(String username);
+    public void createUser(String username, UserGroup usergroup);
     
     /**
      * 将读出的数据列表插入数据库

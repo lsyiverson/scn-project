@@ -17,6 +17,9 @@ if (user == null) {
     case ADMIN:
         out.print("管理员");
         break;
+    case SUPERADMIN:
+        out.print("超级管理员");
+        break;
     default:
         out.print("未知身份");
         break;
@@ -27,7 +30,6 @@ if (user == null) {
     String uri = request.getServletPath();
     uri=uri.substring(uri.lastIndexOf("/")+1);
         switch(user.getGroup()) {
-        case SUPERADMIN:
         case ADMIN:
             if (!uri.equals("fileupload.jsp")) {
                 %>
@@ -50,6 +52,7 @@ if (user == null) {
                 <a href="account_manager.jsp" style="text-decoration: none;">修改密码</a>
                 <%
             }
+        case SUPERADMIN:
         }
     %>
     <a href="Logout" style="text-decoration: none;">注销登录</a>

@@ -1,12 +1,24 @@
 package web;
 
+import bean.User.UserGroup;
+
 import com.opensymphony.xwork2.ActionSupport;
 
 import database.DBHelper;
 
 public class CreateUser extends ActionSupport {
+    
+    private static final String ADMINSUCCESS = "adminsuccess";
 
+    /**
+     * 要创建的用户名
+     */
     private String username;
+    
+    /**
+     * 要创建的用户分组
+     */
+    private int group;
     
     @Override
     public String execute() throws Exception {
@@ -16,8 +28,28 @@ public class CreateUser extends ActionSupport {
         if(DBHelper.getInstance().isAlreadyHaveTheUser(username)){
             return INPUT;
         }
-        DBHelper.getInstance().createUser(username);
-        return SUCCESS;
+        UserGroup usergroup;
+        switch (group) {
+        case 0: 
+            usergroup = UserGroup.USER;
+            break;
+        case 1:
+            usergroup = UserGroup.ADMIN;
+            break;
+        case 2:
+            usergroup = UserGroup.SUPERADMIN;
+            break;
+        default:
+            usergroup = UserGroup.USER;
+        }
+        DBHelper.getInstance().createUser(username, usergroup);
+
+        switch (usergroup) {
+        case ADMIN:
+            return ADMINSUCCESS;
+        default:
+            return SUCCESS;
+        }
     }
 
     private boolean isInvalid(String value) {
@@ -30,5 +62,13 @@ public class CreateUser extends ActionSupport {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public int getGroup() {
+        return group;
+    }
+
+    public void setGroup(int group) {
+        this.group = group;
     }
 }

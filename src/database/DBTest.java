@@ -95,9 +95,9 @@ public class DBTest implements DBInterface{
     }
     
     @Override
-    public void createUser(String username) {
+    public void createUser(String username, UserGroup usergroup) {
         //TODO: 实现此方法
-        User user = new User(username, Utils.hex_md5(username+"123456"), UserGroup.USER);
+        User user = new User(username, Utils.hex_md5(username+"123456"), usergroup);
         usertable.put(username, user);
     }
     
@@ -259,5 +259,10 @@ public class DBTest implements DBInterface{
             return true;
         }
         return false;
+    }
+
+    @Override
+    public ArrayList<String> getAllADMINAccounts() {
+        return null;
     }
 }

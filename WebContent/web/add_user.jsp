@@ -1,3 +1,5 @@
+<%@page import="org.apache.commons.lang3.StringUtils"%>
+<%@page import="org.apache.poi.util.StringUtil"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
@@ -62,8 +64,29 @@ background: #FFFFFF;
 <tr align="center">
 <td align="center">
 <div class="formStyle">
+<%
+String usergroup = request.getParameter("usergroup");
+int group = 0;
+if (StringUtils.isEmpty(usergroup)) {
+    group = 0;
+} else if(StringUtils.isNumeric(usergroup)) {
+    group = Integer.parseInt(usergroup);
+    if (group == 1) {
+        group = user.getGroup()==UserGroup.SUPERADMIN?group:0;
+    }
+} else {
+    group = 0;
+}
+request.setAttribute("group", group);
+%>
+<s:if test="#request.group == 0">
 <h4>创建用户</h4>
-<s:form onsubmit="return validate()" action="CreateUser" name="add">
+</s:if>
+<s:elseif test="#request.group == 1">
+<h4>创建管理员</h4>
+</s:elseif>
+<s:form onsubmit="return validate()" action="CreateUser?" name="add">
+<s:hidden id="group" name="group" value="%{#request.group}"/>
 <s:textfield id="username" name="username" label="用户名" cssStyle="width:140px"/>
 <tr>
 <td colspan="2">

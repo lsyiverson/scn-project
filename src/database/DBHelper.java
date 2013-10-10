@@ -82,7 +82,7 @@ public class DBHelper implements DBInterface{
             }
 
             try {
-                StringBuilder sqlBuilder = new StringBuilder("INSERT INTO projectInfo (");
+                StringBuilder sqlBuilder = new StringBuilder("INSERT INTO qingyang2013 (");
                 if (excelData.get(location).getNumber() != 0) {
                     sqlBuilder.append("number, ");
                 }
@@ -228,27 +228,7 @@ public class DBHelper implements DBInterface{
 
     @Override
     public ArrayList<String> getAllUSERAccounts() {
-        // TODO Auto-generated method stub
-        Connection conn = getConnection();
-        Statement st;
-        ResultSet rs;
-        ArrayList<String> username = new ArrayList<String>();
-        int usergroup = 0;
-        String sql = "SELECT username FROM scn.user WHERE scn.user.group = " + usergroup;
-        try {
-            st = conn.createStatement();
-            rs = st.executeQuery(sql);
-            while(rs.next()) {
-                username.add(rs.getString("username"));
-            }
-            
-            conn.close();
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } finally {
-        }
-        return username;
+        return getAllUserAccountsByGroup(UserGroup.USER);
     }
 
     @Override
@@ -296,11 +276,22 @@ public class DBHelper implements DBInterface{
     }
 
     @Override
-    public void createUser(String username) {
+    public void createUser(String username, UserGroup usergroup) {
         // TODO Auto-generated method stub
         String userName =username;
         String password = Utils.hex_md5(username+"123456");
-        int userGroup = 0;
+        int userGroup;
+        switch (usergroup) {
+        case USER:
+            userGroup = 0;
+            break;
+        case ADMIN:
+            userGroup = 1;
+            break;
+        default:
+            userGroup = 0;
+            break;
+        }
         Connection conn = getConnection();
         Statement st;
         String sql = "INSERT INTO scn.user VALUES('" + userName + "','" +password+ "','" +userGroup+ "')";
@@ -442,7 +433,7 @@ public class DBHelper implements DBInterface{
     private String generateSQLStatement(String[] itemsource,
             String itemdate, String itemname, String pronumber, String proname,
             String[] proproperty, String[] protype, String proaddress) {
-        StringBuilder sql = new StringBuilder("SELECT * FROM scn.projectinfo");
+        StringBuilder sql = new StringBuilder("SELECT * FROM scn.qingyang2013");
         mSourceList = removeEmptyItem(itemsource);
         mPropertyList = removeEmptyItem(proproperty);
         mTypeList = removeEmptyItem(protype);
@@ -564,5 +555,45 @@ public class DBHelper implements DBInterface{
             return true;
         }
         return false;
+    }
+    
+    private ArrayList<String> getAllUserAccountsByGroup(UserGroup group) {
+        int usergroup = 0;
+        switch(group) {
+        case USER:
+            usergroup = 0;
+            break;
+        case ADMIN:
+            usergroup = 1;
+            break;
+        case SUPERADMIN:
+            usergroup = 2;
+        default:
+            break;
+        }
+        Connection conn = getConnection();
+        Statement st;
+        ResultSet rs;
+        ArrayList<String> username = new ArrayList<String>();
+        String sql = "SELECT username FROM scn.user WHERE scn.user.group = " + usergroup;
+        try {
+            st = conn.createStatement();
+            rs = st.executeQuery(sql);
+            while(rs.next()) {
+                username.add(rs.getString("username"));
+            }
+            
+            conn.close();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } finally {
+        }
+        return username;
+    }
+
+    @Override
+    public ArrayList<String> getAllADMINAccounts() {
+        return getAllUserAccountsByGroup(UserGroup.ADMIN);
     }
 }

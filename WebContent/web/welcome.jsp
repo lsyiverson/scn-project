@@ -1,3 +1,4 @@
+<%@page import="bean.User.UserGroup"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@page import="bean.User"%>
@@ -45,8 +46,13 @@ function validate() {
 <%User user = (User) session.getAttribute("user");%>
 <%
 if (user != null) {
-    response.sendRedirect(request.getContextPath() + "/web/main.jsp");
-    return;
+    if (user.getGroup() != UserGroup.SUPERADMIN) {
+        response.sendRedirect(request.getContextPath() + "/web/main.jsp");
+        return;
+    } else {
+        response.sendRedirect(request.getContextPath() + "/web/GetAllAdmins");
+        return;
+    }
 }
 %>
 
