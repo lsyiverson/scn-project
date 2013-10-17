@@ -82,7 +82,7 @@ public class DBHelper implements DBInterface{
             }
 
             try {
-                StringBuilder sqlBuilder = new StringBuilder("INSERT INTO qingyang2013 (");
+                StringBuilder sqlBuilder = new StringBuilder("INSERT INTO projectinfo (");
                 if (excelData.get(location).getNumber() != 0) {
                     sqlBuilder.append("number, ");
                 }
@@ -433,7 +433,7 @@ public class DBHelper implements DBInterface{
     private String generateSQLStatement(String[] itemsource,
             String itemdate, String itemname, String pronumber, String proname,
             String[] proproperty, String[] protype, String proaddress) {
-        StringBuilder sql = new StringBuilder("SELECT * FROM scn.qingyang2013");
+        StringBuilder sql = new StringBuilder("SELECT * FROM scn.projectinfo");
         mSourceList = removeEmptyItem(itemsource);
         mPropertyList = removeEmptyItem(proproperty);
         mTypeList = removeEmptyItem(protype);

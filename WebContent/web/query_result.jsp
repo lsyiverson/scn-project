@@ -1,8 +1,10 @@
+<%@page import="java.text.DecimalFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="bean.ProjectInfo"%>
+<%@ page import="utils.Utils" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -150,78 +152,80 @@ double time = (Long)request.getAttribute("time")/1000.0;
                     </tr>
                 </thead>
                 <tbody>
-<s:iterator value="#request.projectlist" id="list">
-                    <tr align="center">
-                    <s:if test="#list.number == 0">
-                        <td></td>
-                    </s:if>
-                    <s:else>
-                        <td><s:property value="#list.number"/></td>
-                    </s:else>
-                        <td><s:property value="#list.itemSourceGroup"/></td>
-                        <td><s:date name="#list.itemDate" format="yyyy.M.d"/></td>
-                        <td><s:property value="#list.itemName"/></td>
-                        <td><s:property value="#list.proNumber"/></td>
-                        <td><s:property value="#list.proName"/></td>
-                        <td><s:property value="#list.proPropertyGroup"/></td>
-                        <td><s:property value="#list.proTypeGroup"/></td>
-                        <td><s:property value="#list.proAddress"/></td>
-                        <td><s:property value="%{getText('format.money',{#list.A_MaterialCST})}"/></td>
-                        <td><s:property value="#list.A_MaterialBill"/></td>
-                        <td><s:property value="%{getText('format.money',{#list.B_MaterialCST})}"/></td>
-                        <td><s:property value="#list.B_MaterialBill"/></td>
-                        <td><s:property value="%{getText('format.money',{#list.laborCost})}"/></td>
-                        <td><s:property value="#list.laborCstBill"/></td>
-                        <td><s:property value="%{getText('format.money',{#list.coordinationFee})}"/></td>
-                        <td><s:property value="%{getText('format.money',{#list.totalFee})}"/></td>
-                        <td><s:property value="#list.materialQua"/></td>
-                        <td><s:property value="#list.consMethodGroup"/></td>
-                        <td><s:property value="#list.proOADate"/></td>
-                        <td><s:property value="#list.proPaperDate"/></td>
-                        <td><s:property value="#list.dispatchDate"/></td>
-                        <td><s:property value="#list.auditRecordDate"/></td>
-                        <td><s:property value="#list.contractNumber"/></td>
-                        <td><s:property value="%{getText('format.money',{#list.contractAccount})}"/></td>
-                        <td><s:property value="#list.firstPaymentAmount"/></td>
-                        <td><s:property value="#list.secondPaymentAmount"/></td>
-                        <td><s:property value="#list.approachTime"/></td>
-                        <td><s:property value="#list.approachExpectMaterial"/></td>
-                        <td><s:property value="#list.proLeader"/></td>
-                        <td><s:property value="#list.constructionUnit"/></td>
-                        <td><s:property value="#list.monthProgress"/></td>
-                        <td><s:property value="#list.lastMonthProgress"/></td>
-                        <td><s:property value="#list.houseHolds"/></td>
-                        <td><s:property value="#list.routeLength"/></td>
-                        <td><s:property value="#list.reformWay"/></td>
-                        <td><s:property value="#list.consStageGroup"/></td>
-                        <td><s:property value="#list.concealedWork"/></td>
-                        <td><s:property value="#list.hookingOrTube"/></td>
-                        <td><s:property value="#list.orderChangeNo"/></td>
-                        <td><s:property value="#list.orderChangeAccount"/></td>
-                        <td><s:property value="#list.construction"/></td>
-                        <td><s:property value="#list.completedDate"/></td>
-                        <td><s:property value="#list.submitCompletionData"/></td>
-                        <td><s:property value="#list.acceptance"/></td>
-                        <td><s:property value="#list.actualInstall"/></td>
-                        <td><s:property value="#list.assetsTransfer"/></td>
-                        <td><s:property value="#list.assetsGIS"/></td>
-                        <td><s:property value="#list.completionDocNo"/></td>
-                        <td><s:property value="#list.dataTransfer"/></td>
-                        <td><s:property value="#list.importantDataSubmit"/></td>
-                        <td><s:property value="#list.settlementAmount"/></td>
-                        <td><s:property value="#list.importantProAmount"/></td>
-                        <td><s:property value="#list.settlementPayable"/></td>
-                        <td><s:property value="#list.settlementPayMerchants"/></td>
-                        <td><s:property value="#list.owedAmount"/></td>
-                        <td><s:property value="#list.thirdPaymentAmount"/></td>
-                        <td><s:property value="#list.retentionAmount"/></td>
-                        <td><s:property value="#list.retentionExpires"/></td>
-                        <td><s:property value="#list.nextMonthPayAmount"/></td>
-                        <td><s:property value="#list.opticalNode"/></td>
-                        <td><s:property value="#list.cable"/></td>
-                        <td class="rightside"><s:property value="#list.chargeConstruction"/></td>
-                    </tr>
-</s:iterator>
+<%
+for (ProjectInfo info : projectlist) {
+    DecimalFormat formatter = new DecimalFormat("##0.00");
+    out.print("<tr align=\"center\">");
+    if (info.getNumber() == 0) {
+        out.print("<td></td>");
+    } else {
+        out.print("<td>" + info.getNumber() + "</td>");
+    }
+    out.print("<td>" + info.getItemSourceGroup() + "</td>");
+    out.print("<td>" + Utils.DATE_FORMAT.format(info.getItemDate()) + "</td>");
+    out.print("<td>" + info.getItemName() + "</td>");
+    out.print("<td>" + info.getProName() + "</td>");
+    out.print("<td>" + info.getProPropertyGroup() + "</td>");
+    out.print("<td>" + info.getProTypeGroup() + "</td>");
+    out.print("<td>" + info.getProAddress() + "</td>");
+    out.print("<td>" + info.getProName() + "</td>");
+    out.print("<td>" + formatter.format(info.getA_MaterialCST()) + "</td>");
+    out.print("<td>" + info.getA_MaterialBill() + "</td>");
+    out.print("<td>" + formatter.format(info.getB_MaterialCST()) + "</td>");
+    out.print("<td>" + info.getB_MaterialBill() + "</td>");
+    out.print("<td>" + formatter.format(info.getLaborCost()) + "</td>");
+    out.print("<td>" + info.getLaborCstBill() + "</td>");
+    out.print("<td>" + formatter.format(info.getCoordinationFee()) + "</td>");
+    out.print("<td>" + formatter.format(info.getTotalFee()) + "</td>");
+    out.print("<td>" + info.getMaterialQua() + "</td>");
+    out.print("<td>" + info.getConsMethodGroup() + "</td>");
+    out.print("<td>" + info.getProOADate() + "</td>");
+    out.print("<td>" + info.getDispatchDate() + "</td>");
+    out.print("<td>" + info.getAuditRecordDate() + "</td>");
+    out.print("<td>" + info.getContractNumber() + "</td>");
+    out.print("<td>" + info.getMaterialQua() + "</td>");
+    out.print("<td>" + formatter.format(info.getContractAccount()) + "</td>");
+    out.print("<td>" + info.getFirstPaymentAmount() + "</td>");
+    out.print("<td>" + info.getSecondPaymentAmount() + "</td>");
+    out.print("<td>" + info.getApproachTime() + "</td>");
+    out.print("<td>" + info.getApproachExpectMaterial() + "</td>");
+    out.print("<td>" + info.getProLeader() + "</td>");
+    out.print("<td>" + info.getConstructionUnit() + "</td>");
+    out.print("<td>" + info.getMonthProgress() + "</td>");
+    out.print("<td>" + info.getLastMonthProgress() + "</td>");
+    out.print("<td>" + info.getHouseHolds() + "</td>");
+    out.print("<td>" + info.getRouteLength() + "</td>");
+    out.print("<td>" + info.getReformWay() + "</td>");
+    out.print("<td>" + info.getConsStageGroup() + "</td>");
+    out.print("<td>" + info.getConcealedWork() + "</td>");
+    out.print("<td>" + info.getHookingOrTube() + "</td>");
+    out.print("<td>" + info.getOrderChangeNo() + "</td>");
+    out.print("<td>" + info.getOrderChangeAccount() + "</td>");
+    out.print("<td>" + info.getConstruction() + "</td>");
+    out.print("<td>" + info.getCompletedDate() + "</td>");
+    out.print("<td>" + info.getSubmitCompletionData() + "</td>");
+    out.print("<td>" + info.getAcceptance() + "</td>");
+    out.print("<td>" + info.getActualInstall() + "</td>");
+    out.print("<td>" + info.getAssetsTransfer() + "</td>");
+    out.print("<td>" + info.getAssetsGIS() + "</td>");
+    out.print("<td>" + info.getCompletionDocNo() + "</td>");
+    out.print("<td>" + info.getDataTransfer() + "</td>");
+    out.print("<td>" + info.getImportantDataSubmit() + "</td>");
+    out.print("<td>" + info.getSettlementAmount() + "</td>");
+    out.print("<td>" + info.getImportantProAmount() + "</td>");
+    out.print("<td>" + info.getSettlementPayable() + "</td>");
+    out.print("<td>" + info.getSettlementPayMerchants() + "</td>");
+    out.print("<td>" + info.getOwedAmount() + "</td>");
+    out.print("<td>" + info.getThirdPaymentAmount() + "</td>");
+    out.print("<td>" + info.getRetentionAmount() + "</td>");
+    out.print("<td>" + info.getRetentionExpires() + "</td>");
+    out.print("<td>" + info.getNextMonthPayAmount() + "</td>");
+    out.print("<td>" + info.getOpticalNode() + "</td>");
+    out.print("<td>" + info.getCable() + "</td>");
+    out.print("<td class=\"rightside\">" + info.getChargeConstruction() + "</td>");
+    out.print("</tr>");
+}
+%>
                 </tbody>
             </table>
         </div>
