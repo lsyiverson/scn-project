@@ -50,7 +50,7 @@ $(document).ready(function() {
 </head>
 <body>
     <center>
-        <div style="width: 800px">
+        <div style="width: 90%; min-width: 800px">
             <%@include file="page_title.jsp"%>
             <h2>项目详细清单</h2>
 <%
