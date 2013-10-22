@@ -24,6 +24,13 @@ public interface DBInterface {
     public User getUserByUsername(String username);
     
     /**
+     * 查询指定用户名的区域访问权限
+     * @param username 用户名
+     * @return 用户拥有访问权限的区域
+     */
+    public ArrayList<String> getPermisssionByUsername(String username);
+
+    /**
      * 修改用户密码
      * @param username 用户名
      * @param newEncryptedPassword 新密码密文字符串
@@ -89,4 +96,10 @@ public interface DBInterface {
             String[] proproperty,
             String[] protype,
             String proaddress);
+    
+    /**
+     * 查询所有的地区
+     * @return 所有的地区列表
+     */
+    public ArrayList<String> getAllDistricts();
 }

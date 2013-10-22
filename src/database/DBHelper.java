@@ -228,12 +228,7 @@ public class DBHelper implements DBInterface{
         return user;
     }
     
-    /**
-     * 查询指定用户名的区域访问权限
-     * @param username 用户名
-     * @return 用户拥有访问权限的区域
-     */
-    private ArrayList<String> getPermisssionByUsername(String username) {
+    public ArrayList<String> getPermisssionByUsername(String username) {
         ArrayList<String> permissionList = new ArrayList<String>();
         Connection conn = getConnection();
         Statement st;
@@ -628,5 +623,32 @@ public class DBHelper implements DBInterface{
     @Override
     public ArrayList<String> getAllADMINAccounts() {
         return getAllUserAccountsByGroup(UserGroup.ADMIN);
+    }
+
+    @Override
+    public ArrayList<String> getAllDistricts() {
+        ArrayList<String> districtsList = new ArrayList<String>();
+        Connection conn = getConnection();
+        Statement st;
+        ResultSet rs;
+        String sql = "SELECT name FROM scn.district";
+        try {
+            st = conn.createStatement();
+            rs = st.executeQuery(sql);
+            while(rs.next()) {
+                districtsList.add(rs.getString("name"));
+            }
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+        return districtsList;
     }
 }

@@ -62,6 +62,12 @@ public class DBTest implements DBInterface{
     }
     
     @Override
+    public ArrayList<String> getPermisssionByUsername(String username) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
     public boolean updateUserPassword(String username, String newEncryptedPassword) {
         //TODO: 实现此方法
         usertable.get(username).setPassword(newEncryptedPassword);
@@ -263,6 +269,12 @@ public class DBTest implements DBInterface{
 
     @Override
     public ArrayList<String> getAllADMINAccounts() {
+        return null;
+    }
+
+    @Override
+    public ArrayList<String> getAllDistricts() {
+        // TODO Auto-generated method stub
         return null;
     }
 }
