@@ -51,6 +51,11 @@ public class QueryProject extends ActionSupport {
      */
     private String proaddress;
     
+    /**
+     * 查询区域
+     */
+    private String[] area;
+    
     @Override
     public String execute() throws Exception {
 //        DBHelper.getInstance().queryProjectRecord(itemsource,
@@ -154,5 +159,13 @@ public class QueryProject extends ActionSupport {
 
     public void setProaddress(String proaddress) {
         this.proaddress = proaddress;
+    }
+
+    public String[] getArea() {
+        return area;
+    }
+
+    public void setArea(String[] area) {
+        this.area = area;
     }
 }

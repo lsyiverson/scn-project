@@ -105,6 +105,11 @@
             </td>
         </tr>
     </tbody>
+<%
+ArrayList<String> permissionlist = user.getPermission();
+request.setAttribute("permissionlist", permissionlist);
+%>
+    <s:if test="#request.permissionlist.size != 1" >
     <thead>
         <tr align="center" bgcolor="#4472C4">
             <th colspan="4"><font color="#FFFFFF">查询区域</font></th>
@@ -114,11 +119,15 @@
         <tr align="center" bgcolor="#D9E2F3">
             <td colspan="4">
                 <div><br/></div>
-                <s:checkboxlist name="area" list="{'青羊','金牛'}" theme="simple" />
+                <s:checkboxlist name="area" list="#request.permissionlist" theme="simple" />
                 <div><br/></div>
             </td>
         </tr>
     </tbody>
+    </s:if>
+    <s:else>
+    <s:hidden name="area" value="%{#request.permissionlist[0]}" />
+    </s:else>
 </table>
 <div style="width:100%;text-align:left;padding-top:5px">请选择输入一个或多个项进行查询，如果全都不输入将查询所有项</div>
 <div class="btnQuery"><s:submit cssClass="btnStyle" value="查询" theme="simple"/></div>

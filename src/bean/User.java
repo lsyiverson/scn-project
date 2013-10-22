@@ -1,5 +1,7 @@
 package bean;
 
+import java.util.ArrayList;
+
 public class User {
     
     /**
@@ -17,6 +19,11 @@ public class User {
      */
     private UserGroup group;
     
+    /**
+     * 用户权限列表
+     */
+    private ArrayList<String> permission;
+
     public User(String username, String encryptedPsw, UserGroup gourp) {
         this.username = username;
         this.password = encryptedPsw;
@@ -45,6 +52,14 @@ public class User {
 
     public void setGroup(UserGroup group) {
         this.group = group;
+    }
+
+    public ArrayList<String> getPermission() {
+        return permission;
+    }
+
+    public void setPermission(ArrayList<String> permission) {
+        this.permission = permission;
     }
 
     /**

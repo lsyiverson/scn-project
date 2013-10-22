@@ -215,8 +215,10 @@ public class DBHelper implements DBInterface{
                         group = UserGroup.USER;
                 }
                 user = new User(userName,password,group);
+                
+                //向用户对象添加权限列表
+                user.setPermission(getPermisssionByUsername(username));
             }
-            
             conn.close();
         } catch (SQLException e) {
             // TODO Auto-generated catch block
@@ -224,6 +226,37 @@ public class DBHelper implements DBInterface{
         } finally {
         }
         return user;
+    }
+    
+    /**
+     * 查询指定用户名的区域访问权限
+     * @param username 用户名
+     * @return 用户拥有访问权限的区域
+     */
+    private ArrayList<String> getPermisssionByUsername(String username) {
+        ArrayList<String> permissionList = new ArrayList<String>();
+        Connection conn = getConnection();
+        Statement st;
+        ResultSet rs;
+        String sql = "SELECT districtname FROM scn.permission WHERE username = '" + username +"'";
+        try {
+            st = conn.createStatement();
+            rs = st.executeQuery(sql);
+            while(rs.next()) {
+                permissionList.add(rs.getString("districtname"));
+            }
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+        return permissionList;
     }
 
     @Override
