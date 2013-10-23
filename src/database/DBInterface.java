@@ -77,6 +77,12 @@ public interface DBInterface {
     public void addUserDistrict(String username, String district);
     
     /**
+     * 删除指定用户的所有区域访问权限
+     * @param username
+     */
+    public void removeAllUserDistrict(String username);
+    
+    /**
      * 将读出的数据列表插入数据库
      * @param excelData excel数据List
      * @return boolean 插入是否成功

@@ -60,6 +60,7 @@ int allUserCount = allUserList.size();
     <td width="50%" align="center"><s:property/></td>
     <td width="50%" align="center">
     <s:a action="ResetUserPassword?username=%{#list}" onclick="return resetpassword('%{#list}')">密码重置</s:a>
+    <s:a href="modify_user_permission.jsp?username=%{#list}">更改区域权限</s:a>
      <%
     if(allUserCount>1){
      %>

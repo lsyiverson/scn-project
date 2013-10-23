@@ -50,10 +50,15 @@
             <result name="success" type="chain">GetAllUsers</result>
             <result name="adminsuccess" type="chain">GetAllAdmins</result>
         </action>
-        
+
         <action name="QueryProject" class="web.QueryProject">
             <result name="success">/web/query_result.jsp</result>
             <result name="error">/web/query_failed.html</result>
+        </action>
+
+        <action name="ModifyPermission" class="web.ModifyPermission">
+            <result name="success" type="chain">GetAllUsers</result>
+            <result name="adminsuccess" type="chain">GetAllAdmins</result>
         </action>
 
 <!--         <action name="Login_*" method="{1}" class="example.Login">

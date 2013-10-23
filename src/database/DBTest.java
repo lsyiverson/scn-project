@@ -114,6 +114,12 @@ public class DBTest implements DBInterface{
     }
 
     @Override
+    public void removeAllUserDistrict(String username) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
     public boolean insertExcelData(List<ProjectInfo> excelData){
       //TODO: 实现此方法,用于向数据库中插入excel数据
         return true;

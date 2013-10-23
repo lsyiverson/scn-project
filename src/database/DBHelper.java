@@ -289,6 +289,31 @@ public class DBHelper implements DBInterface{
     }
 
     @Override
+    public void removeAllUserDistrict(String username) {
+        Connection conn = getConnection();
+        Statement st;
+        String sql_del_permission = "DELETE FROM scn.permission WHERE username = '" +username+ "'";
+        try {
+            st = conn.createStatement();
+            st = (Statement) conn.createStatement();    //创建用于执行静态sql语句的Statement对象，st属局部变量  
+            
+            //删除用户关联的权限
+            st.execute(sql_del_permission);
+            
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
     public boolean isAlreadyHaveTheUser(String username) {
         // TODO Auto-generated method stub
         Connection conn = getConnection();

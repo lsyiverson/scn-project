@@ -1,26 +1,18 @@
-<%@page import="java.util.ArrayList"%>
-<%@page import="database.DBHelper"%>
-<%@page import="org.apache.commons.lang3.StringUtils"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="database.DBHelper"%>
+<%@page import="org.apache.commons.lang3.StringUtils"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>四川广电网络工程管理系统-添加用户</title>
 <script type="text/javascript">
-String.prototype.trim = function(){  
-    // 用正则表达式将前后空格  
-    // 用空字符串替代。  
-    return this.replace(/(^\s*)|(\s*$)/g, "");  
-};
-
-var username;
 var districts;
 
-function createuser() {
-    username = add.username.value.trim();
+function getuserarea() {
     districts = document.getElementsByName('area');
 }
 
@@ -39,15 +31,10 @@ function isChecked(list) {
 }
 
 function validate() {
-    if(isEmpty(username)) {
-        alert("用户名不能为空");
-        return false;
-    }
     if(!isChecked(districts)) {
         alert("必须为用户分配区域权限");
         return false;
     }
-    add.username.value = username;
 }
 </script>
 <style type="text/css">
@@ -91,9 +78,15 @@ if (StringUtils.isEmpty(usergroup)) {
 }
 request.setAttribute("group", group);
 
+String username = request.getParameter("username");
+request.setAttribute("username", username);
+
 DBHelper db = DBHelper.getInstance();
 ArrayList<String> districts = db.getAllDistricts();
 request.setAttribute("districts", districts);
+
+ArrayList<String> permission = db.getPermisssionByUsername(username);
+request.setAttribute("permission", permission);
 %>
     <div class="content">
         <table width="100%" height="100%">
@@ -109,34 +102,29 @@ request.setAttribute("districts", districts);
             <td>
             </td>
             <td align="center">
-                <s:form onsubmit="return validate()" action="CreateUser" name="add">
+                <s:form onsubmit="return validate()" action="ModifyPermission" name="modify">
                     <table class="formStyle">
                     <tr>
                     <td colspan="2">
                     <s:if test="#request.group == 0">
-                    <h4>创建用户</h4>
+                    <h4>修改用户区域权限</h4>
                     </s:if>
                     <s:elseif test="#request.group == 1">
-                    <h4>创建管理员</h4>
+                    <h4>修改管理员区域权限</h4>
                     </s:elseif>
                     </td>
                     </tr>
                     <tr>
                     <s:hidden id="group" name="group" value="%{#request.group}"/>
-                    <s:textfield id="username" name="username" label="用户名" cssStyle="width:100%"/>
+                    <s:textfield readonly="true" id="username" name="username" value="%{#request.username}" label="用户名" cssStyle="width:100%"/>
                     </tr>
                     <tr>
-                    <td colspan="2">
-                    <div align="right"><font size="2px" color="#808080">初始密码为:123456</font></div>
-                    </td>
-                    </tr>
-                    <tr>
-                    <s:checkboxlist id="area" label="区域权限" name="area" list="#request.districts" />
+                    <s:checkboxlist id="area" label="区域权限" name="area" list="#request.districts" value="#request.permission" />
                     </tr>
                     <tr>
                     <td colspan="2">
                     <div align="right" style="padding-top: 20px">
-                    <s:submit value="创建" theme="simple" onclick="createuser()"/>
+                    <s:submit value="提交" theme="simple" onclick="getuserarea()"/>
                     </div>
                     </td>
                     </tr>
