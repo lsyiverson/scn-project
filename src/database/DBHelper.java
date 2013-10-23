@@ -265,15 +265,25 @@ public class DBHelper implements DBInterface{
         Connection conn = getConnection();
         Statement st;
         String sql = "DELETE FROM scn.user WHERE username = '" +username+ "'";
+        String sql_del_permission = "DELETE FROM scn.permission WHERE username = '" +username+ "'";
         try {
             st = conn.createStatement();
             st = (Statement) conn.createStatement();    //创建用于执行静态sql语句的Statement对象，st属局部变量  
             st.executeUpdate(sql);// 执行更新操作的sql语句，返回更新数据的个数 
-            conn.close();
+            
+            //删除用户关联的权限
+            st.execute(sql_del_permission);
+            
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         } finally {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         }
         return true;
     }
@@ -335,6 +345,28 @@ public class DBHelper implements DBInterface{
         }
     }
     
+    @Override
+    public void addUserDistrict(String username, String district) {
+        Connection conn = getConnection();
+        Statement st;
+        String sql = "INSERT INTO scn.permission(username, districtname) VALUES('" + username + "','" + district + "')";
+        try {
+            st = conn.createStatement();
+            st = (Statement) conn.createStatement();    //创建用于执行静态sql语句的Statement对象，st属局部变量  
+            st.executeUpdate(sql);// 执行更新操作的sql语句，返回更新数据的个数 
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+    }
+
     /**
      * 查询的项目来源关键字列表
      */

@@ -20,6 +20,11 @@ public class CreateUser extends ActionSupport {
      */
     private int group;
     
+    /**
+     * 用户区域访问权限
+     */
+    private String[] area;
+    
     @Override
     public String execute() throws Exception {
         if (isInvalid(username)) {
@@ -42,7 +47,12 @@ public class CreateUser extends ActionSupport {
         default:
             usergroup = UserGroup.USER;
         }
-        DBHelper.getInstance().createUser(username, usergroup);
+        DBHelper.getInstance().createUser(username, usergroup);//创建用户对象
+        
+        //添加用户权限
+        for (String district : area) {
+            DBHelper.getInstance().addUserDistrict(username, district);
+        }
 
         switch (usergroup) {
         case ADMIN:
@@ -70,5 +80,13 @@ public class CreateUser extends ActionSupport {
 
     public void setGroup(int group) {
         this.group = group;
+    }
+
+    public String[] getArea() {
+        return area;
+    }
+
+    public void setArea(String[] area) {
+        this.area = area;
     }
 }

@@ -70,6 +70,13 @@ public interface DBInterface {
     public void createUser(String username, UserGroup usergroup);
     
     /**
+     * 添加用户对指定区域的访问权限
+     * @param username
+     * @param district
+     */
+    public void addUserDistrict(String username, String district);
+    
+    /**
      * 将读出的数据列表插入数据库
      * @param excelData excel数据List
      * @return boolean 插入是否成功
