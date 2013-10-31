@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.apache.struts2.ServletActionContext;
 
 import bean.ProjectInfo;
+import bean.User;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -80,6 +81,22 @@ public class QueryProject extends ActionSupport {
 //        System.out.println(proaddress);
         try {
             long time = System.currentTimeMillis();
+            
+            // 判断用户选择要查询的区域，如果用户没有做出选择，则查询用户拥有权限的所有区域
+            String[] districts;
+            if (area.length <= 0 ) {
+                User user = (User)ServletActionContext.getContext().getSession().get("user");
+                ArrayList<String> permission = user.getPermission();
+                districts = new String[permission.size()];
+                try {
+                    permission.toArray(districts);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            } else {
+                districts = area;
+            }
+
             ArrayList<ProjectInfo> projectlist = DBHelper.getInstance()
                     .queryProjectRecord(itemsource, itemdate, itemname,
                             pronumber, proname, proproperty, protype,
