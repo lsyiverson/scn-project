@@ -35,6 +35,7 @@ public class FileUploadAction extends ActionSupport implements
     private String fileName;
     private String contentType;
     private File target;
+    private String area;    // 数据所属区域
 
     private ServletContext context;
 
@@ -60,6 +61,14 @@ public class FileUploadAction extends ActionSupport implements
 
     public File getDoc() {
         return doc;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
     }
 
     public void setServletContext(ServletContext context) {
