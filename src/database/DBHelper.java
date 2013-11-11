@@ -75,8 +75,8 @@ public class DBHelper implements DBInterface{
         Statement st;
         int location = 0;
         while (location < excelData.size()) {
-            if (excelData.get(location).getItemName() == null 
-                    || StringUtils.isEmpty(excelData.get(location).getItemName().trim())) {
+            if (excelData.get(location).getProName() == null 
+                    || StringUtils.isEmpty(excelData.get(location).getProName().trim())) {
                 location++;
                 continue;
             }
